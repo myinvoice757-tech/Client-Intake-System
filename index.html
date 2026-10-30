@@ -83,6 +83,9 @@
     .gel-btn:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
     .gel-btn:disabled { background: #1e293b; cursor: not-allowed; opacity: 0.6; }
     
+    .gel-btn-secondary { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.2s ease; }
+    .gel-btn-secondary:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); color: #fff; }
+
     @keyframes floatBot { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
     @keyframes pulseRing { 0% { transform: scale(0.92); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 0.3; } 100% { transform: scale(0.92); opacity: 0.8; } }
     .ai-float-btn { animation: floatBot 4.5s ease-in-out infinite; }
@@ -125,9 +128,9 @@
     <!-- CLIENT INTAKE VIEW -->
     <div id="clientIntakeView">
       <section class="text-center pt-8 pb-4 px-6">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/30 mb-3">Official Job Order System</span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/30 mb-3">OFFICIAL JOB ORDER SYSTEM</span>
         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">Client Brief <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E8855A] via-[#D36B3F] to-amber-300">Intake</span></h1>
-        <p class="text-sm text-slate-300 max-w-xl mx-auto font-medium">Please provide your exact design specifications. Fields marked with <span class="text-rose-400 font-bold">*</span> are strictly required.</p>
+        <p class="text-xs md:text-sm text-slate-300 max-w-2xl mx-auto font-medium tracking-wide">Submit your creative vision, brand parameters, and design requirements for Studio One review.</p>
       </section>
 
       <form id="intakeForm" class="p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start" onsubmit="handleFormSubmission(event)">
@@ -198,22 +201,38 @@
           </div>
         </div>
 
-        <!-- COLUMN 2: VIBE & 6-COLOR PALETTE -->
+        <!-- COLUMN 2: CENTERED VIBE SLIDERS & 6-COLOR PALETTE -->
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-4">
             <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
               <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Design Vibe & Aesthetics</span>
             </div>
+            <!-- All 5 sliders initialized to exactly center (value="3") -->
             <div class="gel-surface p-4 rounded-xl space-y-4">
-              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Minimal</span><span>Complex</span></div><input type="range" id="vibeMinimal" min="1" max="5" value="3" class="w-full"></div>
-              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Modern</span><span>Classic</span></div><input type="range" id="vibeModern" min="1" max="5" value="4" class="w-full"></div>
-              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Playful</span><span>Serious</span></div><input type="range" id="vibePlayful" min="1" max="5" value="2" class="w-full"></div>
-              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Loud</span><span>Subtle</span></div><input type="range" id="vibeLoud" min="1" max="5" value="3" class="w-full"></div>
-              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Luxury</span><span>Budget</span></div><input type="range" id="vibeLuxury" min="1" max="5" value="5" class="w-full"></div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold"><span>Minimal</span><span>Complex</span></div>
+                <input type="range" id="vibeMinimal" min="1" max="5" value="3" class="w-full">
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold"><span>Modern</span><span>Classic</span></div>
+                <input type="range" id="vibeModern" min="1" max="5" value="3" class="w-full">
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold"><span>Playful</span><span>Serious</span></div>
+                <input type="range" id="vibePlayful" min="1" max="5" value="3" class="w-full">
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold"><span>Loud</span><span>Subtle</span></div>
+                <input type="range" id="vibeLoud" min="1" max="5" value="3" class="w-full">
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold"><span>Luxury</span><span>Budget</span></div>
+                <input type="range" id="vibeLuxury" min="1" max="5" value="3" class="w-full">
+              </div>
             </div>
           </div>
 
-          <!-- EXPANDED 6-COLOR BRAND PALETTE WITH BIGGER SWATCHES -->
+          <!-- 6-COLOR BRAND PALETTE -->
           <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between pb-2 border-b border-white/[0.1]">
               <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">3. Brand Color Palette</span>
@@ -279,7 +298,7 @@
           </div>
         </div>
 
-        <!-- COLUMN 3: BRIEF, DIRECT MESSAGE, UPLOAD & SUBMIT -->
+        <!-- COLUMN 3: BRIEF, DIRECT MESSAGE, UPLOAD, NDA & DUAL ACTIONS -->
         <div class="flex flex-col gap-5">
           <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
             <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">4. Brief & Live Direct Message</span>
@@ -311,7 +330,15 @@
             <span class="text-xs font-semibold text-slate-200">Require mutual Non-Disclosure Agreement (NDA)</span>
           </label>
 
-          <button type="submit" id="submitBtn" class="gel-btn w-full py-3.5 rounded-xl text-slate-950 font-black text-sm uppercase tracking-wider shadow-lg">Submit Design Brief</button>
+          <!-- DUAL ACTION ROW: RESET & SUBMIT -->
+          <div class="flex items-center gap-3 pt-1">
+            <button type="button" onclick="resetFormToDefaults()" class="gel-btn-secondary w-1/3 py-3.5 rounded-xl text-slate-300 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5">
+              <span>↺</span> Reset
+            </button>
+            <button type="submit" id="submitBtn" class="gel-btn flex-1 py-3.5 rounded-xl text-slate-950 font-black text-sm uppercase tracking-wider shadow-lg">
+              Submit Design Brief
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -378,7 +405,7 @@
         <span class="text-xs font-extrabold uppercase text-[#E8855A] font-mono">Cetora Studio AI</span>
         <button type="button" onclick="toggleAiAssistant()" class="text-slate-400 text-xs">✕</button>
       </div>
-      <p id="aiDynamicTip" class="text-xs text-slate-200">"Welcome to Cetora Design! Pick up to 6 custom brand colors above, or message our lead designer directly."</p>
+      <p id="aiDynamicTip" class="text-xs text-slate-200">"Welcome to Cetora Design! Adjust your sliders or message our design lead directly."</p>
     </div>
   </div>
 
@@ -398,7 +425,6 @@
   </div>
 
   <script>
-    // Exact deployed Google Apps Script Web App URL from Version 57
     const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
 
     function updateClock() { document.getElementById('liveClock').textContent = new Date().toLocaleTimeString(); }
@@ -436,6 +462,34 @@
         document.getElementById('uploadLabel').textContent = `Attached: ${file.name.substring(0, 14)}...`;
       };
       reader.readAsDataURL(file);
+    }
+
+    // FORM RESET HANDLER
+    function resetFormToDefaults() {
+      document.getElementById('intakeForm').reset();
+      
+      // Reset sliders to exact center (3)
+      ['vibeMinimal', 'vibeModern', 'vibePlayful', 'vibeLoud', 'vibeLuxury'].forEach(id => {
+        const slider = document.getElementById(id);
+        if (slider) slider.value = 3;
+      });
+
+      // Reset Palette inputs & hex labels
+      const defaults = {
+        baseColor: '#070a12', baseColorText: '#070a12',
+        primaryColor: '#D36B3F', primaryColorText: '#D36B3F',
+        secondaryColor: '#8C3E1F', secondaryColorText: '#8C3E1F',
+        accentColor: '#E8855A', accentColorText: '#E8855A',
+        neutralColor: '#1e293b', neutralColorText: '#1e293b',
+        lightColor: '#f8fafc', lightColorText: '#f8fafc'
+      };
+      for (const [key, val] of Object.entries(defaults)) {
+        const el = document.getElementById(key);
+        if (el) el.value = val;
+      }
+
+      uploadedFileData = null;
+      document.getElementById('uploadLabel').textContent = 'Drag & Drop Files or Browse';
     }
 
     async function handleFormSubmission(e) {
@@ -502,11 +556,9 @@
 
     function formSuccessCleanup(btn) {
       document.getElementById('successModal').classList.remove('hidden');
-      document.getElementById('intakeForm').reset();
+      resetFormToDefaults();
       btn.disabled = false; 
       btn.textContent = 'Submit Design Brief';
-      uploadedFileData = null; 
-      document.getElementById('uploadLabel').textContent = 'Drag & Drop Files or Browse';
     }
 
     function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
