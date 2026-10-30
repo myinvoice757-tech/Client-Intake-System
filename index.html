@@ -3,28 +3,504 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Global Design Solutions | Portal</title>
+  <title>Cetora Design | The Studio One Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root { --font-sans: 'Plus Jakarta Sans', sans-serif; --font-mono: 'JetBrains Mono', monospace; }
+    body { font-family: var(--font-sans); background-color: #030712; color: #f8fafc; overflow-x: hidden; min-height: 100vh; }
+    
+    /* Native Dark Dropdown & Brand Highlight */
+    select, option {
+      color-scheme: dark;
+      background-color: #030712 !important;
+      color: #f8fafc !important;
+      accent-color: #D36B3F !important;
     }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #070a12;
+    select:focus > option:checked {
+      background: #D36B3F !important;
+      color: #ffffff !important;
     }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
+
+    /* Fixed Draggable Range Sliders */
+    input[type=range] { 
+      -webkit-appearance: none; 
+      background: transparent; 
+      position: relative;
+      z-index: 10;
+      cursor: pointer;
     }
+    input[type=range]:focus { outline: none; }
+    input[type=range]::-webkit-slider-runnable-track { height: 6px; background: #1e293b; border-radius: 999px; }
+    input[type=range]::-webkit-slider-thumb { 
+      -webkit-appearance: none; 
+      height: 18px; 
+      width: 18px; 
+      border-radius: 50%; 
+      background: radial-gradient(circle at 35% 35%, #E8855A 0%, #D36B3F 60%, #8C3E1F 100%); 
+      cursor: pointer; 
+      margin-top: -6px; 
+      box-shadow: 0 0 10px rgba(211,107,63,0.5); 
+    }
+
+    .glow-orb { position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.3; pointer-events: none; animation: floatOrb 18s ease-in-out infinite alternate; }
+    .orb-1 { width: 500px; height: 500px; background: #D36B3F; top: -10%; left: 5%; }
+    .orb-2 { width: 550px; height: 550px; background: #8C3E1F; bottom: 5%; right: 5%; animation-duration: 22s; }
+    .orb-3 { width: 400px; height: 400px; background: #E8855A; top: 40%; left: 45%; animation-duration: 16s; }
+    @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.08); } 100% { transform: translate(-30px, 40px) scale(0.95); } }
+    
+    .mac-window { 
+      background: rgba(13, 17, 28, 0.85); 
+      backdrop-filter: blur(40px) saturate(190%); 
+      -webkit-backdrop-filter: blur(40px) saturate(190%); 
+      border: 1px solid rgba(255, 255, 255, 0.12); 
+      border-top: 1px solid rgba(211, 107, 63, 0.3); 
+      box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.85), 0 0 1px 1px rgba(255, 255, 255, 0.08) inset; 
+    }
+    .gel-surface { 
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(15, 20, 32, 0.85); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      border-top: 1px solid rgba(255, 255, 255, 0.18); 
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5); 
+      transition: all 0.25s ease; 
+    }
+    .gel-surface:hover { border-color: rgba(211, 107, 63, 0.5); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(211, 107, 63, 0.15); }
+    .gel-surface:focus-within { border-color: #D36B3F; box-shadow: 0 0 0 3px rgba(211, 107, 63, 0.3); }
+    
+    .gel-btn { background: linear-gradient(180deg, #E8855A 0%, #D36B3F 100%); box-shadow: 0 4px 18px rgba(211, 107, 63, 0.45); transition: all 0.2s ease; }
+    .gel-btn:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+    .gel-btn:disabled { background: #1e293b; cursor: not-allowed; opacity: 0.6; }
+    
+    @keyframes floatBot { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+    @keyframes pulseRing { 0% { transform: scale(0.92); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 0.3; } 100% { transform: scale(0.92); opacity: 0.8; } }
+    .ai-float-btn { animation: floatBot 4.5s ease-in-out infinite; }
+    .ai-pulse-core { animation: pulseRing 3s ease-in-out infinite; }
   </style>
 </head>
-<body>
-  <iframe src="https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec"></iframe>
+<body class="relative flex items-center justify-center p-3 md:p-6 lg:p-8">
+
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <main class="mac-window relative z-10 w-full max-w-7xl rounded-2xl overflow-hidden my-auto min-h-[640px]">
+    
+    <!-- TOP HEADER -->
+    <header class="h-16 px-6 border-b border-white/[0.08] flex items-center justify-between bg-black/40">
+      <!-- SECRET TRIGGER: Triple-click the logo or press Ctrl+Shift+D -->
+      <div id="secretLogoTrigger" class="flex items-center gap-3 cursor-pointer select-none group" title="Cetora Design">
+        <div class="w-9 h-9 rounded-xl bg-black/60 border border-[#D36B3F]/40 flex items-center justify-center text-[#D36B3F] shadow-[0_0_15px_rgba(211,107,63,0.2)]">
+          <svg class="w-5 h-5" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M72 32 C68 18 50 18 36 24 C20 30 14 46 18 62 C22 76 38 82 54 78 C68 74 80 62 78 48 C76 38 66 34 56 36 C44 40 40 52 48 62 C52 66 58 67 64 65" />
+            <path d="M46 22 C52 18 62 20 68 26" />
+            <circle cx="60" cy="58" r="3" fill="#D36B3F" stroke="none" />
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xs md:text-sm font-extrabold tracking-wider uppercase text-white group-hover:text-[#E8855A] transition-colors">
+            CETORA <span class="text-[#D36B3F]">DESIGN</span>
+          </span>
+          <span class="text-[9px] tracking-[0.2em] uppercase text-slate-400 font-mono">The Studio One</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="hubExitBtn" onclick="exitDesignerHub()" class="hidden px-4 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 border border-white/10 transition-all">← Public Intake</button>
+        <div id="liveClock" class="text-sm font-mono font-semibold text-[#E8855A] bg-white/[0.06] px-4 py-1.5 rounded-full border border-white/[0.1]">--:--:--</div>
+      </div>
+    </header>
+
+    <!-- CLIENT INTAKE VIEW -->
+    <div id="clientIntakeView">
+      <section class="text-center pt-8 pb-4 px-6">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/30 mb-3">Official Job Order System</span>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">Client Brief <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E8855A] via-[#D36B3F] to-amber-300">Intake</span></h1>
+        <p class="text-sm text-slate-300 max-w-xl mx-auto font-medium">Please provide your exact design specifications. Fields marked with <span class="text-rose-400 font-bold">*</span> are strictly required.</p>
+      </section>
+
+      <form id="intakeForm" class="p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start" onsubmit="handleFormSubmission(event)">
+        
+        <!-- COLUMN 1: BASICS, WHATSAPP & TIMELINE -->
+        <div class="flex flex-col gap-5">
+          <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
+            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">1. Client Basics</span>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Your Full Name <span class="text-rose-400">*</span></label>
+            <input type="text" id="clientName" required placeholder="e.g. John Doe" class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Company / Brand Name <span class="text-rose-400">*</span></label>
+            <input type="text" id="companyName" required placeholder="e.g. Acme Studio" class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Email Address <span class="text-rose-400">*</span></label>
+            <input type="email" id="clientEmail" required placeholder="john@company.com" class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Project Category <span class="text-rose-400">*</span></label>
+            <div class="relative">
+              <select id="projectCategory" required class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white focus:outline-none appearance-none cursor-pointer">
+                <option value="" disabled selected class="bg-[#030712] text-slate-400">Select Category...</option>
+                <option value="Logo Design" class="bg-[#030712] text-white">Logo Design</option>
+                <option value="Poster Design" class="bg-[#030712] text-white">Poster Design</option>
+                <option value="3D Design" class="bg-[#030712] text-white">3D Design</option>
+                <option value="Web Design" class="bg-[#030712] text-white">Web Design</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- DIRECT 1-ON-1 WHATSAPP CHAT -->
+          <div class="gel-surface p-4 rounded-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-semibold text-slate-200">Project Budget <span class="text-rose-400">*</span></label>
+              <span class="text-[10px] text-emerald-400 font-mono tracking-wider font-semibold uppercase bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Direct Quote</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-black/40 border border-[#25D366]/30 shadow-[0_0_20px_rgba(37,211,102,0.08)] flex flex-col items-center text-center space-y-3">
+              <div class="w-10 h-10 rounded-full bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center text-[#25D366]">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.551 4.188 1.593 6.009L.435 23.565l5.658-1.485c1.761.96 3.743 1.468 5.938 1.468 6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 21.651c-1.815 0-3.593-.487-5.148-1.408l-.368-.219-3.824 1.003 1.023-3.73-.241-.383A9.704 9.704 0 0 1 2.327 12.03c0-5.352 4.355-9.707 9.704-9.707 5.35 0 9.705 4.355 9.705 9.707s-4.355 9.707-9.705 9.707zm5.324-7.25c-.292-.146-1.728-.853-1.996-.951-.268-.098-.464-.146-.659.146-.195.292-.756.951-.926 1.146-.17.195-.34.219-.633.073-1.964-.982-3.136-1.79-4.453-3.483-.17-.219-.018-.337.128-.483.131-.131.292-.34.438-.512.146-.17.195-.292.292-.487.098-.195.049-.365-.024-.512-.073-.146-.659-1.585-.902-2.17-.238-.573-.478-.495-.659-.504-.17-.009-.366-.009-.56-.009-.195 0-.512.073-.78.365-.268.292-1.023.999-1.023 2.437s1.048 2.827 1.194 3.022c.146.195 2.062 3.148 4.994 4.415 2.143.926 2.893 1.004 3.978.854 1.011-.139 3.238-1.321 3.693-2.602.454-1.28.454-2.376.318-2.602-.136-.226-.502-.365-.794-.512z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-white tracking-wide">Direct 1-on-1 Studio Chat</p>
+                <p class="text-[10px] text-slate-300 font-medium">Chat securely and privately with Cetora Design.</p>
+              </div>
+              <a id="whatsappBtn" href="https://wa.me/94777074837" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-[0_4px_14px_rgba(37,211,102,0.35)]">
+                <span>Open Direct WhatsApp Chat ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Estimated Timeline <span class="text-rose-400">*</span></label>
+            <div class="relative">
+              <select id="projectTimeline" required class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white focus:outline-none appearance-none cursor-pointer">
+                <option value="" disabled selected class="bg-[#030712] text-slate-400">Select Delivery Speed...</option>
+                <option value="1 day" class="bg-[#030712] text-white">1 day</option>
+                <option value="3 days" class="bg-[#030712] text-white">3 days</option>
+                <option value="1 week" class="bg-[#030712] text-white">1 week</option>
+                <option value="2 weeks" class="bg-[#030712] text-white">2 weeks</option>
+                <option value="4 weeks" class="bg-[#030712] text-white">4 weeks</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMN 2: VIBE & PALETTE -->
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
+              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Design Vibe & Aesthetics</span>
+            </div>
+            <div class="gel-surface p-4 rounded-xl space-y-4">
+              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Minimal</span><span>Complex</span></div><input type="range" id="vibeMinimal" min="1" max="5" value="3" class="w-full"></div>
+              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Modern</span><span>Classic</span></div><input type="range" id="vibeModern" min="1" max="5" value="4" class="w-full"></div>
+              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Playful</span><span>Serious</span></div><input type="range" id="vibePlayful" min="1" max="5" value="2" class="w-full"></div>
+              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Loud</span><span>Subtle</span></div><input type="range" id="vibeLoud" min="1" max="5" value="3" class="w-full"></div>
+              <div class="space-y-1.5"><div class="flex justify-between text-xs font-semibold"><span>Luxury</span><span>Budget</span></div><input type="range" id="vibeLuxury" min="1" max="5" value="5" class="w-full"></div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
+              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">3. Brand Color Palette</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
+                <input type="color" id="baseColor" value="#070a12" oninput="document.getElementById('baseColorText').value = this.value" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                <div class="flex-1 min-w-0"><p class="text-[11px] uppercase font-bold text-slate-300">Base</p><input type="text" id="baseColorText" value="#070a12" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none"></div>
+              </div>
+              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
+                <input type="color" id="primaryColor" value="#D36B3F" oninput="document.getElementById('primaryColorText').value = this.value" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
+                <div class="flex-1 min-w-0"><p class="text-[11px] uppercase font-bold text-slate-300">Primary</p><input type="text" id="primaryColorText" value="#D36B3F" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMN 3: BRIEF, DIRECT MESSAGE, UPLOAD & SUBMIT -->
+        <div class="flex flex-col gap-5">
+          <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
+            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">4. Brief & Live Direct Message</span>
+          </div>
+          
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Project Description <span class="text-rose-400">*</span></label>
+            <textarea id="projectDesc" required rows="3" placeholder="Outline your project goals, deliverables, and requirements..." class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none resize-none"></textarea>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-[#E8855A] flex items-center gap-1.5">
+              <span>💬</span> Direct Message to Studio Admins
+            </label>
+            <textarea id="clientDirectMessage" rows="2" placeholder="Send a direct note or question to the Cetora lead designer..." class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none resize-none border-[#D36B3F]/30"></textarea>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-200">Upload Assets (Sketches, PDFs, Moodboards)</label>
+            <div id="dropZone" onclick="document.getElementById('fileInput').click()" class="gel-surface border-dashed border-2 border-slate-600 hover:border-[#E8855A] p-4 rounded-xl text-center cursor-pointer transition-colors">
+              <p id="uploadLabel" class="text-xs font-bold text-white uppercase tracking-wider">Drag & Drop Files or Browse</p>
+              <p class="text-[10px] text-slate-400 mt-1">Accepts images, vectors, and PDFs up to 25MB</p>
+              <input type="file" id="fileInput" class="hidden" onchange="handleFileSelection(event)">
+            </div>
+          </div>
+
+          <label class="flex items-center gap-3 p-1 cursor-pointer select-none">
+            <input type="checkbox" id="ndaCheckbox" class="w-4 h-4 rounded bg-black/60 border-slate-500 text-[#D36B3F] focus:ring-0">
+            <span class="text-xs font-semibold text-slate-200">Require mutual Non-Disclosure Agreement (NDA)</span>
+          </label>
+
+          <button type="submit" id="submitBtn" class="gel-btn w-full py-3.5 rounded-xl text-slate-950 font-black text-sm uppercase tracking-wider shadow-lg">Submit Design Brief</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- DESIGNER HUB VIEW -->
+    <div id="designerHubView" class="hidden p-6 md:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+        <div>
+          <span class="text-[10px] font-bold tracking-widest text-[#E8855A] uppercase bg-[#D36B3F]/10 px-2.5 py-0.5 rounded-md border border-[#D36B3F]/20">Studio Operations</span>
+          <h2 class="text-2xl font-extrabold text-white mt-1">Designer Command Hub</h2>
+          <p class="text-xs text-slate-400">Live submissions & direct client messages streaming from Google Sheets.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="refreshHubData()" class="gel-surface px-4 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-white"><span>↻</span> Refresh</button>
+          <a href="https://docs.google.com/spreadsheets/d/1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic/edit" target="_blank" class="gel-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-950 uppercase">Open Sheet ↗</a>
+        </div>
+      </div>
+
+      <div class="gel-surface rounded-xl overflow-hidden border border-white/[0.08]">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-white/[0.08] bg-black/40 text-slate-400 font-bold uppercase tracking-wider">
+                <th class="p-3.5">Timestamp</th>
+                <th class="p-3.5">Client & Company</th>
+                <th class="p-3.5">Category</th>
+                <th class="p-3.5">Direct Message / Inquiry</th>
+                <th class="p-3.5 text-right">Assets</th>
+              </tr>
+            </thead>
+            <tbody id="briefsTableBody" class="divide-y divide-white/[0.04] text-slate-300">
+              <tr><td colspan="5" class="p-8 text-center text-slate-400 font-mono">Loading real-time messages...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
+      <div class="mac-window max-w-md w-full p-8 rounded-3xl text-center space-y-6 border border-white/20">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-[#8C3E1F] via-[#D36B3F] to-amber-200 p-[2px] flex items-center justify-center">
+          <div class="w-full h-full rounded-full bg-[#0a0f1d] flex items-center justify-center">
+            <svg class="w-10 h-10 text-[#E8855A]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+          </div>
+        </div>
+        <h3 class="text-2xl font-black text-white">Brief & Direct Message Sent!</h3>
+        <p class="text-xs text-slate-300">Your brief and direct message have been securely delivered to Cetora Design.</p>
+        <button type="button" onclick="closeSuccessModal()" class="gel-btn w-full py-3.5 rounded-xl text-slate-950 font-black text-xs uppercase tracking-wider">Done & Return</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING AI ASSISTANT -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3">
+    <button type="button" onclick="toggleAiAssistant()" class="ai-float-btn relative w-14 h-14 rounded-full flex items-center justify-center cursor-pointer group">
+      <div id="orbGlow" class="ai-pulse-core absolute inset-0 rounded-full bg-gradient-to-tr from-[#D36B3F] to-amber-600 blur-md opacity-75"></div>
+      <div class="relative w-12 h-12 rounded-full bg-gradient-to-b from-[#1e293b] to-[#020617] border border-[#D36B3F]/50 flex items-center justify-center">
+        <svg class="w-6 h-6 text-[#E8855A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z"/></svg>
+      </div>
+    </button>
+    <div id="aiAssistantWindow" class="hidden w-80 mac-window p-5 rounded-2xl border border-[#D36B3F]/30 space-y-3">
+      <div class="flex items-center justify-between border-b border-white/10 pb-2">
+        <span class="text-xs font-extrabold uppercase text-[#E8855A] font-mono">Cetora Studio AI</span>
+        <button type="button" onclick="toggleAiAssistant()" class="text-slate-400 text-xs">✕</button>
+      </div>
+      <p id="aiDynamicTip" class="text-xs text-slate-200">"Welcome to Cetora Design! Use the direct message box on the form to send us a note or click the direct WhatsApp chat."</p>
+    </div>
+  </div>
+
+  <!-- SECRET ADMIN PIN MODAL -->
+  <div id="pinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+    <div id="pinModalBox" class="mac-window w-full max-w-sm p-6 rounded-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-sm text-white uppercase tracking-wider">Studio Command Hub</h3>
+        <button type="button" onclick="closePinModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
+      </div>
+      <p class="text-[11px] text-slate-400">Enter studio authorization PIN to access live client briefs.</p>
+      <form onsubmit="event.preventDefault(); verifyAndOpenHub();" class="space-y-3">
+        <input type="password" id="adminPin" placeholder="••••" maxlength="6" autocomplete="off" class="gel-surface w-full px-4 py-2.5 rounded-xl text-base text-white text-center font-mono tracking-widest focus:outline-none">
+        <button type="submit" id="pinSubmitBtn" class="gel-btn w-full py-2.5 rounded-xl text-slate-950 font-bold text-xs uppercase">Unlock Hub</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Exact deployed Google Apps Script Web App URL from Version 57
+    const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
+
+    function updateClock() { document.getElementById('liveClock').textContent = new Date().toLocaleTimeString(); }
+    setInterval(updateClock, 1000); updateClock();
+
+    // SECRET TRIGGER 1: Triple-click the logo within 800ms
+    let logoClickCount = 0;
+    let logoClickTimer = null;
+    document.getElementById('secretLogoTrigger').addEventListener('click', () => {
+      logoClickCount++;
+      clearTimeout(logoClickTimer);
+      if (logoClickCount === 3) {
+        logoClickCount = 0;
+        promptAdminModal();
+      } else {
+        logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 800);
+      }
+    });
+
+    // SECRET TRIGGER 2: Press Ctrl + Shift + D (or Cmd + Shift + D on Mac)
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+        e.preventDefault();
+        promptAdminModal();
+      }
+    });
+
+    let uploadedFileData = null;
+    function handleFileSelection(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        uploadedFileData = { name: file.name, type: file.type, base64: evt.target.result.split(',')[1] };
+        document.getElementById('uploadLabel').textContent = `Attached: ${file.name.substring(0, 14)}...`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function handleFormSubmission(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; 
+      btn.textContent = 'Submitting...';
+
+      const payload = {
+        name: document.getElementById('clientName').value,
+        company: document.getElementById('companyName').value,
+        email: document.getElementById('clientEmail').value,
+        category: document.getElementById('projectCategory').value,
+        timeline: document.getElementById('projectTimeline').value,
+        vibes: { 
+          minimal: document.getElementById('vibeMinimal').value, 
+          modern: document.getElementById('vibeModern').value, 
+          playful: document.getElementById('vibePlayful').value, 
+          loud: document.getElementById('vibeLoud').value, 
+          luxury: document.getElementById('vibeLuxury').value 
+        },
+        palette: { 
+          base: document.getElementById('baseColorText').value, 
+          primary: document.getElementById('primaryColorText').value 
+        },
+        description: document.getElementById('projectDesc').value,
+        directMessage: document.getElementById('clientDirectMessage').value,
+        nda: document.getElementById('ndaCheckbox').checked ? 'Yes' : 'No',
+        file: uploadedFileData
+      };
+
+      // Native Apps Script Environment execution
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(() => { formSuccessCleanup(btn); })
+          .withFailureHandler(err => { 
+            alert('Submission Error: ' + err.message); 
+            btn.disabled = false; 
+            btn.textContent = 'Submit Design Brief'; 
+          })
+          .processFormSubmission(payload);
+        return;
+      }
+
+      // GitHub Pages Webhook execution
+      try {
+        await fetch(APPS_SCRIPT_WEBAPP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        formSuccessCleanup(btn);
+      } catch (err) {
+        alert("Submission failed. Please check network connection.");
+        btn.disabled = false; 
+        btn.textContent = 'Submit Design Brief';
+      }
+    }
+
+    function formSuccessCleanup(btn) {
+      document.getElementById('successModal').classList.remove('hidden');
+      document.getElementById('intakeForm').reset();
+      btn.disabled = false; 
+      btn.textContent = 'Submit Design Brief';
+      uploadedFileData = null; 
+      document.getElementById('uploadLabel').textContent = 'Drag & Drop Files or Browse';
+    }
+
+    function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
+    function toggleAiAssistant() { document.getElementById('aiAssistantWindow').classList.toggle('hidden'); }
+    function promptAdminModal() { document.getElementById('pinModal').classList.remove('hidden'); setTimeout(() => document.getElementById('adminPin').focus(), 50); }
+    function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); document.getElementById('adminPin').value = ''; }
+
+    const VALID_ADMIN_PINS = ['1234', '5678', '9900'];
+    function verifyAndOpenHub() {
+      const pin = document.getElementById('adminPin').value.trim();
+      if (VALID_ADMIN_PINS.includes(pin)) {
+        closePinModal();
+        document.getElementById('clientIntakeView').classList.add('hidden');
+        document.getElementById('designerHubView').classList.remove('hidden');
+        document.getElementById('hubExitBtn').classList.remove('hidden');
+        refreshHubData();
+      } else { 
+        alert('Invalid PIN Access Denied.'); 
+        document.getElementById('adminPin').value = '';
+      }
+    }
+
+    function exitDesignerHub() {
+      document.getElementById('designerHubView').classList.add('hidden');
+      document.getElementById('clientIntakeView').classList.remove('hidden');
+      document.getElementById('hubExitBtn').classList.add('hidden');
+    }
+
+    function refreshHubData() {
+      const tbody = document.getElementById('briefsTableBody');
+      tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono">Connecting to Google Sheets...</td></tr>';
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run.withSuccessHandler(renderHubTable).getDesignerHubData();
+      } else {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Live database active. Click "Open Sheet ↗" above to view all submissions in Google Sheets.</td></tr>';
+      }
+    }
+
+    function renderHubTable(rows) {
+      const tbody = document.getElementById('briefsTableBody');
+      if (!rows || rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">No submissions found.</td></tr>';
+        return;
+      }
+      let html = '';
+      rows.forEach(r => {
+        const fileBtn = r.driveLink ? `<a href="${r.driveLink}" target="_blank" class="text-[#E8855A] hover:underline font-mono">View File ↗</a>` : '<span class="text-slate-600">None</span>';
+        html += `<tr class="hover:bg-white/[0.02]">
+          <td class="p-3.5 font-mono text-slate-400 text-[11px]">${r.timestamp}</td>
+          <td class="p-3.5"><p class="font-bold text-white text-xs">${r.clientName}</p><p class="text-[11px] text-slate-400">${r.company} • ${r.email}</p></td>
+          <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D36B3F]/10 text-[#E8855A] border border-[#D36B3F]/20">${r.category}</span></td>
+          <td class="p-3.5 text-amber-200 font-medium bg-amber-950/20 rounded-lg">"${r.directMessage}"</td>
+          <td class="p-3.5 text-right">${fileBtn}</td>
+        </tr>`;
+      });
+      tbody.innerHTML = html;
+    }
+  </script>
 </body>
 </html>
