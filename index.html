@@ -45,6 +45,16 @@
       box-shadow: 0 0 10px rgba(211,107,63,0.5); 
     }
 
+    /* Styled Big Color Pickers */
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+      border-radius: 0.75rem;
+    }
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius: 0.75rem;
+    }
+
     .glow-orb { position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.3; pointer-events: none; animation: floatOrb 18s ease-in-out infinite alternate; }
     .orb-1 { width: 500px; height: 500px; background: #D36B3F; top: -10%; left: 5%; }
     .orb-2 { width: 550px; height: 550px; background: #8C3E1F; bottom: 5%; right: 5%; animation-duration: 22s; }
@@ -188,7 +198,7 @@
           </div>
         </div>
 
-        <!-- COLUMN 2: VIBE & PALETTE -->
+        <!-- COLUMN 2: VIBE & 6-COLOR PALETTE -->
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-4">
             <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
@@ -203,19 +213,68 @@
             </div>
           </div>
 
+          <!-- EXPANDED 6-COLOR BRAND PALETTE WITH BIGGER SWATCHES -->
           <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
+            <div class="flex items-center justify-between pb-2 border-b border-white/[0.1]">
               <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">3. Brand Color Palette</span>
+              <span class="text-[10px] font-mono text-slate-400">6 Color Slots</span>
             </div>
             <div class="grid grid-cols-2 gap-3">
+              
+              <!-- 1. Base -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="baseColor" value="#070a12" oninput="document.getElementById('baseColorText').value = this.value" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
-                <div class="flex-1 min-w-0"><p class="text-[11px] uppercase font-bold text-slate-300">Base</p><input type="text" id="baseColorText" value="#070a12" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none"></div>
+                <input type="color" id="baseColor" value="#070a12" oninput="document.getElementById('baseColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Base</p>
+                  <input type="text" id="baseColorText" value="#070a12" oninput="document.getElementById('baseColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                </div>
               </div>
+
+              <!-- 2. Primary -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="primaryColor" value="#D36B3F" oninput="document.getElementById('primaryColorText').value = this.value" class="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0">
-                <div class="flex-1 min-w-0"><p class="text-[11px] uppercase font-bold text-slate-300">Primary</p><input type="text" id="primaryColorText" value="#D36B3F" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none"></div>
+                <input type="color" id="primaryColor" value="#D36B3F" oninput="document.getElementById('primaryColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[10px] uppercase font-bold text-[#E8855A] tracking-wider">Primary</p>
+                  <input type="text" id="primaryColorText" value="#D36B3F" oninput="document.getElementById('primaryColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                </div>
               </div>
+
+              <!-- 3. Secondary -->
+              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
+                <input type="color" id="secondaryColor" value="#8C3E1F" oninput="document.getElementById('secondaryColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Secondary</p>
+                  <input type="text" id="secondaryColorText" value="#8C3E1F" oninput="document.getElementById('secondaryColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                </div>
+              </div>
+
+              <!-- 4. Accent -->
+              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
+                <input type="color" id="accentColor" value="#E8855A" oninput="document.getElementById('accentColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Accent</p>
+                  <input type="text" id="accentColorText" value="#E8855A" oninput="document.getElementById('accentColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                </div>
+              </div>
+
+              <!-- 5. Dark / Neutral -->
+              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
+                <input type="color" id="neutralColor" value="#1e293b" oninput="document.getElementById('neutralColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Neutral</p>
+                  <input type="text" id="neutralColorText" value="#1e293b" oninput="document.getElementById('neutralColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                </div>
+              </div>
+
+              <!-- 6. Light / Surface -->
+              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
+                <input type="color" id="lightColor" value="#f8fafc" oninput="document.getElementById('lightColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Light</p>
+                  <input type="text" id="lightColorText" value="#f8fafc" oninput="document.getElementById('lightColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -319,7 +378,7 @@
         <span class="text-xs font-extrabold uppercase text-[#E8855A] font-mono">Cetora Studio AI</span>
         <button type="button" onclick="toggleAiAssistant()" class="text-slate-400 text-xs">✕</button>
       </div>
-      <p id="aiDynamicTip" class="text-xs text-slate-200">"Welcome to Cetora Design! Use the direct message box on the form to send us a note or click the direct WhatsApp chat."</p>
+      <p id="aiDynamicTip" class="text-xs text-slate-200">"Welcome to Cetora Design! Pick up to 6 custom brand colors above, or message our lead designer directly."</p>
     </div>
   </div>
 
@@ -400,7 +459,11 @@
         },
         palette: { 
           base: document.getElementById('baseColorText').value, 
-          primary: document.getElementById('primaryColorText').value 
+          primary: document.getElementById('primaryColorText').value,
+          secondary: document.getElementById('secondaryColorText').value,
+          accent: document.getElementById('accentColorText').value,
+          neutral: document.getElementById('neutralColorText').value,
+          light: document.getElementById('lightColorText').value
         },
         description: document.getElementById('projectDesc').value,
         directMessage: document.getElementById('clientDirectMessage').value,
