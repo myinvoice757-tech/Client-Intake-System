@@ -86,10 +86,26 @@
     .gel-btn-secondary { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.2s ease; }
     .gel-btn-secondary:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); color: #fff; }
 
-    @keyframes floatBot { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
-    @keyframes pulseRing { 0% { transform: scale(0.92); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 0.3; } 100% { transform: scale(0.92); opacity: 0.8; } }
-    .ai-float-btn { animation: floatBot 4.5s ease-in-out infinite; }
-    .ai-pulse-core { animation: pulseRing 3s ease-in-out infinite; }
+    /* 3D AI Assistant Floating & Glow Animations */
+    @keyframes avatarFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+    @keyframes holoPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(211, 107, 63, 0.4), 0 0 40px rgba(232, 133, 90, 0.2); }
+      50% { box-shadow: 0 0 32px rgba(211, 107, 63, 0.7), 0 0 60px rgba(232, 133, 90, 0.45); }
+    }
+    @keyframes ringSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .avatar-float { animation: avatarFloat 4s ease-in-out infinite; }
+    .holo-glow { animation: holoPulse 3s ease-in-out infinite; }
+    .ring-rotate { animation: ringSpin 12s linear infinite; }
+    
+    /* Chat Scrollbar */
+    .chat-scroll::-webkit-scrollbar { width: 5px; }
+    .chat-scroll::-webkit-scrollbar-thumb { background: rgba(211, 107, 63, 0.4); border-radius: 10px; }
   </style>
 </head>
 <body class="relative flex items-center justify-center p-3 md:p-6 lg:p-8">
@@ -207,7 +223,7 @@
             <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
               <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Design Vibe & Aesthetics</span>
             </div>
-            <!-- All 5 sliders initialized to exactly center (value="3") -->
+            <!-- All 5 sliders initialized to center (value="3") -->
             <div class="gel-surface p-4 rounded-xl space-y-4">
               <div class="space-y-1.5">
                 <div class="flex justify-between text-xs font-semibold"><span>Minimal</span><span>Complex</span></div>
@@ -392,20 +408,144 @@
     </div>
   </main>
 
-  <!-- FLOATING AI ASSISTANT -->
-  <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3">
-    <button type="button" onclick="toggleAiAssistant()" class="ai-float-btn relative w-14 h-14 rounded-full flex items-center justify-center cursor-pointer group">
-      <div id="orbGlow" class="ai-pulse-core absolute inset-0 rounded-full bg-gradient-to-tr from-[#D36B3F] to-amber-600 blur-md opacity-75"></div>
-      <div class="relative w-12 h-12 rounded-full bg-gradient-to-b from-[#1e293b] to-[#020617] border border-[#D36B3F]/50 flex items-center justify-center">
-        <svg class="w-6 h-6 text-[#E8855A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z"/></svg>
+  <!-- 3D CYBERPUNK AI ASSISTANT (ARIA) -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3 select-none">
+    
+    <!-- 3D Floating Avatar Button -->
+    <button type="button" onclick="toggleAiAssistant()" class="avatar-float relative group cursor-pointer focus:outline-none" title="Chat with Aria - Cetora AI">
+      <!-- Outer Rotating Hologram Ring -->
+      <div class="ring-rotate absolute -inset-2.5 rounded-full border border-dashed border-[#D36B3F]/50 pointer-events-none"></div>
+      
+      <!-- Ambient Glow Behind Avatar -->
+      <div id="holoAura" class="holo-glow absolute inset-0 rounded-full bg-gradient-to-tr from-[#D36B3F] via-[#E8855A] to-amber-500 opacity-60 blur-md"></div>
+      
+      <!-- 3D Avatar Outer Frame -->
+      <div class="relative w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-b from-[#E8855A] via-[#D36B3F] to-[#8C3E1F] shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+        <div class="w-full h-full rounded-full bg-[#070b16] overflow-hidden relative flex items-center justify-center border border-white/20">
+          
+          <!-- Realistic 3D Stylized AI Avatar Vector Illustration -->
+          <svg class="w-full h-full transform scale-110 translate-y-1" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="faceGrad" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="#ffd5b8"/>
+                <stop offset="70%" stop-color="#f5a77f"/>
+                <stop offset="100%" stop-color="#c97148"/>
+              </radialGradient>
+              <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff9a62"/>
+                <stop offset="45%" stop-color="#d36b3f"/>
+                <stop offset="100%" stop-color="#4a1505"/>
+              </linearGradient>
+              <linearGradient id="visorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#818cf8" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#c084fc" stop-opacity="0.9"/>
+              </linearGradient>
+              <linearGradient id="suitGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#1e293b"/>
+                <stop offset="100%" stop-color="#090d16"/>
+              </linearGradient>
+            </defs>
+            <!-- Background Halo -->
+            <circle cx="60" cy="60" r="50" fill="#131b2e" />
+            <circle cx="60" cy="60" r="46" stroke="#D36B3F" stroke-width="1.5" stroke-opacity="0.4" />
+            
+            <!-- Shoulders & Cyber Suit -->
+            <path d="M22 108 C25 90 40 82 60 82 C80 82 95 90 98 108 Z" fill="url(#suitGrad)" stroke="#E8855A" stroke-width="1.5" stroke-opacity="0.6"/>
+            <!-- Cyber Collar Core -->
+            <polygon points="60,86 52,98 68,98" fill="#D36B3F" opacity="0.9"/>
+            <circle cx="60" cy="94" r="2.5" fill="#38bdf8"/>
+
+            <!-- Neck -->
+            <path d="M50 72 L50 84 C54 86 66 86 70 84 L70 72 Z" fill="#e89874"/>
+
+            <!-- Back Hair Layer -->
+            <path d="M30 46 C28 65 32 82 40 92 C32 80 34 52 35 44 Z" fill="url(#hairGrad)"/>
+            <path d="M90 46 C92 65 88 82 80 92 C88 80 86 52 85 44 Z" fill="url(#hairGrad)"/>
+
+            <!-- Head / Face -->
+            <ellipse cx="60" cy="56" rx="22" ry="26" fill="url(#faceGrad)"/>
+            
+            <!-- Cute Stylized Hair Bob -->
+            <path d="M36 48 C36 28 46 20 60 20 C74 20 84 28 84 48 C78 40 70 38 60 38 C48 38 42 42 36 48 Z" fill="url(#hairGrad)"/>
+            <!-- Front Bangs -->
+            <path d="M40 38 C48 42 54 44 60 41 C66 44 74 41 80 36 C75 32 68 30 60 30 C50 30 44 34 40 38 Z" fill="#ff9a62" opacity="0.7"/>
+
+            <!-- Cybernetic Hologram Visor / Glasses -->
+            <path d="M42 50 C46 48 54 48 58 50 L58 58 C54 60 46 60 42 58 Z" fill="url(#visorGrad)"/>
+            <path d="M62 50 C66 48 74 48 78 50 L78 58 C74 60 66 60 62 58 Z" fill="url(#visorGrad)"/>
+            <rect x="58" y="52" width="4" height="2" fill="#38bdf8"/>
+            <circle cx="50" cy="54" r="1.5" fill="#ffffff" opacity="0.8"/>
+            <circle cx="70" cy="54" r="1.5" fill="#ffffff" opacity="0.8"/>
+
+            <!-- Gentle Smile & Blush -->
+            <circle cx="46" cy="65" r="3" fill="#ff7f7f" opacity="0.4"/>
+            <circle cx="74" cy="65" r="3" fill="#ff7f7f" opacity="0.4"/>
+            <path d="M54 68 Q60 72 66 68" stroke="#a44b25" stroke-width="1.8" stroke-linecap="round"/>
+
+            <!-- Cyber Temple Node & Headset -->
+            <rect x="34" y="51" width="4" height="9" rx="2" fill="#D36B3F"/>
+            <circle cx="36" cy="55.5" r="1.2" fill="#38bdf8"/>
+            <path d="M35 58 Q36 68 45 71" stroke="#D36B3F" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <circle cx="45" cy="71" r="1.8" fill="#38bdf8"/>
+          </svg>
+
+          <!-- Online Green Status Badge -->
+          <span class="absolute bottom-0 right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#030712] shadow-[0_0_8px_#10b981]"></span>
+        </div>
       </div>
     </button>
-    <div id="aiAssistantWindow" class="hidden w-80 mac-window p-5 rounded-2xl border border-[#D36B3F]/30 space-y-3">
-      <div class="flex items-center justify-between border-b border-white/10 pb-2">
-        <span class="text-xs font-extrabold uppercase text-[#E8855A] font-mono">Cetora Studio AI</span>
-        <button type="button" onclick="toggleAiAssistant()" class="text-slate-400 text-xs">✕</button>
+
+    <!-- Interactive AI Assistant HUD Window -->
+    <div id="aiAssistantWindow" class="hidden w-[350px] max-w-[92vw] mac-window rounded-2xl border border-[#D36B3F]/40 shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden transition-all duration-300">
+      
+      <!-- Assistant Header -->
+      <div class="px-4 py-3 bg-black/60 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-[#D36B3F]/20 border border-[#D36B3F]/40 flex items-center justify-center text-[#E8855A] font-bold text-xs">
+            ✨
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-black tracking-wider uppercase text-white font-mono">ARIA</span>
+              <span class="text-[9px] uppercase font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">Studio AI</span>
+            </div>
+            <p class="text-[10px] text-slate-400">Cetora Design Concierge</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button type="button" onclick="speakLastResponse()" class="p-1.5 rounded-lg text-slate-400 hover:text-[#E8855A] hover:bg-white/5 transition-all text-xs" title="Voice Speak">
+            🔊
+          </button>
+          <button type="button" onclick="toggleAiAssistant()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-xs">✕</button>
+        </div>
       </div>
-      <p id="aiDynamicTip" class="text-xs text-slate-200">"Welcome to Cetora Design! Adjust your sliders or message our design lead directly."</p>
+
+      <!-- Dialogue History -->
+      <div id="aiChatLog" class="p-4 space-y-3 max-h-72 overflow-y-auto chat-scroll text-xs">
+        <!-- Aria Intro Message -->
+        <div class="flex gap-2.5 items-start">
+          <div class="w-6 h-6 rounded-full bg-[#D36B3F]/30 text-[10px] flex items-center justify-center shrink-0 border border-[#D36B3F]/50">A</div>
+          <div class="gel-surface p-3 rounded-2xl rounded-tl-sm text-slate-200 leading-relaxed border-white/10 space-y-1">
+            <p>Hi! I'm <strong>Aria</strong>, your Cetora design guide. How can I help you tailor your job order today?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Prompt Chips -->
+      <div class="px-4 py-2 border-t border-white/[0.06] bg-black/30 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px]">
+        <button type="button" onclick="askAiPrompt('Turnaround times?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">⏱ Turnaround?</button>
+        <button type="button" onclick="askAiPrompt('How does NDA work?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">🔒 NDA Info</button>
+        <button type="button" onclick="askAiPrompt('Direct quote process?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">💬 Quote Help</button>
+      </div>
+
+      <!-- Interactive Input Box -->
+      <form onsubmit="handleAiChatSubmit(event)" class="p-3 bg-black/60 border-t border-white/10 flex items-center gap-2">
+        <input type="text" id="aiChatInput" placeholder="Ask Aria anything..." autocomplete="off" class="gel-surface flex-1 px-3.5 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none">
+        <button type="submit" class="gel-btn px-3 py-2 rounded-xl text-slate-950 font-bold text-xs uppercase transition-all shadow-md">
+          Send
+        </button>
+      </form>
     </div>
   </div>
 
@@ -562,7 +702,98 @@
     }
 
     function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
-    function toggleAiAssistant() { document.getElementById('aiAssistantWindow').classList.toggle('hidden'); }
+
+    // ==========================================
+    // 3D AI ASSISTANT (ARIA) INTERACTIVE LOGIC
+    // ==========================================
+    let lastAriaSpeech = "Hi! I am Aria, your Cetora design concierge. How can I help you tailor your job order today?";
+
+    function toggleAiAssistant() {
+      const win = document.getElementById('aiAssistantWindow');
+      win.classList.toggle('hidden');
+      if (!win.classList.contains('hidden')) {
+        setTimeout(() => document.getElementById('aiChatInput').focus(), 100);
+      }
+    }
+
+    function appendMessage(sender, text) {
+      const log = document.getElementById('aiChatLog');
+      const isAria = sender === 'aria';
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex gap-2.5 items-start ${isAria ? '' : 'flex-row-reverse'}`;
+
+      const avatar = document.createElement('div');
+      avatar.className = `w-6 h-6 rounded-full text-[10px] font-bold flex items-center justify-center shrink-0 border ${
+        isAria ? 'bg-[#D36B3F]/30 text-[#E8855A] border-[#D36B3F]/50' : 'bg-slate-700 text-white border-white/20'
+      }`;
+      avatar.textContent = isAria ? 'A' : 'You';
+
+      const bubble = document.createElement('div');
+      bubble.className = `p-3 rounded-2xl text-xs leading-relaxed max-w-[85%] ${
+        isAria ? 'gel-surface rounded-tl-sm text-slate-200 border-white/10' : 'bg-[#D36B3F] text-slate-950 font-medium rounded-tr-sm'
+      }`;
+      bubble.innerHTML = text;
+
+      msgDiv.appendChild(avatar);
+      msgDiv.appendChild(bubble);
+      log.appendChild(msgDiv);
+      log.scrollTop = log.scrollHeight;
+
+      if (isAria) {
+        lastAriaSpeech = text.replace(/<[^>]*>?/gm, ''); // Strip HTML tags for speech synth
+      }
+    }
+
+    function askAiPrompt(query) {
+      document.getElementById('aiChatInput').value = query;
+      handleAiChatSubmit(new Event('submit'));
+    }
+
+    function handleAiChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('aiChatInput');
+      const query = input.value.trim();
+      if (!query) return;
+
+      appendMessage('user', query);
+      input.value = '';
+
+      // Intelligent Contextual Responses for Cetora Design
+      setTimeout(() => {
+        const q = query.toLowerCase();
+        let reply = "";
+
+        if (q.includes('turnaround') || q.includes('time') || q.includes('fast') || q.includes('speed')) {
+          reply = "Our studio delivers fast iterations! Logo & Poster concepts can complete within <strong>1 to 3 days</strong>, while full 3D and Web projects typically run <strong>1 to 2 weeks</strong>. You can pick your desired speed under Section 1.";
+        } else if (q.includes('nda') || q.includes('confidential') || q.includes('privacy') || q.includes('secret')) {
+          reply = "Absolute privacy is guaranteed. Check the <strong>'Require mutual Non-Disclosure Agreement'</strong> box at the bottom of the form, and our lead designer countersigns prior to asset ingestion.";
+        } else if (q.includes('quote') || q.includes('price') || q.includes('cost') || q.includes('budget') || q.includes('whatsapp')) {
+          reply = "Cetora provides personalized quotes based on project scope! Click the green <strong>'Open Direct WhatsApp Chat'</strong> button in Section 1 to discuss your exact deliverables with our lead designer immediately.";
+        } else if (q.includes('palette') || q.includes('color')) {
+          reply = "We offer <strong>6 customizable color slots</strong> (Base, Primary, Secondary, Accent, Neutral, Light). Click the enlarged square swatches in Section 3 to calibrate your brand tones.";
+        } else if (q.includes('slider') || q.includes('vibe') || q.includes('aesthetic')) {
+          reply = "The aesthetic sliders default to 3 (neutral balance). Move them left or right to indicate whether you lean towards <em>Minimal vs Complex</em>, <em>Modern vs Classic</em>, or <em>Luxury vs Budget</em>.";
+        } else {
+          reply = `Got it! For questions regarding "<em>${query}</em>", feel free to add a note directly in the <strong>💬 Direct Message</strong> box in Section 4, or click through to our WhatsApp for real-time discussion!`;
+        }
+
+        appendMessage('aria', reply);
+      }, 450);
+    }
+
+    function speakLastResponse() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(lastAriaSpeech);
+        utter.pitch = 1.1;
+        utter.rate = 1.0;
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    // ==========================================
+    // SECRET ADMIN HUB LOGIC
+    // ==========================================
     function promptAdminModal() { document.getElementById('pinModal').classList.remove('hidden'); setTimeout(() => document.getElementById('adminPin').focus(), 50); }
     function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); document.getElementById('adminPin').value = ''; }
 
