@@ -86,6 +86,14 @@
     .gel-btn-secondary { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.2s ease; }
     .gel-btn-secondary:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); color: #fff; }
 
+    /* Custom Pricing Radio Selection Glow */
+    input[type="radio"]:checked + div {
+      border-color: #D36B3F !important;
+      background: linear-gradient(180deg, rgba(211, 107, 63, 0.1) 0%, rgba(15, 20, 32, 0.9) 100%) !important;
+      box-shadow: 0 0 0 1px #D36B3F, 0 10px 30px rgba(211, 107, 63, 0.2) !important;
+      transform: translateY(-4px);
+    }
+    
     /* 3D AI Assistant Floating & Glow Animations */
     @keyframes avatarFloat {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -151,10 +159,86 @@
 
       <form id="intakeForm" class="p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start" onsubmit="handleFormSubmission(event)">
         
+        <!-- SECTION 0: 4-TIER PRICING PACKAGES (Spans all columns) -->
+        <div class="col-span-1 md:col-span-2 lg:col-span-3 mb-2">
+          <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1] mb-5">
+            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">1. Select Service Package</span>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- Tier 1: Essential -->
+            <label class="cursor-pointer group">
+              <input type="radio" name="packageTier" value="Essential Tier" class="peer sr-only" required>
+              <div class="gel-surface p-5 rounded-2xl border border-white/10 h-full flex flex-col transition-all duration-300">
+                <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Essential</h3>
+                <div class="text-3xl font-black text-white mb-1">$149<span class="text-sm text-slate-500 font-medium">.99</span></div>
+                <p class="text-[10px] text-slate-500 mb-4 pb-4 border-b border-white/5">Perfect for startups</p>
+                <ul class="space-y-2.5 text-xs text-slate-300 flex-1">
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 1 Base Concept</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 2 Revisions</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Standard Delivery</li>
+                </ul>
+              </div>
+            </label>
+
+            <!-- Tier 2: Standard -->
+            <label class="cursor-pointer group">
+              <input type="radio" name="packageTier" value="Standard Tier" class="peer sr-only" required>
+              <div class="gel-surface p-5 rounded-2xl border border-white/10 h-full flex flex-col transition-all duration-300">
+                <h3 class="text-[11px] font-black text-[#E8855A] uppercase tracking-widest mb-1">Standard</h3>
+                <div class="text-3xl font-black text-white mb-1">$299<span class="text-sm text-slate-500 font-medium">.99</span></div>
+                <p class="text-[10px] text-slate-500 mb-4 pb-4 border-b border-white/5">Growing businesses</p>
+                <ul class="space-y-2.5 text-xs text-slate-300 flex-1">
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 3 Unique Concepts</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 5 Revisions</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Source Files (AI, PSD)</li>
+                </ul>
+              </div>
+            </label>
+
+            <!-- Tier 3: Pro (HIGHLIGHTED) -->
+            <label class="cursor-pointer group relative">
+              <input type="radio" name="packageTier" value="Pro Tier" class="peer sr-only" required checked>
+              <!-- Absolute Badge -->
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#E8855A] to-[#D36B3F] text-slate-950 text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-[0_0_10px_rgba(211,107,63,0.5)] z-20">
+                Most Popular
+              </div>
+              <div class="gel-surface p-5 rounded-2xl border border-white/10 h-full flex flex-col transition-all duration-300">
+                <h3 class="text-[11px] font-black text-amber-400 uppercase tracking-widest mb-1">Professional</h3>
+                <div class="text-3xl font-black text-white mb-1">$599<span class="text-sm text-slate-500 font-medium">.99</span></div>
+                <p class="text-[10px] text-slate-500 mb-4 pb-4 border-b border-white/5">Full brand identity</p>
+                <ul class="space-y-2.5 text-xs text-slate-300 flex-1">
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Full Brand Guidelines</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Unlimited Revisions</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 3D Assets & Mockups</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Priority Support</li>
+                </ul>
+              </div>
+            </label>
+
+            <!-- Tier 4: Ultra/Enterprise -->
+            <label class="cursor-pointer group">
+              <input type="radio" name="packageTier" value="Ultra Tier" class="peer sr-only" required>
+              <div class="gel-surface p-5 rounded-2xl border border-white/10 h-full flex flex-col transition-all duration-300">
+                <h3 class="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">Ultra</h3>
+                <div class="text-3xl font-black text-white mb-1">$999<span class="text-sm text-slate-500 font-medium">+</span></div>
+                <p class="text-[10px] text-slate-500 mb-4 pb-4 border-b border-white/5">Studio takeover</p>
+                <ul class="space-y-2.5 text-xs text-slate-300 flex-1">
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Dedicated Lead Designer</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Full Web Development</li>
+                  <li class="flex items-start gap-2"><svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Motion Graphics</li>
+                </ul>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
         <!-- COLUMN 1: BASICS, WHATSAPP & TIMELINE -->
         <div class="flex flex-col gap-5">
           <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
-            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">1. Client Basics</span>
+            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Client Basics</span>
           </div>
           <div class="space-y-1.5">
             <label class="block text-xs font-semibold text-slate-200">Your Full Name <span class="text-rose-400">*</span></label>
@@ -182,12 +266,7 @@
           </div>
 
           <!-- DIRECT 1-ON-1 WHATSAPP CHAT -->
-          <div class="gel-surface p-4 rounded-xl space-y-3">
-            <div class="flex items-center justify-between">
-              <label class="block text-xs font-semibold text-slate-200">Project Budget <span class="text-rose-400">*</span></label>
-              <span class="text-[10px] text-emerald-400 font-mono tracking-wider font-semibold uppercase bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Direct Quote</span>
-            </div>
-
+          <div class="gel-surface p-4 rounded-xl space-y-3 mt-2">
             <div class="p-4 rounded-xl bg-black/40 border border-[#25D366]/30 shadow-[0_0_20px_rgba(37,211,102,0.08)] flex flex-col items-center text-center space-y-3">
               <div class="w-10 h-10 rounded-full bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center text-[#25D366]">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.551 4.188 1.593 6.009L.435 23.565l5.658-1.485c1.761.96 3.743 1.468 5.938 1.468 6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 21.651c-1.815 0-3.593-.487-5.148-1.408l-.368-.219-3.824 1.003 1.023-3.73-.241-.383A9.704 9.704 0 0 1 2.327 12.03c0-5.352 4.355-9.707 9.704-9.707 5.35 0 9.705 4.355 9.705 9.707s-4.355 9.707-9.705 9.707zm5.324-7.25c-.292-.146-1.728-.853-1.996-.951-.268-.098-.464-.146-.659.146-.195.292-.756.951-.926 1.146-.17.195-.34.219-.633.073-1.964-.982-3.136-1.79-4.453-3.483-.17-.219-.018-.337.128-.483.131-.131.292-.34.438-.512.146-.17.195-.292.292-.487.098-.195.049-.365-.024-.512-.073-.146-.659-1.585-.902-2.17-.238-.573-.478-.495-.659-.504-.17-.009-.366-.009-.56-.009-.195 0-.512.073-.78.365-.268.292-1.023.999-1.023 2.437s1.048 2.827 1.194 3.022c.146.195 2.062 3.148 4.994 4.415 2.143.926 2.893 1.004 3.978.854 1.011-.139 3.238-1.321 3.693-2.602.454-1.28.454-2.376.318-2.602-.136-.226-.502-.365-.794-.512z"/></svg>
@@ -221,7 +300,7 @@
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-4">
             <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
-              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Design Vibe & Aesthetics</span>
+              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">3. Design Vibe & Aesthetics</span>
             </div>
             <!-- All 5 sliders initialized to center (value="3") -->
             <div class="gel-surface p-4 rounded-xl space-y-4">
@@ -251,12 +330,11 @@
           <!-- 6-COLOR BRAND PALETTE -->
           <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between pb-2 border-b border-white/[0.1]">
-              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">3. Brand Color Palette</span>
+              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">4. Brand Color Palette</span>
               <span class="text-[10px] font-mono text-slate-400">6 Color Slots</span>
             </div>
             <div class="grid grid-cols-2 gap-3">
               
-              <!-- 1. Base -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
                 <input type="color" id="baseColor" value="#070a12" oninput="document.getElementById('baseColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
@@ -265,7 +343,6 @@
                 </div>
               </div>
 
-              <!-- 2. Primary -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
                 <input type="color" id="primaryColor" value="#D36B3F" oninput="document.getElementById('primaryColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
@@ -274,7 +351,6 @@
                 </div>
               </div>
 
-              <!-- 3. Secondary -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
                 <input type="color" id="secondaryColor" value="#8C3E1F" oninput="document.getElementById('secondaryColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
@@ -283,7 +359,6 @@
                 </div>
               </div>
 
-              <!-- 4. Accent -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
                 <input type="color" id="accentColor" value="#E8855A" oninput="document.getElementById('accentColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
@@ -292,7 +367,6 @@
                 </div>
               </div>
 
-              <!-- 5. Dark / Neutral -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
                 <input type="color" id="neutralColor" value="#1e293b" oninput="document.getElementById('neutralColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
@@ -301,7 +375,6 @@
                 </div>
               </div>
 
-              <!-- 6. Light / Surface -->
               <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
                 <input type="color" id="lightColor" value="#f8fafc" oninput="document.getElementById('lightColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
@@ -317,7 +390,7 @@
         <!-- COLUMN 3: BRIEF, DIRECT MESSAGE, UPLOAD, NDA & DUAL ACTIONS -->
         <div class="flex flex-col gap-5">
           <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
-            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">4. Brief & Live Direct Message</span>
+            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">5. Brief Details</span>
           </div>
           
           <div class="space-y-1.5">
@@ -411,19 +484,11 @@
   <!-- 3D CYBERPUNK AI ASSISTANT (ARIA) -->
   <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3 select-none">
     
-    <!-- 3D Floating Avatar Button -->
     <button type="button" onclick="toggleAiAssistant()" class="avatar-float relative group cursor-pointer focus:outline-none" title="Chat with Aria - Cetora AI">
-      <!-- Outer Rotating Hologram Ring -->
       <div class="ring-rotate absolute -inset-2.5 rounded-full border border-dashed border-[#D36B3F]/50 pointer-events-none"></div>
-      
-      <!-- Ambient Glow Behind Avatar -->
       <div id="holoAura" class="holo-glow absolute inset-0 rounded-full bg-gradient-to-tr from-[#D36B3F] via-[#E8855A] to-amber-500 opacity-60 blur-md"></div>
-      
-      <!-- 3D Avatar Outer Frame -->
       <div class="relative w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-b from-[#E8855A] via-[#D36B3F] to-[#8C3E1F] shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
         <div class="w-full h-full rounded-full bg-[#070b16] overflow-hidden relative flex items-center justify-center border border-white/20">
-          
-          <!-- Realistic 3D Stylized AI Avatar Vector Illustration -->
           <svg class="w-full h-full transform scale-110 translate-y-1" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <radialGradient id="faceGrad" cx="50%" cy="40%" r="55%">
@@ -446,65 +511,40 @@
                 <stop offset="100%" stop-color="#090d16"/>
               </linearGradient>
             </defs>
-            <!-- Background Halo -->
             <circle cx="60" cy="60" r="50" fill="#131b2e" />
             <circle cx="60" cy="60" r="46" stroke="#D36B3F" stroke-width="1.5" stroke-opacity="0.4" />
-            
-            <!-- Shoulders & Cyber Suit -->
             <path d="M22 108 C25 90 40 82 60 82 C80 82 95 90 98 108 Z" fill="url(#suitGrad)" stroke="#E8855A" stroke-width="1.5" stroke-opacity="0.6"/>
-            <!-- Cyber Collar Core -->
             <polygon points="60,86 52,98 68,98" fill="#D36B3F" opacity="0.9"/>
             <circle cx="60" cy="94" r="2.5" fill="#38bdf8"/>
-
-            <!-- Neck -->
             <path d="M50 72 L50 84 C54 86 66 86 70 84 L70 72 Z" fill="#e89874"/>
-
-            <!-- Back Hair Layer -->
             <path d="M30 46 C28 65 32 82 40 92 C32 80 34 52 35 44 Z" fill="url(#hairGrad)"/>
             <path d="M90 46 C92 65 88 82 80 92 C88 80 86 52 85 44 Z" fill="url(#hairGrad)"/>
-
-            <!-- Head / Face -->
             <ellipse cx="60" cy="56" rx="22" ry="26" fill="url(#faceGrad)"/>
-            
-            <!-- Cute Stylized Hair Bob -->
             <path d="M36 48 C36 28 46 20 60 20 C74 20 84 28 84 48 C78 40 70 38 60 38 C48 38 42 42 36 48 Z" fill="url(#hairGrad)"/>
-            <!-- Front Bangs -->
             <path d="M40 38 C48 42 54 44 60 41 C66 44 74 41 80 36 C75 32 68 30 60 30 C50 30 44 34 40 38 Z" fill="#ff9a62" opacity="0.7"/>
-
-            <!-- Cybernetic Hologram Visor / Glasses -->
             <path d="M42 50 C46 48 54 48 58 50 L58 58 C54 60 46 60 42 58 Z" fill="url(#visorGrad)"/>
             <path d="M62 50 C66 48 74 48 78 50 L78 58 C74 60 66 60 62 58 Z" fill="url(#visorGrad)"/>
             <rect x="58" y="52" width="4" height="2" fill="#38bdf8"/>
             <circle cx="50" cy="54" r="1.5" fill="#ffffff" opacity="0.8"/>
             <circle cx="70" cy="54" r="1.5" fill="#ffffff" opacity="0.8"/>
-
-            <!-- Gentle Smile & Blush -->
             <circle cx="46" cy="65" r="3" fill="#ff7f7f" opacity="0.4"/>
             <circle cx="74" cy="65" r="3" fill="#ff7f7f" opacity="0.4"/>
             <path d="M54 68 Q60 72 66 68" stroke="#a44b25" stroke-width="1.8" stroke-linecap="round"/>
-
-            <!-- Cyber Temple Node & Headset -->
             <rect x="34" y="51" width="4" height="9" rx="2" fill="#D36B3F"/>
             <circle cx="36" cy="55.5" r="1.2" fill="#38bdf8"/>
             <path d="M35 58 Q36 68 45 71" stroke="#D36B3F" stroke-width="1.2" fill="none" stroke-linecap="round"/>
             <circle cx="45" cy="71" r="1.8" fill="#38bdf8"/>
           </svg>
-
-          <!-- Online Green Status Badge -->
           <span class="absolute bottom-0 right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#030712] shadow-[0_0_8px_#10b981]"></span>
         </div>
       </div>
     </button>
 
-    <!-- Interactive AI Assistant HUD Window -->
     <div id="aiAssistantWindow" class="hidden w-[350px] max-w-[92vw] mac-window rounded-2xl border border-[#D36B3F]/40 shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden transition-all duration-300">
       
-      <!-- Assistant Header -->
       <div class="px-4 py-3 bg-black/60 border-b border-white/10 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-full bg-[#D36B3F]/20 border border-[#D36B3F]/40 flex items-center justify-center text-[#E8855A] font-bold text-xs">
-            ✨
-          </div>
+          <div class="w-8 h-8 rounded-full bg-[#D36B3F]/20 border border-[#D36B3F]/40 flex items-center justify-center text-[#E8855A] font-bold text-xs">✨</div>
           <div>
             <div class="flex items-center gap-1.5">
               <span class="text-xs font-black tracking-wider uppercase text-white font-mono">ARIA</span>
@@ -514,16 +554,12 @@
           </div>
         </div>
         <div class="flex items-center gap-1">
-          <button type="button" onclick="speakLastResponse()" class="p-1.5 rounded-lg text-slate-400 hover:text-[#E8855A] hover:bg-white/5 transition-all text-xs" title="Voice Speak">
-            🔊
-          </button>
+          <button type="button" onclick="speakLastResponse()" class="p-1.5 rounded-lg text-slate-400 hover:text-[#E8855A] hover:bg-white/5 transition-all text-xs" title="Voice Speak">🔊</button>
           <button type="button" onclick="toggleAiAssistant()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-xs">✕</button>
         </div>
       </div>
 
-      <!-- Dialogue History -->
       <div id="aiChatLog" class="p-4 space-y-3 max-h-72 overflow-y-auto chat-scroll text-xs">
-        <!-- Aria Intro Message -->
         <div class="flex gap-2.5 items-start">
           <div class="w-6 h-6 rounded-full bg-[#D36B3F]/30 text-[10px] flex items-center justify-center shrink-0 border border-[#D36B3F]/50">A</div>
           <div class="gel-surface p-3 rounded-2xl rounded-tl-sm text-slate-200 leading-relaxed border-white/10 space-y-1">
@@ -532,19 +568,15 @@
         </div>
       </div>
 
-      <!-- Quick Action Prompt Chips -->
       <div class="px-4 py-2 border-t border-white/[0.06] bg-black/30 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px]">
         <button type="button" onclick="askAiPrompt('Turnaround times?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">⏱ Turnaround?</button>
         <button type="button" onclick="askAiPrompt('How does NDA work?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">🔒 NDA Info</button>
         <button type="button" onclick="askAiPrompt('Direct quote process?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">💬 Quote Help</button>
       </div>
 
-      <!-- Interactive Input Box -->
       <form onsubmit="handleAiChatSubmit(event)" class="p-3 bg-black/60 border-t border-white/10 flex items-center gap-2">
         <input type="text" id="aiChatInput" placeholder="Ask Aria anything..." autocomplete="off" class="gel-surface flex-1 px-3.5 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none">
-        <button type="submit" class="gel-btn px-3 py-2 rounded-xl text-slate-950 font-bold text-xs uppercase transition-all shadow-md">
-          Send
-        </button>
+        <button type="submit" class="gel-btn px-3 py-2 rounded-xl text-slate-950 font-bold text-xs uppercase transition-all shadow-md">Send</button>
       </form>
     </div>
   </div>
@@ -570,7 +602,6 @@
     function updateClock() { document.getElementById('liveClock').textContent = new Date().toLocaleTimeString(); }
     setInterval(updateClock, 1000); updateClock();
 
-    // SECRET TRIGGER 1: Triple-click the logo within 800ms
     let logoClickCount = 0;
     let logoClickTimer = null;
     document.getElementById('secretLogoTrigger').addEventListener('click', () => {
@@ -584,7 +615,6 @@
       }
     });
 
-    // SECRET TRIGGER 2: Press Ctrl + Shift + D (or Cmd + Shift + D on Mac)
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
         e.preventDefault();
@@ -604,17 +634,14 @@
       reader.readAsDataURL(file);
     }
 
-    // FORM RESET HANDLER
     function resetFormToDefaults() {
       document.getElementById('intakeForm').reset();
       
-      // Reset sliders to exact center (3)
       ['vibeMinimal', 'vibeModern', 'vibePlayful', 'vibeLoud', 'vibeLuxury'].forEach(id => {
         const slider = document.getElementById(id);
         if (slider) slider.value = 3;
       });
 
-      // Reset Palette inputs & hex labels
       const defaults = {
         baseColor: '#070a12', baseColorText: '#070a12',
         primaryColor: '#D36B3F', primaryColorText: '#D36B3F',
@@ -638,11 +665,19 @@
       btn.disabled = true; 
       btn.textContent = 'Submitting...';
 
+      // Capture Pricing Tier
+      const selectedPackage = document.querySelector('input[name="packageTier"]:checked');
+      const packageValue = selectedPackage ? selectedPackage.value : 'Custom Quote';
+      const baseCategory = document.getElementById('projectCategory').value;
+
       const payload = {
         name: document.getElementById('clientName').value,
         company: document.getElementById('companyName').value,
         email: document.getElementById('clientEmail').value,
-        category: document.getElementById('projectCategory').value,
+        
+        // Magically combined to fit your current Google Sheet perfectly without needing script updates!
+        category: `${baseCategory} (${packageValue})`,
+        
         timeline: document.getElementById('projectTimeline').value,
         vibes: { 
           minimal: document.getElementById('vibeMinimal').value, 
@@ -665,7 +700,6 @@
         file: uploadedFileData
       };
 
-      // Native Apps Script Environment execution
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         google.script.run
           .withSuccessHandler(() => { formSuccessCleanup(btn); })
@@ -678,7 +712,6 @@
         return;
       }
 
-      // GitHub Pages Webhook execution
       try {
         await fetch(APPS_SCRIPT_WEBAPP_URL, {
           method: 'POST',
@@ -703,9 +736,7 @@
 
     function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
 
-    // ==========================================
-    // 3D AI ASSISTANT (ARIA) INTERACTIVE LOGIC
-    // ==========================================
+    // AI Assistant Code
     let lastAriaSpeech = "Hi! I am Aria, your Cetora design concierge. How can I help you tailor your job order today?";
 
     function toggleAiAssistant() {
@@ -740,7 +771,7 @@
       log.scrollTop = log.scrollHeight;
 
       if (isAria) {
-        lastAriaSpeech = text.replace(/<[^>]*>?/gm, ''); // Strip HTML tags for speech synth
+        lastAriaSpeech = text.replace(/<[^>]*>?/gm, ''); 
       }
     }
 
@@ -758,25 +789,18 @@
       appendMessage('user', query);
       input.value = '';
 
-      // Intelligent Contextual Responses for Cetora Design
       setTimeout(() => {
         const q = query.toLowerCase();
         let reply = "";
-
         if (q.includes('turnaround') || q.includes('time') || q.includes('fast') || q.includes('speed')) {
-          reply = "Our studio delivers fast iterations! Logo & Poster concepts can complete within <strong>1 to 3 days</strong>, while full 3D and Web projects typically run <strong>1 to 2 weeks</strong>. You can pick your desired speed under Section 1.";
-        } else if (q.includes('nda') || q.includes('confidential') || q.includes('privacy') || q.includes('secret')) {
-          reply = "Absolute privacy is guaranteed. Check the <strong>'Require mutual Non-Disclosure Agreement'</strong> box at the bottom of the form, and our lead designer countersigns prior to asset ingestion.";
-        } else if (q.includes('quote') || q.includes('price') || q.includes('cost') || q.includes('budget') || q.includes('whatsapp')) {
-          reply = "Cetora provides personalized quotes based on project scope! Click the green <strong>'Open Direct WhatsApp Chat'</strong> button in Section 1 to discuss your exact deliverables with our lead designer immediately.";
-        } else if (q.includes('palette') || q.includes('color')) {
-          reply = "We offer <strong>6 customizable color slots</strong> (Base, Primary, Secondary, Accent, Neutral, Light). Click the enlarged square swatches in Section 3 to calibrate your brand tones.";
-        } else if (q.includes('slider') || q.includes('vibe') || q.includes('aesthetic')) {
-          reply = "The aesthetic sliders default to 3 (neutral balance). Move them left or right to indicate whether you lean towards <em>Minimal vs Complex</em>, <em>Modern vs Classic</em>, or <em>Luxury vs Budget</em>.";
+          reply = "Our studio delivers fast iterations! Logo & Poster concepts can complete within <strong>1 to 3 days</strong>, while full 3D and Web projects typically run <strong>1 to 2 weeks</strong>.";
+        } else if (q.includes('nda') || q.includes('privacy')) {
+          reply = "Absolute privacy is guaranteed. Check the <strong>'Require mutual Non-Disclosure Agreement'</strong> box at the bottom of the form.";
+        } else if (q.includes('quote') || q.includes('price') || q.includes('cost')) {
+          reply = "You can select your desired tier in the Pricing Table at the top of the form! Or click the WhatsApp button for custom quotes.";
         } else {
-          reply = `Got it! For questions regarding "<em>${query}</em>", feel free to add a note directly in the <strong>💬 Direct Message</strong> box in Section 4, or click through to our WhatsApp for real-time discussion!`;
+          reply = `Got it! For questions regarding "<em>${query}</em>", feel free to add a note directly in the <strong>💬 Direct Message</strong> box or click through to our WhatsApp!`;
         }
-
         appendMessage('aria', reply);
       }, 450);
     }
@@ -791,9 +815,7 @@
       }
     }
 
-    // ==========================================
-    // SECRET ADMIN HUB LOGIC
-    // ==========================================
+    // Command Hub Logic
     function promptAdminModal() { document.getElementById('pinModal').classList.remove('hidden'); setTimeout(() => document.getElementById('adminPin').focus(), 50); }
     function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); document.getElementById('adminPin').value = ''; }
 
