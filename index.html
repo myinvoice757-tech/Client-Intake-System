@@ -3,47 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CETORA DESIGN | The Studio One</title>
+  <title>CETORA DESIGN | The Studio One — Client Brief Intake</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Three.js 3D Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #050507;
+      background-color: #06080e;
       color: #f8fafc;
-      overflow-x: hidden;
+      min-height: 100vh;
     }
 
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* macOS Window Glass Panel */
+    /* macOS Window Frame */
     .macos-window {
-      background: rgba(10, 14, 23, 0.88);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 40px rgba(211, 107, 63, 0.15);
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
     }
 
-    /* Range Slider Styling */
+    /* Input Field Styling */
+    .studio-input {
+      background: #101624;
+      border: 1px solid #1c263c;
+      color: #f8fafc;
+      border-radius: 10px;
+      font-size: 13px;
+      padding: 10px 14px;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+    .studio-input:focus {
+      outline: none;
+      border-color: #D36B3F;
+      box-shadow: 0 0 0 2px rgba(211, 107, 63, 0.2);
+    }
+    .studio-input::placeholder {
+      color: #475569;
+    }
+
+    /* Dual-Spectrum Range Slider */
     input[type=range] {
       -webkit-appearance: none;
-      background: #1e293b;
-      height: 5px;
+      background: #1c2436;
+      height: 4px;
       border-radius: 9999px;
       outline: none;
+      width: 100%;
     }
-
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 16px;
@@ -51,68 +67,65 @@
       border-radius: 50%;
       background: #D36B3F;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(211, 107, 63, 0.8);
+      box-shadow: 0 0 10px rgba(211, 107, 63, 0.9);
       border: 2px solid #ffffff;
       transition: transform 0.15s ease;
     }
-
     input[type=range]::-webkit-slider-thumb:hover {
       transform: scale(1.2);
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #050507; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #D36B3F; }
-
-    /* Floating AI Pulse Animation */
-    @keyframes ai-float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(2deg); }
+    /* Color Swatch Card */
+    .color-slot {
+      background: #101624;
+      border: 1px solid #1c263c;
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
     }
-    .floating-ai {
-      animation: ai-float 4s ease-in-out infinite;
+    .color-slot:hover {
+      border-color: #D36B3F;
     }
   </style>
 </head>
-<body class="min-h-screen relative flex items-center justify-center p-3 sm:p-6 md:p-10 selection:bg-[#D36B3F] selection:text-white">
+<body class="flex items-center justify-center p-3 sm:p-6 md:p-8 selection:bg-[#D36B3F] selection:text-white">
 
-  <!-- 3D Interactive Three.js Canvas -->
-  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
-
-  <!-- macOS Styled Central Window -->
-  <div class="macos-window relative z-10 w-full max-w-5xl rounded-2xl overflow-hidden flex flex-col">
+  <!-- macOS Central Shell Window -->
+  <div class="macos-window w-full max-w-[1240px] rounded-2xl overflow-hidden border border-white/10 flex flex-col my-auto">
     
-    <!-- macOS Window Top Titlebar -->
-    <div class="h-12 bg-black/60 border-b border-white/10 px-4 flex items-center justify-between select-none">
+    <!-- macOS Window Titlebar -->
+    <div class="h-14 bg-[#070a12] border-b border-white/10 px-6 flex items-center justify-between select-none">
       
-      <!-- macOS Traffic Light Window Controls -->
+      <!-- Traffic Light Controls -->
       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-[#ff5f56] inline-block border border-[#e0443e] cursor-pointer hover:opacity-80 transition-opacity" title="Close"></span>
-        <span class="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block border border-[#dea123] cursor-pointer hover:opacity-80 transition-opacity" title="Minimize"></span>
-        <span class="w-3 h-3 rounded-full bg-[#27c93f] inline-block border border-[#1aab29] cursor-pointer hover:opacity-80 transition-opacity" title="Expand"></span>
-        
-        <div class="hidden sm:flex items-center gap-2 ml-4 pl-4 border-l border-white/10">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="text-[11px] font-mono text-slate-400">Live Database Sync</span>
+        <span class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] inline-block border border-[#e0443e]"></span>
+        <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e] inline-block border border-[#dea123]"></span>
+        <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f] inline-block border border-[#1aab29]"></span>
+      </div>
+
+      <!-- Studio Center Emblem & Branding -->
+      <div id="secretLogoTrigger" class="flex items-center gap-3 cursor-pointer group" title="Click 3 times to open Command Hub">
+        <div class="w-9 h-9 rounded-xl bg-black/60 border border-[#D36B3F]/40 p-1 flex items-center justify-center shadow-[0_0_15px_rgba(211,107,63,0.3)]">
+          <img src="./CD.svg" alt="Cetora Emblem" class="w-full h-full object-contain">
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xs sm:text-sm font-extrabold tracking-widest uppercase text-white group-hover:text-[#E8855A] transition-colors">
+            CETORA <span class="text-[#D36B3F]">DESIGN</span>
+          </span>
+          <span class="text-[9px] tracking-[0.25em] uppercase text-slate-500 font-mono">The Studio One</span>
         </div>
       </div>
 
-      <!-- Center Logo / Title Trigger (Click 3 times for Admin Hub) -->
-      <div id="secretLogoTrigger" class="flex items-center gap-2.5 cursor-pointer group" title="Cetora Design • The Studio One">
-        <img src="./CD.svg" alt="Cetora Emblem" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
-        <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white group-hover:text-[#E8855A] transition-colors">
-          CETORA <span class="text-[#D36B3F]">DESIGN</span>
-        </span>
-      </div>
-
-      <!-- Right Window Utilities -->
+      <!-- Clock & Hub Link -->
       <div class="flex items-center gap-3">
-        <div id="liveClock" class="text-xs font-mono text-slate-400 bg-black/40 px-2.5 py-1 rounded border border-white/5">
-          --:--:--
+        <div id="liveClock" class="text-xs font-mono text-slate-400 bg-black/40 px-3 py-1.5 rounded-lg border border-white/5">
+          12:08:26 PM
         </div>
-        <button id="viewToggleBtn" class="text-xs font-semibold px-2.5 py-1 rounded bg-white/10 hover:bg-[#D36B3F] text-white transition-all flex items-center gap-1.5 border border-white/10">
+        <button id="viewToggleBtn" class="hidden sm:flex text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/10 hover:bg-[#D36B3F] text-white transition-all items-center gap-1.5 border border-white/10">
           <i class="fa-solid fa-terminal text-[10px]"></i>
           <span id="viewToggleLabel">Command Hub</span>
         </button>
@@ -120,153 +133,318 @@
 
     </div>
 
-    <!-- VIEW 1: SIMPLE INTAKE FORM -->
-    <div id="intakeView" class="p-6 sm:p-10 transition-all">
+    <!-- MAIN INTAKE CONTENT -->
+    <div id="intakeView" class="p-6 sm:p-8 md:p-10">
       
-      <!-- Minimal Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 mb-8">
-        <div>
-          <span class="text-[10px] font-extrabold tracking-[0.25em] uppercase text-[#D36B3F] bg-[#D36B3F]/15 px-2.5 py-1 rounded border border-[#D36B3F]/30">The Studio One</span>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-2">Client Brief Intake</h1>
-          <p class="text-xs text-slate-400 mt-1">Submit your design specifications, branding direction, and creative project details.</p>
+      <!-- Center Title Banner -->
+      <div class="text-center mb-8">
+        <span class="inline-block text-[10px] font-extrabold tracking-[0.3em] uppercase text-[#E8855A] bg-[#D36B3F]/10 border border-[#D36B3F]/30 px-3.5 py-1 rounded-full mb-3">
+          Official Job Order System
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Client Brief <span class="text-[#D36B3F]">Intake</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400 mt-2">
+          Submit your creative vision, brand parameters, and design requirements for Studio One review.
+        </p>
+      </div>
+
+      <!-- SECTION 1: SERVICE PACKAGE -->
+      <div class="mb-8 max-w-3xl mx-auto">
+        <div class="text-center text-[11px] font-bold tracking-widest uppercase text-[#D36B3F] mb-3">
+          Select Service Package
         </div>
-        <div class="text-right hidden sm:block">
-          <div class="text-[11px] font-mono text-slate-400">System v2.4</div>
-          <div class="text-xs font-semibold text-[#E8855A]">Instant Studio Dispatch</div>
+
+        <!-- Horizontal Tier Nav Tabs -->
+        <div class="bg-[#0b0f19] border border-white/10 rounded-xl p-1.5 grid grid-cols-4 gap-1 text-center select-none mb-4">
+          <button type="button" class="tier-tab py-2 px-3 rounded-lg text-xs font-bold transition-all bg-[#1a2336] text-white shadow" data-tier="Essential">
+            Essential
+          </button>
+          <button type="button" class="tier-tab py-2 px-3 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Standard">
+            Standard
+          </button>
+          <button type="button" class="tier-tab relative py-2 px-3 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Pro">
+            <span class="absolute -top-2 right-1/2 translate-x-1/2 bg-[#D36B3F] text-black text-[8px] font-black uppercase px-1.5 py-0.2 rounded-full tracking-wider">Popular</span>
+            Professional
+          </button>
+          <button type="button" class="tier-tab py-2 px-3 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Ultra">
+            Ultra
+          </button>
+        </div>
+
+        <!-- Tier Dynamic Feature Card -->
+        <div class="bg-[#0e1422] border border-white/10 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <span id="tierSubtitle" class="text-[11px] font-mono uppercase tracking-widest text-slate-400">Essential</span>
+            <div class="flex items-baseline gap-1 my-1">
+              <span id="tierPrice" class="text-3xl font-extrabold text-white">$149</span>
+              <span id="tierDec" class="text-sm text-slate-400 font-bold">.99</span>
+            </div>
+            <p id="tierDesc" class="text-xs text-slate-400">Perfect for startups and foundational identity design.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-xs text-slate-300">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature1">1 Base Concept</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature2">2 Revisions</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature3">Standard Delivery</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature4">Vector & Web Formats</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <form id="clientBriefForm" class="space-y-6">
-        
-        <!-- Row 1: Client Info -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Your Name *</label>
-            <input type="text" id="clientName" required placeholder="Alex Morgan" class="w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#D36B3F] transition-all">
-          </div>
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Company / Brand</label>
-            <input type="text" id="companyName" placeholder="Apex Studio Ltd" class="w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#D36B3F] transition-all">
-          </div>
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Email Address *</label>
-            <input type="email" id="clientEmail" required placeholder="alex@apex.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#D36B3F] transition-all">
-          </div>
-        </div>
-
-        <!-- Row 2: Service & Package & Timeline -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Project Category *</label>
-            <select id="projectCategory" required class="w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-[#D36B3F] transition-all">
-              <option value="Logo Design">Logo Design & Identity</option>
-              <option value="Web Design">Web Design & Front-End</option>
-              <option value="3D Design">3D Assets & Dynamic Motion</option>
-              <option value="Poster Design">Poster & Visual Collateral</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Package Tier</label>
-            <select id="packageTier" class="w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#E8855A] font-bold focus:outline-none focus:border-[#D36B3F] transition-all">
-              <option value="Essential Tier">Essential Tier ($149)</option>
-              <option value="Standard Tier">Standard Tier ($299)</option>
-              <option value="Pro Tier" selected>Pro Tier ($549 - Most Popular)</option>
-              <option value="Ultra Tier">Ultra Tier ($999 - Bespoke)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Turnaround Speed</label>
-            <select id="timelineSelect" class="w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-[#D36B3F] transition-all">
-              <option value="Standard (1-2 weeks)">Standard (1-2 weeks)</option>
-              <option value="3-5 days Rush">3-5 Days Priority</option>
-              <option value="1 day Ultra Express">1 Day Ultra Express</option>
-              <option value="Flexible">Flexible Roadmap</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Row 3: Aesthetic Matrix & Palette (Collapsible / Clean) -->
-        <div class="p-4 rounded-xl bg-black/30 border border-white/5 space-y-4">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Brand Aesthetic Sliders</span>
-            <span class="text-[10px] text-slate-500 font-mono">Real-time styling</span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
-                <span>Minimal</span>
-                <span id="lblMinimal" class="text-[#E8855A] font-mono">50%</span>
-                <span>Complex</span>
-              </div>
-              <input type="range" id="rngMinimal" min="0" max="100" value="50" class="w-full">
+      <!-- MAIN FORM WITH 3 BALANCED COLUMNS -->
+      <form id="clientBriefForm">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- COLUMN 1: CLIENT BASICS -->
+          <div class="space-y-4">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/5">
+              2. Client Basics
             </div>
+
             <div>
-              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
-                <span>Modern</span>
-                <span id="lblModern" class="text-[#E8855A] font-mono">80%</span>
-                <span>Classic</span>
-              </div>
-              <input type="range" id="rngModern" min="0" max="100" value="80" class="w-full">
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Your Full Name *</label>
+              <input type="text" id="clientName" required placeholder="e.g. John Doe" class="studio-input">
             </div>
+
             <div>
-              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
-                <span>Casual</span>
-                <span id="lblLuxury" class="text-[#E8855A] font-mono">85%</span>
-                <span>Luxury</span>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Company / Brand Name *</label>
+              <input type="text" id="companyName" required placeholder="e.g. Acme Studio" class="studio-input">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Email Address *</label>
+              <input type="email" id="clientEmail" required placeholder="john@company.com" class="studio-input">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Project Category *</label>
+              <select id="projectCategory" required class="studio-input">
+                <option value="">Select Category...</option>
+                <option value="Logo Design" selected>Logo Design & Identity</option>
+                <option value="Web Design">Web Design & Front-End</option>
+                <option value="3D Design">3D Design & Assets</option>
+                <option value="Poster Design">Poster Design & Print</option>
+              </select>
+            </div>
+
+            <!-- Direct 1-on-1 Studio Chat (WhatsApp Card) -->
+            <div class="bg-[#0b101a] border border-emerald-500/25 rounded-2xl p-5 text-center mt-4">
+              <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto mb-2 text-lg">
+                <i class="fa-brands fa-whatsapp"></i>
               </div>
-              <input type="range" id="rngLuxury" min="0" max="100" value="85" class="w-full">
+              <div class="text-xs font-bold text-white mb-0.5">Direct 1-on-1 Studio Chat</div>
+              <div class="text-[11px] text-slate-400 mb-3">Chat securely and privately with Cetora Design.</div>
+              <a href="https://wa.me/94777074837?text=Hello%20Cetora%20Design%2C%20I%20am%20inquiry%20about%20a%20project" target="_blank" class="w-full inline-block py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                Open Direct WhatsApp Chat ↗
+              </a>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Estimated Timeline *</label>
+              <select id="timelineSelect" required class="studio-input">
+                <option value="Standard (1-2 weeks)" selected>Standard (1-2 weeks)</option>
+                <option value="3-5 days Priority">3-5 days Priority</option>
+                <option value="1 day Express">1 day Ultra Express</option>
+                <option value="Flexible Timeline">Flexible Timeline</option>
+              </select>
             </div>
           </div>
-        </div>
 
-        <!-- Row 4: Scope & Direct Message -->
-        <div class="space-y-4">
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Project Scope & Details *</label>
-            <textarea id="projectDesc" required rows="3" placeholder="Describe deliverables, target audience, and key goals..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#D36B3F] transition-all"></textarea>
+          <!-- COLUMN 2: DESIGN VIBE & AESTHETICS & BRAND PALETTE -->
+          <div class="space-y-6">
+            
+            <!-- Vibe Sliders Box -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/5 mb-4">
+                3. Design Vibe & Aesthetics
+              </div>
+
+              <div class="bg-[#0b101a] border border-white/10 rounded-2xl p-5 space-y-4">
+                <!-- Slider 1 -->
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Minimal</span>
+                    <span class="text-slate-500">Complex</span>
+                  </div>
+                  <input type="range" id="slMinimal" min="0" max="100" value="50">
+                </div>
+
+                <!-- Slider 2 -->
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Modern</span>
+                    <span class="text-slate-500">Classic</span>
+                  </div>
+                  <input type="range" id="slModern" min="0" max="100" value="75">
+                </div>
+
+                <!-- Slider 3 -->
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Playful</span>
+                    <span class="text-slate-500">Serious</span>
+                  </div>
+                  <input type="range" id="slPlayful" min="0" max="100" value="30">
+                </div>
+
+                <!-- Slider 4 -->
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Loud</span>
+                    <span class="text-slate-500">Subtle</span>
+                  </div>
+                  <input type="range" id="slLoud" min="0" max="100" value="60">
+                </div>
+
+                <!-- Slider 5 -->
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Luxury</span>
+                    <span class="text-slate-500">Budget</span>
+                  </div>
+                  <input type="range" id="slLuxury" min="0" max="100" value="85">
+                </div>
+              </div>
+            </div>
+
+            <!-- Brand Color Palette Swatches -->
+            <div>
+              <div class="flex items-center justify-between pb-1 border-b border-white/5 mb-3">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F]">4. Brand Color Palette</span>
+                <span class="text-[10px] font-mono text-slate-500">6 color slots</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2.5">
+                <!-- Base -->
+                <div class="color-slot" onclick="document.getElementById('cBase').click()">
+                  <input type="color" id="cBase" value="#070a12" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Base</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexBase">#070a12</div>
+                  </div>
+                </div>
+
+                <!-- Primary -->
+                <div class="color-slot" onclick="document.getElementById('cPrimary').click()">
+                  <input type="color" id="cPrimary" value="#D36B3F" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-[#E8855A] uppercase">Primary</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexPrimary">#D36B3F</div>
+                  </div>
+                </div>
+
+                <!-- Secondary -->
+                <div class="color-slot" onclick="document.getElementById('cSecondary').click()">
+                  <input type="color" id="cSecondary" value="#8C3E1F" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Secondary</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexSecondary">#8C3E1F</div>
+                  </div>
+                </div>
+
+                <!-- Accent -->
+                <div class="color-slot" onclick="document.getElementById('cAccent').click()">
+                  <input type="color" id="cAccent" value="#E8855A" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Accent</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexAccent">#E8855A</div>
+                  </div>
+                </div>
+
+                <!-- Neutral -->
+                <div class="color-slot" onclick="document.getElementById('cNeutral').click()">
+                  <input type="color" id="cNeutral" value="#1e293b" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Neutral</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexNeutral">#1e293b</div>
+                  </div>
+                </div>
+
+                <!-- Light -->
+                <div class="color-slot" onclick="document.getElementById('cLight').click()">
+                  <input type="color" id="cLight" value="#f8fafc" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Light</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexLight">#f8fafc</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-[#fbbf24] mb-1.5 flex items-center gap-1.5">
-              <i class="fa-regular fa-comment-dots"></i> Direct Message to Designer
-            </label>
-            <textarea id="directMessage" rows="2" placeholder="Informal message, question, or specific instruction directly to the lead designer..." class="w-full bg-[#1b150c]/60 border border-[#f59e0b]/30 rounded-xl p-3 text-xs sm:text-sm text-[#fef08a] placeholder-amber-200/40 focus:outline-none focus:border-[#f59e0b] transition-all"></textarea>
+          <!-- COLUMN 3: BRIEF DETAILS & ACTIONS -->
+          <div class="space-y-4 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/5 mb-4">
+                5. Brief Details
+              </div>
+
+              <!-- Project Description -->
+              <div class="mb-4">
+                <label class="block text-[11px] font-medium text-slate-400 mb-1">Project Description *</label>
+                <textarea id="projectDesc" required rows="3" placeholder="Outline your project goals, deliverables, and requirements..." class="studio-input"></textarea>
+              </div>
+
+              <!-- Direct Message to Admins -->
+              <div class="mb-4">
+                <label class="block text-[11px] font-medium text-[#E8855A] mb-1 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-[#D36B3F]"></span> Direct Message to Studio Admins
+                </label>
+                <textarea id="directMessage" rows="2" placeholder="Send a direct note or question to the Cetora lead designer..." class="studio-input bg-[#161210] border-[#7a381e]/40 text-amber-200 focus:border-[#D36B3F]"></textarea>
+              </div>
+
+              <!-- Drag & Drop Upload -->
+              <div class="mb-4">
+                <label class="block text-[11px] font-medium text-slate-400 mb-1">Upload Assets (Sketches, PDFs, Moodboards)</label>
+                <div id="dropZone" class="border border-dashed border-white/20 hover:border-[#D36B3F] rounded-xl p-5 text-center cursor-pointer transition-all bg-[#0b101a]">
+                  <input type="file" id="fileUpload" class="hidden">
+                  <div id="uploadLabel" class="text-xs font-bold text-white uppercase tracking-wider">Drag & drop files or browse</div>
+                  <div class="text-[10px] text-slate-500 font-mono mt-0.5">Accepts images, vectors, and PDFs up to 25MB</div>
+                </div>
+              </div>
+
+              <!-- NDA Checkbox -->
+              <div class="mb-6">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none">
+                  <input type="checkbox" id="ndaCheck" class="w-4 h-4 rounded text-[#D36B3F] bg-black/50 border-white/20">
+                  <span class="text-xs text-slate-300">Require mutual Non-Disclosure Agreement (NDA)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Form Bottom Buttons -->
+            <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+              <button type="reset" class="w-1/3 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider text-slate-400 transition-all">
+                <i class="fa-solid fa-rotate-left mr-1"></i> Reset
+              </button>
+
+              <button type="submit" id="submitBtn" class="w-2/3 py-3.5 rounded-xl bg-gradient-to-r from-[#E8855A] to-[#D36B3F] hover:from-[#F08E65] hover:to-[#E8855A] text-black font-extrabold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(211,107,63,0.35)] transition-all flex items-center justify-center gap-2">
+                <span>Submit Design Brief</span>
+              </button>
+            </div>
+
           </div>
+
         </div>
-
-        <!-- Row 5: Upload & NDA -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-          <div id="dropZone" class="border border-dashed border-white/20 hover:border-[#D36B3F] rounded-xl p-4 text-center cursor-pointer transition-all bg-black/20">
-            <input type="file" id="fileUpload" class="hidden">
-            <i class="fa-solid fa-cloud-arrow-up text-base text-[#D36B3F] mb-1"></i>
-            <div id="uploadLabel" class="text-xs text-slate-300 font-medium">Attach files / brief (or drag & drop)</div>
-          </div>
-
-          <div class="flex items-center justify-between sm:justify-end gap-3 px-2">
-            <label class="flex items-center gap-2 cursor-pointer select-none">
-              <input type="checkbox" id="ndaCheck" class="w-4 h-4 rounded text-[#D36B3F] bg-black/40 border-white/20">
-              <span class="text-xs text-slate-300">Require NDA</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-          <button type="reset" class="text-xs font-semibold uppercase text-slate-500 hover:text-white transition-colors">
-            Reset
-          </button>
-          <button type="submit" id="submitBtn" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#E8855A] to-[#D36B3F] hover:from-[#F08E65] hover:to-[#E8855A] text-black font-extrabold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(211,107,63,0.35)] transition-all flex items-center gap-2">
-            <span>Transmit Project Brief</span>
-            <i class="fa-solid fa-paper-plane text-[11px]"></i>
-          </button>
-        </div>
-
       </form>
     </div>
 
-    <!-- VIEW 2: DESIGNER COMMAND HUB -->
-    <div id="commandHubView" class="hidden p-6 sm:p-10 transition-all">
+    <!-- VIEW 2: COMMAND HUB (Accessible via Top Right or Clicking Emblem 3 Times) -->
+    <div id="commandHubView" class="hidden p-6 sm:p-10">
       <div class="flex items-center justify-between pb-6 border-b border-white/10 mb-6">
         <div>
           <span class="text-[10px] font-extrabold tracking-[0.25em] uppercase text-[#D36B3F]">Command Console</span>
@@ -284,7 +462,7 @@
         </div>
       </div>
 
-      <!-- KPI Metrics -->
+      <!-- KPI Summary -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <div class="bg-black/40 border border-white/5 p-4 rounded-xl">
           <div class="text-[10px] font-bold uppercase text-slate-400">Total Briefs</div>
@@ -328,39 +506,12 @@
 
   </div>
 
-  <!-- FLOATING 3D SPEAKING AI ASSISTANT WIDGET -->
-  <div id="aiAssistantWidget" class="fixed bottom-6 right-6 z-40 flex items-end gap-3 select-none">
-    
-    <!-- AI Speech Bubble -->
-    <div id="aiSpeechBubble" class="macos-window p-3.5 rounded-2xl max-w-xs shadow-2xl border border-[#D36B3F]/40 transition-all duration-300 transform scale-100">
-      <div class="flex items-center justify-between mb-1">
-        <span class="text-[10px] font-extrabold uppercase text-[#E8855A] tracking-wider flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-          Studio AI Assistant
-        </span>
-        <button id="closeAiBubble" class="text-slate-500 hover:text-white text-[10px]">✕</button>
-      </div>
-      <p id="aiSpeechText" class="text-xs text-slate-300 leading-relaxed">
-        Need assistance with your brief or package selection? Feel free to leave a direct note for our lead designer!
-      </p>
-    </div>
-
-    <!-- AI 3D Floating Avatar Button -->
-    <button id="aiAvatarBtn" class="floating-ai w-14 h-14 rounded-2xl bg-gradient-to-br from-[#E8855A] to-[#D36B3F] p-0.5 shadow-[0_0_25px_rgba(211,107,63,0.6)] cursor-pointer group flex items-center justify-center hover:scale-110 transition-all">
-      <div class="w-full h-full rounded-[14px] bg-[#0b0e17] flex items-center justify-center relative overflow-hidden">
-        <img src="./CD.svg" alt="AI Avatar" class="w-7 h-7 object-contain group-hover:rotate-12 transition-transform">
-        <span class="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#0b0e17]"></span>
-      </div>
-    </button>
-
-  </div>
-
-  <!-- LOGIC & SCRIPTS -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // Live Apps Script Web App Deployment URL
+    // Live Published Apps Script Web App Deployment URL
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyv4H_vQ872xLqgT9x-c4Gq8pQ8mI6cK7uN1v8s_O7c/exec";
 
-    // 1. Clock
+    // 1. Live Clock
     function updateClock() {
       const now = new Date();
       document.getElementById('liveClock').textContent = now.toLocaleTimeString('en-US', { hour12: true });
@@ -368,14 +519,67 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. Sliders
-    ['rngMinimal', 'rngModern', 'rngLuxury'].forEach(id => {
-      const el = document.getElementById(id);
-      const lbl = document.getElementById('lbl' + id.substring(3));
-      if (el && lbl) el.addEventListener('input', () => lbl.textContent = el.value + '%');
+    // 2. Package Tier Data & Switching
+    const tiers = {
+      Essential: {
+        price: "$149", dec: ".99", desc: "Perfect for startups and foundational identity design.",
+        f1: "1 Base Concept", f2: "2 Revisions", f3: "Standard Delivery", f4: "Vector & Web Formats"
+      },
+      Standard: {
+        price: "$299", dec: ".99", desc: "For scaling ventures requiring refined design packages.",
+        f1: "2 Base Concepts", f2: "4 Revisions", f3: "Priority Delivery", f4: "Full Source Files"
+      },
+      Pro: {
+        price: "$549", dec: ".99", desc: "Comprehensive production suite with complete creative assets.",
+        f1: "3 Base Concepts", f2: "Unlimited Minor Edits", f3: "Express Queue", f4: "3D & Vector Assets"
+      },
+      Ultra: {
+        price: "$999", dec: ".99", desc: "Full bespoke studio identity, motion, and 3D modeling.",
+        f1: "Custom Bespoke Concept", f2: "Lead Designer 1-on-1", f3: "Rush Turnaround", f4: "Full Copyright & Raw Files"
+      }
+    };
+    let activeTier = "Essential";
+
+    document.querySelectorAll('.tier-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tier-tab').forEach(t => {
+          t.classList.remove('bg-[#1a2336]', 'text-white', 'shadow');
+          t.classList.add('text-slate-400');
+        });
+        tab.classList.add('bg-[#1a2336]', 'text-white', 'shadow');
+        tab.classList.remove('text-slate-400');
+
+        activeTier = tab.getAttribute('data-tier');
+        const data = tiers[activeTier];
+        document.getElementById('tierSubtitle').textContent = activeTier;
+        document.getElementById('tierPrice').textContent = data.price;
+        document.getElementById('tierDec').textContent = data.dec;
+        document.getElementById('tierDesc').textContent = data.desc;
+        document.getElementById('tierFeature1').textContent = data.f1;
+        document.getElementById('tierFeature2').textContent = data.f2;
+        document.getElementById('tierFeature3').textContent = data.f3;
+        document.getElementById('tierFeature4').textContent = data.f4;
+      });
     });
 
-    // 3. File Dropzone
+    // 3. Color Picker Dynamic Hex Mirror
+    const colorInputs = [
+      { id: 'cBase', hexId: 'hexBase' },
+      { id: 'cPrimary', hexId: 'hexPrimary' },
+      { id: 'cSecondary', hexId: 'hexSecondary' },
+      { id: 'cAccent', hexId: 'hexAccent' },
+      { id: 'cNeutral', hexId: 'hexNeutral' },
+      { id: 'cLight', hexId: 'hexLight' }
+    ];
+    colorInputs.forEach(item => {
+      const el = document.getElementById(item.id);
+      const hex = document.getElementById(item.hexId);
+      if (el && hex) {
+        el.addEventListener('input', () => hex.textContent = el.value.toLowerCase());
+      }
+    });
+
+    // 4. File Drag & Drop
     let uploadedFileBlob = null;
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileUpload');
@@ -398,28 +602,38 @@
       }
     });
 
-    // 4. Submit Brief
+    // 5. Submit Form to Google Apps Script
     const form = document.getElementById('clientBriefForm');
     const submitBtn = document.getElementById('submitBtn');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Transmitting...`;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Transmitting...`;
 
       const payload = {
         name: document.getElementById('clientName').value,
         company: document.getElementById('companyName').value,
         email: document.getElementById('clientEmail').value,
-        category: `${document.getElementById('projectCategory').value} (${document.getElementById('packageTier').value})`,
+        category: `${document.getElementById('projectCategory').value} (${activeTier} Tier)`,
         timeline: document.getElementById('timelineSelect').value,
         nda: document.getElementById('ndaCheck').checked ? 'Yes' : 'No',
         description: document.getElementById('projectDesc').value,
         directMessage: document.getElementById('directMessage').value,
         vibes: {
-          minimal: document.getElementById('rngMinimal').value,
-          modern: document.getElementById('rngModern').value,
-          luxury: document.getElementById('rngLuxury').value
+          minimal: document.getElementById('slMinimal').value,
+          modern: document.getElementById('slModern').value,
+          playful: document.getElementById('slPlayful').value,
+          loud: document.getElementById('slLoud').value,
+          luxury: document.getElementById('slLuxury').value
+        },
+        palette: {
+          base: document.getElementById('cBase').value,
+          primary: document.getElementById('cPrimary').value,
+          secondary: document.getElementById('cSecondary').value,
+          accent: document.getElementById('cAccent').value,
+          neutral: document.getElementById('cNeutral').value,
+          light: document.getElementById('cLight').value
         },
         file: uploadedFileBlob
       };
@@ -432,19 +646,19 @@
           body: JSON.stringify(payload)
         });
 
-        alert("🚀 Project Brief Received! A confirmation has been transmitted to Studio One.");
+        alert("🚀 Project Brief Received! Notifications have been dispatched to the Cetora Studio team.");
         form.reset();
-        uploadLabel.textContent = "Attach files / brief (or drag & drop)";
+        uploadLabel.textContent = "Drag & drop files or browse";
         uploadedFileBlob = null;
       } catch (err) {
         alert("Transmission error: " + err.message);
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>Transmit Project Brief</span> <i class="fa-solid fa-paper-plane text-[11px]"></i>`;
+        submitBtn.innerHTML = `<span>Submit Design Brief</span>`;
       }
     });
 
-    // 5. Views Toggle (Intake vs Hub)
+    // 6. View Switcher (Intake vs Hub)
     const intakeView = document.getElementById('intakeView');
     const commandHubView = document.getElementById('commandHubView');
     const viewToggleBtn = document.getElementById('viewToggleBtn');
@@ -475,7 +689,7 @@
       setTimeout(() => clickCount = 0, 1500);
     });
 
-    // 6. JSONP Hub Data Sync
+    // 7. Command Hub JSONP Sync
     document.getElementById('refreshHubBtn').addEventListener('click', loadHubFeed);
     function loadHubFeed() {
       const script = document.createElement('script');
@@ -518,78 +732,6 @@
         </tr>
       `).join('');
     }
-
-    // 7. Interactive Floating AI Assistant Quotes
-    const speechPhrases = [
-      "Need guidance on turnaround times or asset formats? I'm here to help!",
-      "Tip: You can attach branding references and moodboards directly below.",
-      "Looking for a custom 3D build? Select our Pro or Ultra tier for dedicated modeling.",
-      "Leave a direct message to the designer for specific style notes!"
-    ];
-    let phraseIndex = 0;
-    const aiBubble = document.getElementById('aiSpeechBubble');
-    const aiText = document.getElementById('aiSpeechText');
-
-    document.getElementById('aiAvatarBtn').addEventListener('click', () => {
-      phraseIndex = (phraseIndex + 1) % speechPhrases.length;
-      aiText.textContent = speechPhrases[phraseIndex];
-      aiBubble.classList.remove('hidden');
-    });
-
-    document.getElementById('closeAiBubble').addEventListener('click', () => {
-      aiBubble.classList.add('hidden');
-    });
-
-    // 8. Dynamic 3D Three.js Particle Mesh Background
-    (function initThreeBackground() {
-      const canvas = document.getElementById('bg-canvas');
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-
-      const particleCount = 220;
-      const geometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(particleCount * 3);
-
-      for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 22;
-        positions[i + 1] = (Math.random() - 0.5) * 22;
-        positions[i + 2] = (Math.random() - 0.5) * 22;
-      }
-
-      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const material = new THREE.PointsMaterial({
-        color: 0xD36B3F,
-        size: 0.06,
-        transparent: true,
-        opacity: 0.45
-      });
-
-      const particleSystem = new THREE.Points(geometry, material);
-      scene.add(particleSystem);
-      camera.position.z = 8;
-
-      let mouseX = 0, mouseY = 0;
-      window.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
-        mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
-      });
-
-      function animate() {
-        requestAnimationFrame(animate);
-        particleSystem.rotation.y += 0.0008 + mouseX * 0.05;
-        particleSystem.rotation.x += 0.0004 + mouseY * 0.05;
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-    })();
   </script>
 </body>
 </html>
