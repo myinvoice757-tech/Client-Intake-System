@@ -89,7 +89,6 @@
     
     <header class="h-20 px-5 md:px-7 border-b border-white/[0.08] flex items-center justify-between bg-black/40 shadow-sm relative">
       <div class="flex items-center gap-6">
-        <!-- Logo Trigger with CD.svg Emblem -->
         <div id="secretLogoTrigger" class="flex items-center gap-4 cursor-pointer select-none group" title="Cetora Design">
           <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-black/60 border-2 border-[#D36B3F]/40 p-2 flex items-center justify-center shadow-[0_0_20px_rgba(211,107,63,0.3)] transition-transform group-hover:scale-105 overflow-hidden">
             <img src="./CD.svg" alt="Cetora Design Emblem" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(211,107,63,0.4)]">
@@ -410,7 +409,7 @@
         <div>
           <span class="text-[10px] font-bold tracking-widest text-[#E8855A] uppercase bg-[#D36B3F]/10 px-2.5 py-0.5 rounded-md border border-[#D36B3F]/20">Studio Operations</span>
           <h2 class="text-2xl font-extrabold text-white mt-1">Designer Command Hub</h2>
-          <p class="text-xs text-slate-400">Live submissions & direct client messages streaming from Google Sheets.</p>
+          <p class="text-xs text-slate-400">Live submissions & direct client messages streaming directly from Google Sheets.</p>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="refreshHubData()" class="gel-surface px-4 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-white"><span>↻</span> Refresh</button>
@@ -438,7 +437,7 @@
       </div>
     </div>
 
-    <!-- Success Confirmation Modal -->
+    <!-- Success Modal -->
     <div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
       <div class="mac-window max-w-md w-full p-8 rounded-3xl text-center space-y-6 border border-white/20">
         <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-[#8C3E1F] via-[#D36B3F] to-amber-200 p-[2px] flex items-center justify-center">
@@ -566,9 +565,9 @@
     </div>
   </div>
 
-  <!-- Front-End JavaScript Logic with Dual Fetcher -->
   <script>
     const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
+    const SPREADSHEET_ID = "1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic";
 
     // 1. Digital Clock
     function updateClock() {
@@ -866,22 +865,51 @@
       document.getElementById('hubExitBtn')?.classList.add('hidden');
     }
 
-    // 9. DUAL-MODE LOADER: Direct Fetch + Dynamic JSONP Fallback
+    // 9. Multi-Source Live Loader (Direct Sheet CSV + Apps Script Fallback)
     async function refreshHubData() {
       const tbody = document.getElementById('briefsTableBody');
       if (tbody) {
         tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono animate-pulse">Connecting to Studio One Database...</td></tr>';
       }
 
-      // Method A: Direct fetch() (Handles pure JSON responses from redirected Google Apps Script endpoints)
+      // Method A: Direct Google Sheets GViz CSV Feed
       try {
-        const response = await fetch(`${APPS_SCRIPT_WEBAPP_URL}?t=${Date.now()}`, {
+        const sheetName = encodeURIComponent("All Client Briefs");
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${sheetName}&t=${Date.now()}`;
+        const response = await fetch(csvUrl);
+        if (response.ok) {
+          const csvText = await response.text();
+          const rows = parseCSV(csvText);
+          if (rows.length > 1) {
+            const dataRows = rows.slice(1).map(cols => ({
+              jobId: cols[0] || "",
+              timestamp: cols[1] || "",
+              clientName: cols[2] || "Anonymous",
+              company: cols[3] || "",
+              email: cols[4] || "",
+              category: cols[5] || "",
+              timeline: cols[6] || "",
+              nda: cols[7] || "No",
+              description: cols[8] || "No description provided",
+              directMessage: cols[9] || "None",
+              driveLink: cols[10] && cols[10].startsWith("http") ? cols[10] : ""
+            })).reverse();
+            renderHubTable(dataRows);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Direct CSV stream bypassed, falling back to Apps Script Web App...", err);
+      }
+
+      // Method B: Direct Fetch from Apps Script
+      try {
+        const res = await fetch(`${APPS_SCRIPT_WEBAPP_URL}?t=${Date.now()}`, {
           method: 'GET',
           redirect: 'follow'
         });
-        if (response.ok) {
-          const text = await response.text();
-          // Check if response is raw JSON or JSONP
+        if (res.ok) {
+          const text = await res.text();
           let rows;
           if (text.trim().startsWith('[') || text.trim().startsWith('{')) {
             rows = JSON.parse(text);
@@ -889,16 +917,16 @@
             const rawJson = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
             rows = JSON.parse(rawJson);
           }
-          if (Array.isArray(rows)) {
+          if (Array.isArray(rows) && rows.length > 0) {
             renderHubTable(rows);
             return;
           }
         }
-      } catch (err) {
-        console.warn("Direct fetch bypass blocked, initiating JSONP fallback channel...", err);
+      } catch (fetchErr) {
+        console.warn("Direct Web App fetch failed, attempting JSONP script tag...", fetchErr);
       }
 
-      // Method B: Script Tag Injection (Fallback)
+      // Method C: Script Tag JSONP Fallback
       const existingScript = document.getElementById('hubJsonpScript');
       if (existingScript) existingScript.remove();
 
@@ -913,13 +941,33 @@
       const script = document.createElement('script');
       script.id = 'hubJsonpScript';
       script.src = `${APPS_SCRIPT_WEBAPP_URL}?callback=handleHubDataResponse&t=${Date.now()}`;
-      
       script.onerror = function() {
         if (!jsonpResolved && tbody) {
           tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Unable to load data. Click "Open Sheet ↗" above to view directly in Google Sheets.</td></tr>';
         }
       };
       document.body.appendChild(script);
+    }
+
+    // RFC-compliant CSV Parser
+    function parseCSV(text) {
+      const p = [[]];
+      let row = p[0], col = '', inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i], next = text[i + 1];
+        if (c === '"' && inQuotes && next === '"') { col += '"'; i++; }
+        else if (c === '"') { inQuotes = !inQuotes; }
+        else if (c === ',' && !inQuotes) { row.push(col.trim()); col = ''; }
+        else if ((c === '\r' || c === '\n') && !inQuotes) {
+          if (c === '\r' && next === '\n') { i++; }
+          row.push(col.trim());
+          col = '';
+          row = [];
+          p.push(row);
+        } else { col += c; }
+      }
+      if (col) row.push(col.trim());
+      return p.filter(r => r.length > 1 || (r.length === 1 && r[0] !== ''));
     }
 
     function renderHubTable(rows) {
