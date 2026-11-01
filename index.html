@@ -85,7 +85,7 @@
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
 
-  <main class="mac-window relative z-10 w-full max-w-7xl rounded-2xl overflow-hidden my-auto min-h-[640px]">
+  <main class="mac-window relative z-10 w-full max-w-7xl rounded-2xl overflow-hidden my-auto min-h-[680px]">
     
     <header class="h-20 px-5 md:px-7 border-b border-white/[0.08] flex items-center justify-between bg-black/40 shadow-sm relative">
       <div class="flex items-center gap-6">
@@ -118,6 +118,7 @@
       </div>
     </header>
 
+    <!-- CLIENT INTAKE FORM VIEW -->
     <div id="clientIntakeView" class="pb-10">
       <section class="text-center pt-10 pb-6 px-6">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/30 mb-4 shadow-sm">OFFICIAL JOB ORDER SYSTEM</span>
@@ -352,7 +353,7 @@
                 <input type="color" id="neutralColor" value="#1e293b" oninput="document.getElementById('neutralColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
                   <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Neutral</p>
-                  <input type="text" id="neutralColorText" value="#1e293b" oninput="document.getElementById('neutralColorText').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                  <input type="text" id="neutralColorText" value="#1e293b" oninput="document.getElementById('neutralColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
                 </div>
               </div>
 
@@ -360,7 +361,7 @@
                 <input type="color" id="lightColor" value="#f8fafc" oninput="document.getElementById('lightColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
                 <div class="flex-1 min-w-0">
                   <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Light</p>
-                  <input type="text" id="lightColorText" value="#f8fafc" oninput="document.getElementById('lightColorText').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
+                  <input type="text" id="lightColorText" value="#f8fafc" oninput="document.getElementById('lightColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
                 </div>
               </div>
             </div>
@@ -410,40 +411,129 @@
       </form>
     </div>
 
-    <!-- DESIGNER HUB VIEW -->
-    <div id="designerHubView" class="hidden p-6 md:p-8 space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+    <!-- EXPANDED DESIGNER COMMAND HUB VIEW -->
+    <div id="designerHubView" class="hidden p-6 md:p-10 space-y-8">
+      
+      <!-- Top Overview Bar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/[0.08]">
         <div>
-          <span class="text-[10px] font-bold tracking-widest text-[#E8855A] uppercase bg-[#D36B3F]/10 px-2.5 py-0.5 rounded-md border border-[#D36B3F]/20">Studio Operations</span>
-          <h2 class="text-2xl font-extrabold text-white mt-1">Designer Command Hub</h2>
-          <p class="text-xs text-slate-400">Live submissions & direct client messages streaming from Google Sheets.</p>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-widest text-[#E8855A] uppercase bg-[#D36B3F]/15 px-3 py-1 rounded-md border border-[#D36B3F]/30">Studio Operations</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[11px] font-mono text-slate-400">Live Database Sync</span>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-black text-white mt-2 tracking-tight">Designer Command Hub</h2>
+          <p class="text-sm text-slate-300 mt-1">Incoming briefs, project scopes, files, and direct client correspondence.</p>
         </div>
+
         <div class="flex items-center gap-3">
-          <button onclick="refreshHubData()" class="gel-surface px-4 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-white"><span>↻</span> Refresh</button>
-          <a href="https://docs.google.com/spreadsheets/d/1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic/edit" target="_blank" class="gel-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-950 uppercase">Open Sheet ↗</a>
+          <button onclick="refreshHubData()" class="gel-surface px-5 py-3 rounded-xl text-xs font-bold tracking-wider uppercase text-slate-200 hover:text-white flex items-center gap-2 transition-all">
+            <span class="text-base">↻</span> Refresh Feed
+          </button>
+          <a href="https://docs.google.com/spreadsheets/d/1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic/edit" target="_blank" rel="noopener noreferrer" class="gel-btn px-6 py-3 rounded-xl text-xs font-black text-slate-950 uppercase tracking-wider flex items-center gap-2 shadow-lg">
+            Open Sheet Database ↗
+          </a>
         </div>
       </div>
 
-      <div class="gel-surface rounded-xl overflow-hidden border border-white/[0.08]">
+      <!-- Quick Metrics Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="gel-surface p-5 rounded-2xl border border-white/[0.08]">
+          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Briefs Logged</p>
+          <p id="metricTotalBriefs" class="text-3xl font-extrabold text-white mt-1">--</p>
+        </div>
+        <div class="gel-surface p-5 rounded-2xl border border-white/[0.08]">
+          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Active Services</p>
+          <p id="metricActiveServices" class="text-3xl font-extrabold text-[#E8855A] mt-1">4 Types</p>
+        </div>
+        <div class="gel-surface p-5 rounded-2xl border border-white/[0.08]">
+          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Fast Turnarounds</p>
+          <p id="metricRushOrders" class="text-3xl font-extrabold text-amber-400 mt-1">--</p>
+        </div>
+        <div class="gel-surface p-5 rounded-2xl border border-white/[0.08]">
+          <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">NDA Required</p>
+          <p id="metricNdaCount" class="text-3xl font-extrabold text-emerald-400 mt-1">--</p>
+        </div>
+      </div>
+
+      <!-- Detailed Submissions Table -->
+      <div class="gel-surface rounded-2xl overflow-hidden border border-white/[0.1] shadow-2xl">
         <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs">
+          <table class="w-full text-left border-collapse text-xs md:text-sm">
             <thead>
-              <tr class="border-b border-white/[0.08] bg-black/40 text-slate-400 font-bold uppercase tracking-wider">
-                <th class="p-3.5">Timestamp</th>
-                <th class="p-3.5">Client & Company</th>
-                <th class="p-3.5">Category</th>
-                <th class="p-3.5">Direct Message / Inquiry</th>
-                <th class="p-3.5 text-right">Assets</th>
+              <tr class="border-b border-white/[0.1] bg-black/50 text-slate-400 font-extrabold uppercase tracking-wider">
+                <th class="p-4 md:p-5">Job ID & Received</th>
+                <th class="p-4 md:p-5">Client Profile</th>
+                <th class="p-4 md:p-5">Service & Package</th>
+                <th class="p-4 md:p-5">Speed / NDA</th>
+                <th class="p-4 md:p-5">Direct Client Message</th>
+                <th class="p-4 md:p-5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="briefsTableBody" class="divide-y divide-white/[0.04] text-slate-300">
-              <tr><td colspan="5" class="p-8 text-center text-slate-400 font-mono">Loading real-time messages...</td></tr>
+            <tbody id="briefsTableBody" class="divide-y divide-white/[0.06] text-slate-200">
+              <tr>
+                <td colspan="6" class="p-12 text-center text-[#E8855A] font-mono tracking-wide">
+                  Connecting to live database stream...
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
+    <!-- Brief Inspection Modal -->
+    <div id="briefDetailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-2xl">
+      <div class="mac-window w-full max-w-2xl max-h-[85vh] flex flex-col rounded-3xl overflow-hidden border border-white/20 shadow-[0_25px_70px_rgba(0,0,0,0.9)]">
+        
+        <div class="p-6 bg-black/60 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span id="modalJobId" class="text-sm font-mono font-bold px-3 py-1 rounded-lg bg-[#D36B3F]/20 text-[#E8855A] border border-[#D36B3F]/40">#CD-XXXX</span>
+            <h3 id="modalClientTitle" class="text-lg font-bold text-white">Client Brief Overview</h3>
+          </div>
+          <button onclick="closeBriefModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-white/5 hover:bg-white/10 text-xs transition-all">✕ Close</button>
+        </div>
+
+        <div class="p-6 md:p-8 space-y-6 overflow-y-auto chat-scroll text-xs">
+          
+          <div class="grid grid-cols-2 gap-4 gel-surface p-4 rounded-xl border border-white/10">
+            <div>
+              <p class="text-[10px] uppercase font-bold text-slate-400">Company / Organization</p>
+              <p id="modalCompany" class="text-sm font-bold text-white mt-0.5">--</p>
+            </div>
+            <div>
+              <p class="text-[10px] uppercase font-bold text-slate-400">Direct Email</p>
+              <p id="modalEmail" class="text-sm font-mono text-[#E8855A] mt-0.5">--</p>
+            </div>
+            <div>
+              <p class="text-[10px] uppercase font-bold text-slate-400">Category & Tier</p>
+              <p id="modalCategory" class="text-sm font-semibold text-slate-200 mt-0.5">--</p>
+            </div>
+            <div>
+              <p class="text-[10px] uppercase font-bold text-slate-400">Requested Timeline & NDA</p>
+              <p id="modalTimelineNda" class="text-sm font-semibold text-emerald-400 mt-0.5">--</p>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-[#E8855A]">Full Project Scope & Goals</h4>
+            <div id="modalDescription" class="gel-surface p-4 rounded-xl leading-relaxed text-slate-200 text-xs border border-white/10 whitespace-pre-wrap">--</div>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-amber-300">💬 Client's Direct Message</h4>
+            <div id="modalDirectMessage" class="gel-surface p-4 rounded-xl text-amber-200 bg-amber-950/20 border border-amber-500/20 leading-relaxed text-xs">--</div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between border-t border-white/10">
+            <div id="modalDriveContainer"></div>
+            <button type="button" onclick="closeBriefModal()" class="gel-btn px-6 py-2.5 rounded-xl text-slate-950 font-bold uppercase tracking-wider text-xs">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
     <div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
       <div class="mac-window max-w-md w-full p-8 rounded-3xl text-center space-y-6 border border-white/20">
         <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-[#8C3E1F] via-[#D36B3F] to-amber-200 p-[2px] flex items-center justify-center">
@@ -572,22 +662,31 @@
   </div>
 
   <script>
-        const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw8v3lEn6UeGSC6mEFA3GK0MCgMKmoCONsYh8FJe4ibPu-MWtGi8piVdHX7mJ96J7KJrQ/exec";
-    function updateClock() { document.getElementById('liveClock').textContent = new Date().toLocaleTimeString(); }
-    setInterval(updateClock, 1000); updateClock();
+    // Your exact deployed Web App URL
+    const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw8v3lEn6UeGSC6mEFA3GK0MCgMKmoCONsYh8FJe4ibPu-MWtGi8piVdHX7mJ96J7KJrQ/exec";
+
+    function updateClock() { 
+      const clockEl = document.getElementById('liveClock');
+      if (clockEl) clockEl.textContent = new Date().toLocaleTimeString(); 
+    }
+    setInterval(updateClock, 1000); 
+    updateClock();
 
     let logoClickCount = 0;
     let logoClickTimer = null;
-    document.getElementById('secretLogoTrigger').addEventListener('click', () => {
-      logoClickCount++;
-      clearTimeout(logoClickTimer);
-      if (logoClickCount === 3) {
-        logoClickCount = 0;
-        promptAdminModal();
-      } else {
-        logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 800);
-      }
-    });
+    const logoTrigger = document.getElementById('secretLogoTrigger');
+    if (logoTrigger) {
+      logoTrigger.addEventListener('click', () => {
+        logoClickCount++;
+        clearTimeout(logoClickTimer);
+        if (logoClickCount === 3) {
+          logoClickCount = 0;
+          promptAdminModal();
+        } else {
+          logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 800);
+        }
+      });
+    }
 
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
@@ -616,15 +715,23 @@
       if (!file) return;
       const reader = new FileReader();
       reader.onload = evt => {
-        uploadedFileData = { name: file.name, type: file.type, base64: evt.target.result.split(',')[1] };
-        document.getElementById('uploadLabel').textContent = `Attached: ${file.name.substring(0, 14)}...`;
+        uploadedFileData = { 
+          name: file.name, 
+          type: file.type, 
+          base64: evt.target.result.split(',')[1] 
+        };
+        const labelEl = document.getElementById('uploadLabel');
+        if (labelEl) labelEl.textContent = `Attached: ${file.name.substring(0, 16)}...`;
       };
       reader.readAsDataURL(file);
     }
 
     function resetFormToDefaults() {
-      document.getElementById('intakeForm').reset();
-      document.querySelector('input[value="Pro Tier"]').checked = true;
+      const form = document.getElementById('intakeForm');
+      if (form) form.reset();
+
+      const defaultRadio = document.querySelector('input[value="Pro Tier"]');
+      if (defaultRadio) defaultRadio.checked = true;
       updateTierDisplay('professional');
 
       ['vibeMinimal', 'vibeModern', 'vibePlayful', 'vibeLoud', 'vibeLuxury'].forEach(id => {
@@ -646,7 +753,8 @@
       }
 
       uploadedFileData = null;
-      document.getElementById('uploadLabel').textContent = 'Drag & Drop Files or Browse';
+      const labelEl = document.getElementById('uploadLabel');
+      if (labelEl) labelEl.textContent = 'Drag & Drop Files or Browse';
     }
 
     async function handleFormSubmission(e) {
@@ -702,27 +810,35 @@
     }
 
     function formSuccessCleanup(btn) {
-      document.getElementById('successModal').classList.remove('hidden');
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.remove('hidden');
       resetFormToDefaults();
       btn.disabled = false; 
       btn.textContent = 'Submit Design Brief';
     }
 
-    function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
+    function closeSuccessModal() { 
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.add('hidden'); 
+    }
 
-    // AI Concierge
     let lastAriaSpeech = "Hi! I am Aria, your Cetora design concierge. How can I help you tailor your job order today?";
 
     function toggleAiAssistant() {
       const win = document.getElementById('aiAssistantWindow');
+      if (!win) return;
       win.classList.toggle('hidden');
       if (!win.classList.contains('hidden')) {
-        setTimeout(() => document.getElementById('aiChatInput').focus(), 100);
+        setTimeout(() => {
+          const input = document.getElementById('aiChatInput');
+          if (input) input.focus();
+        }, 100);
       }
     }
 
     function appendMessage(sender, text) {
       const log = document.getElementById('aiChatLog');
+      if (!log) return;
       const isAria = sender === 'aria';
       const msgDiv = document.createElement('div');
       msgDiv.className = `flex gap-2.5 items-start ${isAria ? '' : 'flex-row-reverse'}`;
@@ -750,13 +866,17 @@
     }
 
     function askAiPrompt(query) {
-      document.getElementById('aiChatInput').value = query;
-      handleAiChatSubmit(new Event('submit'));
+      const input = document.getElementById('aiChatInput');
+      if (input) {
+        input.value = query;
+        handleAiChatSubmit(new Event('submit'));
+      }
     }
 
     function handleAiChatSubmit(e) {
       e.preventDefault();
       const input = document.getElementById('aiChatInput');
+      if (!input) return;
       const query = input.value.trim();
       if (!query) return;
 
@@ -771,7 +891,7 @@
         } else if (q.includes('nda') || q.includes('privacy')) {
           reply = "Absolute privacy is guaranteed. Check the <strong>'Require mutual Non-Disclosure Agreement'</strong> box at the bottom of the form.";
         } else if (q.includes('quote') || q.includes('price') || q.includes('cost')) {
-          reply = "You can click on the tabs at the top of the form (Essential, Standard, Professional, Ultra) to view package pricing! Or click the WhatsApp button for custom quotes.";
+          reply = "You can click on the tabs at the top of the form (Essential, Standard, Professional, Ultra) to view package pricing, or click the WhatsApp button for custom quotes.";
         } else {
           reply = `Got it! For questions regarding "<em>${query}</em>", feel free to add a note directly in the <strong>💬 Direct Message</strong> box or click through to our WhatsApp!`;
         }
@@ -789,13 +909,28 @@
       }
     }
 
-    // Command Hub Stream (JSONP Implementation)
-    function promptAdminModal() { document.getElementById('pinModal').classList.remove('hidden'); setTimeout(() => document.getElementById('adminPin').focus(), 50); }
-    function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); document.getElementById('adminPin').value = ''; }
+    function promptAdminModal() { 
+      const modal = document.getElementById('pinModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          const pinInput = document.getElementById('adminPin');
+          if (pinInput) pinInput.focus();
+        }, 50);
+      }
+    }
+
+    function closePinModal() { 
+      const modal = document.getElementById('pinModal');
+      if (modal) modal.classList.add('hidden'); 
+      const pinInput = document.getElementById('adminPin');
+      if (pinInput) pinInput.value = ''; 
+    }
 
     const VALID_ADMIN_PINS = ['1234', '5678', '9900'];
     function verifyAndOpenHub() {
-      const pin = document.getElementById('adminPin').value.trim();
+      const pinInput = document.getElementById('adminPin');
+      const pin = pinInput ? pinInput.value.trim() : '';
       if (VALID_ADMIN_PINS.includes(pin)) {
         closePinModal();
         document.getElementById('clientIntakeView').classList.add('hidden');
@@ -804,7 +939,7 @@
         refreshHubData();
       } else { 
         alert('Invalid PIN Access Denied.'); 
-        document.getElementById('adminPin').value = '';
+        if (pinInput) pinInput.value = '';
       }
     }
 
@@ -814,15 +949,22 @@
       document.getElementById('hubExitBtn').classList.add('hidden');
     }
 
+    // Live Submissions Feed & Modal Handling
+    let liveBriefsData = [];
+
     function refreshHubData() {
       const tbody = document.getElementById('briefsTableBody');
-      tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono">Loading real-time submissions...</td></tr>';
-      
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-12 text-center text-[#E8855A] font-mono tracking-wide">Syncing submissions from Google Sheets...</td></tr>';
+      }
+
       const oldScript = document.getElementById('hubJsonpScript');
       if (oldScript) oldScript.remove();
 
       window.handleHubDataResponse = function(rows) {
-        renderHubTable(rows);
+        liveBriefsData = rows || [];
+        updateMetrics(liveBriefsData);
+        renderHubTable(liveBriefsData);
         const script = document.getElementById('hubJsonpScript');
         if (script) script.remove();
       };
@@ -831,29 +973,112 @@
       script.id = 'hubJsonpScript';
       script.src = `${APPS_SCRIPT_WEBAPP_URL}?callback=handleHubDataResponse&t=${Date.now()}`;
       script.onerror = function() {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Unable to load data. Click "Open Sheet ↗" above to view directly in Google Sheets.</td></tr>';
+        if (tbody) {
+          tbody.innerHTML = '<tr><td colspan="6" class="p-10 text-center text-slate-400">Unable to load data. Click "Open Sheet Database ↗" above to view directly in Google Sheets.</td></tr>';
+        }
       };
       document.body.appendChild(script);
     }
 
+    function updateMetrics(rows) {
+      const totalEl = document.getElementById('metricTotalBriefs');
+      if (totalEl) totalEl.textContent = rows.length;
+      
+      const rushCount = rows.filter(r => (r.timeline || '').includes('1 day') || (r.timeline || '').includes('3 days')).length;
+      const rushEl = document.getElementById('metricRushOrders');
+      if (rushEl) rushEl.textContent = rushCount;
+
+      const ndaCount = rows.filter(r => (r.nda || '').toLowerCase() === 'yes').length;
+      const ndaEl = document.getElementById('metricNdaCount');
+      if (ndaEl) ndaEl.textContent = ndaCount;
+    }
+
     function renderHubTable(rows) {
       const tbody = document.getElementById('briefsTableBody');
+      if (!tbody) return;
+
       if (!rows || rows.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">No submissions found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="p-12 text-center text-slate-400">No client submissions found.</td></tr>';
         return;
       }
+
       let html = '';
-      rows.forEach(r => {
-        const fileBtn = r.driveLink ? `<a href="${r.driveLink}" target="_blank" class="text-[#E8855A] hover:underline font-mono">View File ↗</a>` : '<span class="text-slate-600">None</span>';
-        html += `<tr class="hover:bg-white/[0.02]">
-          <td class="p-3.5 font-mono text-slate-400 text-[11px]">${r.timestamp}</td>
-          <td class="p-3.5"><p class="font-bold text-white text-xs">${r.clientName}</p><p class="text-[11px] text-slate-400">${r.company} • ${r.email}</p></td>
-          <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D36B3F]/10 text-[#E8855A] border border-[#D36B3F]/20">${r.category}</span></td>
-          <td class="p-3.5 text-amber-200 font-medium bg-amber-950/20 rounded-lg">"${r.directMessage}"</td>
-          <td class="p-3.5 text-right">${fileBtn}</td>
+      rows.forEach((r, index) => {
+        const fileBtn = r.driveLink 
+          ? `<a href="${r.driveLink}" target="_blank" rel="noopener noreferrer" class="text-[#E8855A] hover:underline font-mono inline-flex items-center gap-1 font-semibold"><span>📎</span> Assets ↗</a>` 
+          : '<span class="text-slate-500 font-mono">None</span>';
+
+        const ndaBadge = (r.nda || '').toLowerCase() === 'yes'
+          ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">NDA</span>`
+          : '';
+
+        html += `
+        <tr class="hover:bg-white/[0.03] transition-colors">
+          <td class="p-4 md:p-5">
+            <span class="font-mono font-bold text-[#E8855A] text-xs">${r.jobId || '#CD-????'}</span>
+            <p class="text-[11px] font-mono text-slate-400 mt-1">${r.timestamp}</p>
+          </td>
+
+          <td class="p-4 md:p-5">
+            <p class="font-bold text-white text-sm">${r.clientName}</p>
+            <p class="text-xs text-slate-400 font-medium">${r.company} <span class="text-slate-600">•</span> ${r.email}</p>
+          </td>
+
+          <td class="p-4 md:p-5">
+            <span class="inline-block px-2.5 py-1 rounded-lg text-xs font-bold bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/30">${r.category}</span>
+          </td>
+
+          <td class="p-4 md:p-5">
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-slate-300 text-xs">${r.timeline || 'Standard'}</span>
+              ${ndaBadge}
+            </div>
+          </td>
+
+          <td class="p-4 md:p-5 max-w-xs">
+            <div class="p-2.5 rounded-xl bg-amber-950/20 border border-amber-500/20 text-amber-200 text-xs font-medium truncate" title="${r.directMessage}">
+              💬 "${r.directMessage}"
+            </div>
+          </td>
+
+          <td class="p-4 md:p-5 text-right space-x-2">
+            <button onclick="openBriefModal(${index})" class="gel-surface px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:text-white border border-white/10 hover:border-[#D36B3F]/50 transition-all">
+              Inspect Brief
+            </button>
+            ${fileBtn}
+          </td>
         </tr>`;
       });
+
       tbody.innerHTML = html;
+    }
+
+    function openBriefModal(index) {
+      const item = liveBriefsData[index];
+      if (!item) return;
+
+      document.getElementById('modalJobId').textContent = item.jobId;
+      document.getElementById('modalClientTitle').textContent = `${item.clientName}'s Project Brief`;
+      document.getElementById('modalCompany').textContent = item.company;
+      document.getElementById('modalEmail').textContent = item.email;
+      document.getElementById('modalCategory').textContent = item.category;
+      document.getElementById('modalTimelineNda').textContent = `${item.timeline} (NDA: ${item.nda})`;
+      document.getElementById('modalDescription').textContent = item.description;
+      document.getElementById('modalDirectMessage').textContent = item.directMessage;
+
+      const driveCont = document.getElementById('modalDriveContainer');
+      if (item.driveLink) {
+        driveCont.innerHTML = `<a href="${item.driveLink}" target="_blank" rel="noopener noreferrer" class="text-[#E8855A] hover:underline font-mono text-xs font-bold">Open Client Assets in Google Drive ↗</a>`;
+      } else {
+        driveCont.innerHTML = `<span class="text-slate-500 font-mono text-xs">No external file attached</span>`;
+      }
+
+      document.getElementById('briefDetailModal').classList.remove('hidden');
+    }
+
+    function closeBriefModal() {
+      const modal = document.getElementById('briefDetailModal');
+      if (modal) modal.classList.add('hidden');
     }
   </script>
 </body>
