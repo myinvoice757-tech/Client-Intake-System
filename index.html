@@ -3,346 +3,346 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CETORA DESIGN | The Studio One — Client Intake Portal</title>
+  <title>CETORA DESIGN | The Studio One — Client Brief Intake</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Three.js 3D Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #030508;
+      background: radial-gradient(circle at 50% 0%, #1c0e08 0%, #080c16 45%, #040508 100%);
+      background-attachment: fixed;
       color: #f8fafc;
       min-height: 100vh;
-      overflow-x: hidden;
-      margin: 0;
-      padding: 0;
     }
 
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* 3D Dynamic Ambient Canvas */
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Modern 3D Glass Shell */
-    .studio-shell {
-      position: relative;
-      background: linear-gradient(135deg, rgba(13, 18, 30, 0.82) 0%, rgba(6, 9, 15, 0.90) 100%);
+    /* Studio Window Frame */
+    .studio-window {
+      background: linear-gradient(180deg, rgba(14, 19, 32, 0.94) 0%, rgba(8, 11, 18, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 60px rgba(211, 107, 63, 0.08);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow: 0 40px 100px -15px rgba(0, 0, 0, 0.95),
-                  0 0 60px -10px rgba(211, 107, 63, 0.22),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
-    /* Elevated 3D Logo Badge */
-    .logo-3d-pod {
-      position: relative;
-      background: linear-gradient(145deg, #1e293f 0%, #080c14 100%);
-      border: 1.5px solid rgba(211, 107, 63, 0.65);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8),
-                  0 0 25px rgba(211, 107, 63, 0.45),
-                  inset 0 1px 2px rgba(255, 255, 255, 0.35);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      transform-style: preserve-3d;
-    }
-    .logo-3d-pod:hover {
-      transform: translateY(-3px) scale(1.06) rotateX(6deg) rotateY(-6deg);
-      border-color: #F08E65;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9),
-                  0 0 35px rgba(211, 107, 63, 0.7),
-                  inset 0 1px 3px rgba(255, 255, 255, 0.5);
+    /* 3D Elevated Logo Card */
+    .logo-badge-3d {
+      background: linear-gradient(145deg, #182033 0%, #080b12 100%);
+      border: 1.5px solid rgba(211, 107, 63, 0.6);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 
+                  0 0 20px rgba(211, 107, 63, 0.4), 
+                  inset 0 1px 2px rgba(255, 255, 255, 0.25);
     }
 
-    /* Sleek Modern Input Fields */
+    /* Input Field Styling */
     .studio-input {
-      background: rgba(10, 15, 26, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0f1524;
+      border: 1px solid #1c263c;
       color: #f8fafc;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 13px;
-      padding: 11px 15px;
+      padding: 10px 14px;
       transition: all 0.2s ease;
       width: 100%;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
     }
     .studio-input:focus {
       outline: none;
-      background: rgba(13, 20, 36, 0.95);
       border-color: #D36B3F;
-      box-shadow: 0 0 0 3px rgba(211, 107, 63, 0.25), inset 0 1px 2px rgba(0,0,0,0.5);
+      box-shadow: 0 0 0 2px rgba(211, 107, 63, 0.25);
     }
     .studio-input::placeholder {
       color: #475569;
     }
 
-    /* Dual-Spectrum Range Slider */
+    /* Range Slider */
     input[type=range] {
       -webkit-appearance: none;
-      background: #182236;
-      height: 5px;
+      background: #1c2436;
+      height: 4px;
       border-radius: 9999px;
       outline: none;
       width: 100%;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #F08E65 0%, #D36B3F 100%);
+      background: #D36B3F;
       cursor: pointer;
-      box-shadow: 0 0 14px rgba(211, 107, 63, 1), 0 2px 5px rgba(0,0,0,0.6);
+      box-shadow: 0 0 12px rgba(211, 107, 63, 0.95);
       border: 2px solid #ffffff;
       transition: transform 0.15s ease;
     }
     input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.25);
+      transform: scale(1.2);
     }
 
-    /* 3D Color Swatch Card */
-    .color-card-3d {
-      background: rgba(13, 19, 32, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 9px 12px;
+    /* Color Swatch Card */
+    .color-slot {
+      background: #0f1524;
+      border: 1px solid #1c263c;
+      border-radius: 10px;
+      padding: 8px 10px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: border-color 0.2s ease;
     }
-    .color-card-3d:hover {
-      border-color: rgba(211, 107, 63, 0.6);
-      background: rgba(21, 30, 50, 0.85);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4), 0 0 15px rgba(211, 107, 63, 0.2);
+    .color-slot:hover {
+      border-color: #D36B3F;
     }
-
-    /* Floating AI Widget Animation */
-    @keyframes floatOrb {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-7px) rotate(2deg); }
-    }
-    .ai-orb-float {
-      animation: floatOrb 4.5s ease-in-out infinite;
-    }
-
-    /* Smooth Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #030508; }
-    ::-webkit-scrollbar-thumb { background: #1c263c; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #D36B3F; }
   </style>
 </head>
-<body class="selection:bg-[#D36B3F] selection:text-white relative">
+<body class="flex items-center justify-center p-3 sm:p-6 md:p-8 selection:bg-[#D36B3F] selection:text-white">
 
-  <!-- Interactive Three.js 3D Cyber Mesh Canvas -->
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- Content Container with Depth -->
-  <div class="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-6 md:p-8">
+  <!-- Central Shell Window -->
+  <div class="studio-window w-full max-w-[1320px] rounded-2xl overflow-hidden flex flex-col my-auto">
     
-    <div class="studio-shell w-full max-w-[1240px] rounded-3xl overflow-hidden my-auto border border-white/10">
+    <!-- Window Top Header -->
+    <div class="h-16 bg-[#070a12]/90 border-b border-white/10 px-6 sm:px-8 flex items-center justify-between select-none">
       
-      <!-- Top Sleek Header Bar -->
-      <div class="h-16 bg-[#060912]/90 border-b border-white/10 px-6 sm:px-8 flex items-center justify-between select-none">
-        
-        <!-- Left 3D Emblem & Studio Identity -->
-        <div id="secretLogoTrigger" class="flex items-center gap-3.5 cursor-pointer group" title="Cetora Design • The Studio One">
-          <div class="logo-3d-pod w-11 h-11 rounded-xl p-1.5 flex items-center justify-center">
-            <img src="./CD.svg" alt="Cetora Emblem" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(211,107,63,0.6)]">
-          </div>
-          <div class="flex flex-col">
-            <span class="text-sm sm:text-base font-extrabold tracking-widest uppercase text-white group-hover:text-[#E8855A] transition-colors flex items-center gap-1.5">
-              CETORA <span class="text-[#D36B3F]">DESIGN</span>
-            </span>
-            <span class="text-[9px] tracking-[0.28em] uppercase text-slate-400 font-mono">The Studio One</span>
-          </div>
+      <!-- Studio Emblem & Branding -->
+      <div id="secretLogoTrigger" class="flex items-center gap-3.5 cursor-pointer group" title="Cetora Design • The Studio One">
+        <div class="logo-badge-3d w-11 h-11 rounded-xl p-1.5 flex items-center justify-center">
+          <img src="./CD.svg" alt="Cetora Emblem" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(211,107,63,0.5)]">
+        </div>
+        <div class="flex flex-col">
+          <span class="text-sm sm:text-base font-extrabold tracking-widest uppercase text-white group-hover:text-[#E8855A] transition-colors flex items-center gap-1.5">
+            CETORA <span class="text-[#D36B3F]">DESIGN</span>
+          </span>
+          <span class="text-[9px] tracking-[0.28em] uppercase text-slate-400 font-mono">The Studio One</span>
+        </div>
+      </div>
+
+      <!-- Right Header Utilities -->
+      <div class="flex items-center gap-3">
+        <div id="liveClock" class="text-xs font-mono text-slate-400 bg-black/50 px-3 py-1.5 rounded-lg border border-white/5">
+          12:08:26 PM
+        </div>
+        <button id="viewToggleBtn" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/10 hover:bg-[#D36B3F] text-white transition-all flex items-center gap-1.5 border border-white/10">
+          <i class="fa-solid fa-terminal text-[10px]"></i>
+          <span id="viewToggleLabel">Command Hub</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- MAIN INTAKE CONTENT -->
+    <div id="intakeView" class="p-6 sm:p-8 md:p-10">
+      
+      <!-- Center Title Banner -->
+      <div class="text-center mb-8">
+        <span class="inline-block text-[10px] font-extrabold tracking-[0.3em] uppercase text-[#E8855A] bg-[#D36B3F]/10 border border-[#D36B3F]/30 px-3.5 py-1 rounded-full mb-3 shadow-[0_0_15px_rgba(211,107,63,0.15)]">
+          OFFICIAL JOB ORDER SYSTEM
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Client Brief <span class="text-[#D36B3F]">Intake</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400 mt-2">
+          Submit your creative vision, brand parameters, and design requirements for Studio One review.
+        </p>
+      </div>
+
+      <!-- SECTION 1: SERVICE PACKAGE -->
+      <div class="mb-8 max-w-3xl mx-auto">
+        <div class="text-center text-[11px] font-bold tracking-widest uppercase text-[#D36B3F] mb-3">
+          SELECT SERVICE PACKAGE
         </div>
 
-        <!-- Right Header Utilities -->
-        <div class="flex items-center gap-3">
-          <div id="liveClock" class="text-xs font-mono text-slate-400 bg-black/60 px-3 py-1.5 rounded-lg border border-white/10 shadow-inner">
-            12:08:26 PM
-          </div>
-          <button id="viewToggleBtn" class="text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-[#D36B3F] hover:text-black text-white transition-all flex items-center gap-2 border border-white/10 shadow-sm">
-            <i class="fa-solid fa-terminal text-[10px]"></i>
-            <span id="viewToggleLabel">Command Hub</span>
+        <!-- Horizontal Tier Nav Tabs -->
+        <div class="bg-[#0b0f19] border border-white/10 rounded-xl p-1.5 grid grid-cols-4 gap-1 text-center select-none mb-4">
+          <button type="button" class="tier-tab py-2 px-3 rounded-lg text-xs font-bold transition-all bg-[#1a2336] text-white shadow" data-tier="Essential">
+            Essential
+          </button>
+          <button type="button" class="tier-tab py-2 px-3 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Standard">
+            Standard
+          </button>
+          <button type="button" class="tier-tab relative py-2 px-3 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Pro">
+            <span class="absolute -top-2 right-1/2 translate-x-1/2 bg-[#D36B3F] text-black text-[8px] font-black uppercase px-1.5 py-0.2 rounded-full tracking-wider">POPULAR</span>
+            Professional
+          </button>
+          <button type="button" class="tier-tab py-2 px-3 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Ultra">
+            Ultra
           </button>
         </div>
 
+        <!-- Tier Dynamic Feature Card -->
+        <div class="bg-[#0e1422] border border-white/10 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-inner">
+          <div>
+            <span id="tierSubtitle" class="text-[11px] font-mono uppercase tracking-widest text-slate-400">ESSENTIAL</span>
+            <div class="flex items-baseline gap-1 my-1">
+              <span id="tierPrice" class="text-3xl font-extrabold text-white">$149</span>
+              <span id="tierDec" class="text-sm text-slate-400 font-bold">.99</span>
+            </div>
+            <p id="tierDesc" class="text-xs text-slate-400">Perfect for startups and foundational identity design.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-xs text-slate-300">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature1">1 Base Concept</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature2">2 Revisions</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature3">Standard Delivery</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+              <span id="tierFeature4">Vector & Web Formats</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- MAIN INTAKE VIEW -->
-      <div id="intakeView" class="p-6 sm:p-8 md:p-10">
-        
-        <!-- Center Title Banner -->
-        <div class="text-center mb-8">
-          <span class="inline-block text-[10px] font-extrabold tracking-[0.3em] uppercase text-[#E8855A] bg-[#D36B3F]/15 border border-[#D36B3F]/40 px-4 py-1 rounded-full mb-3 shadow-[0_0_20px_rgba(211,107,63,0.25)]">
-            Official Job Order System
-          </span>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-            Client Brief <span class="text-[#D36B3F]">Intake</span>
-          </h1>
-          <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl mx-auto">
-            Submit your creative vision, brand parameters, and design requirements for Studio One review.
-          </p>
-        </div>
+      <!-- MAIN FORM WITH 3 BALANCED COLUMNS -->
+      <form id="clientBriefForm">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- COLUMN 1: CLIENT BASICS -->
+          <div class="space-y-4">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/5">
+              2. CLIENT BASICS
+            </div>
 
-        <!-- SECTION 1: SERVICE PACKAGE -->
-        <div class="mb-8 max-w-3xl mx-auto">
-          <div class="text-center text-[11px] font-bold tracking-widest uppercase text-[#D36B3F] mb-3">
-            Select Service Package
-          </div>
-
-          <!-- Horizontal Tier Tabs -->
-          <div class="bg-[#080d17]/80 border border-white/10 rounded-2xl p-1.5 grid grid-cols-4 gap-1.5 text-center select-none mb-4 shadow-xl">
-            <button type="button" class="tier-tab py-2.5 px-3 rounded-xl text-xs font-bold transition-all bg-[#1a253a] text-white shadow-lg border border-white/10" data-tier="Essential">
-              Essential
-            </button>
-            <button type="button" class="tier-tab py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Standard">
-              Standard
-            </button>
-            <button type="button" class="tier-tab relative py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Pro">
-              <span class="absolute -top-2 right-1/2 translate-x-1/2 bg-[#D36B3F] text-black text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-wider shadow">Popular</span>
-              Professional
-            </button>
-            <button type="button" class="tier-tab py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all" data-tier="Ultra">
-              Ultra
-            </button>
-          </div>
-
-          <!-- Tier Dynamic Display Card -->
-          <div class="bg-gradient-to-br from-[#0e1626]/90 to-[#070b14]/90 border border-white/10 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-12 -right-12 w-40 h-40 bg-[#D36B3F]/10 rounded-full blur-2xl pointer-events-none"></div>
             <div>
-              <span id="tierSubtitle" class="text-[11px] font-mono uppercase tracking-widest text-[#E8855A]">Essential</span>
-              <div class="flex items-baseline gap-1 my-1">
-                <span id="tierPrice" class="text-3xl sm:text-4xl font-black text-white">$149</span>
-                <span id="tierDec" class="text-sm text-slate-400 font-bold">.99</span>
-              </div>
-              <p id="tierDesc" class="text-xs text-slate-400">Perfect for startups and foundational identity design.</p>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Your Full Name *</label>
+              <input type="text" id="clientName" required placeholder="e.g. John Doe" class="studio-input">
             </div>
 
-            <div class="grid grid-cols-2 gap-x-8 gap-y-2.5 text-xs text-slate-300">
-              <div class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span id="tierFeature1">1 Base Concept</span>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Company / Brand Name *</label>
+              <input type="text" id="companyName" required placeholder="e.g. Acme Studio" class="studio-input">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Email Address *</label>
+              <input type="email" id="clientEmail" required placeholder="john@company.com" class="studio-input">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Project Category *</label>
+              <select id="projectCategory" required class="studio-input">
+                <option value="">Select Category...</option>
+                <option value="Logo Design" selected>Logo Design & Identity</option>
+                <option value="Web Design">Web Design & Front-End</option>
+                <option value="3D Design">3D Design & Assets</option>
+                <option value="Poster Design">Poster Design & Print</option>
+              </select>
+            </div>
+
+            <!-- Direct 1-on-1 Studio Chat (WhatsApp Card) -->
+            <div class="bg-[#0b101a] border border-emerald-500/25 rounded-2xl p-4 text-center mt-2">
+              <div class="w-9 h-9 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto mb-1.5 text-base">
+                <i class="fa-brands fa-whatsapp"></i>
               </div>
-              <div class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span id="tierFeature2">2 Revisions</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span id="tierFeature3">Standard Delivery</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span id="tierFeature4">Vector & Web Formats</span>
-              </div>
+              <div class="text-xs font-bold text-white mb-0.5">Direct 1-on-1 Studio Chat</div>
+              <div class="text-[11px] text-slate-400 mb-2.5">Chat securely and privately with Cetora Design.</div>
+              <a href="https://wa.me/94777074837?text=Hello%20Cetora%20Design%2C%20I%20am%20inquiry%20about%20a%20project" target="_blank" class="w-full inline-block py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-[11px] uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                OPEN DIRECT WHATSAPP CHAT ↗
+              </a>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Estimated Timeline *</label>
+              <select id="timelineSelect" required class="studio-input">
+                <option value="Standard (1-2 weeks)" selected>Standard (1-2 weeks)</option>
+                <option value="3-5 days Priority">3-5 days Priority</option>
+                <option value="1 day Express">1 day Ultra Express</option>
+                <option value="Flexible Timeline">Flexible Timeline</option>
+              </select>
             </div>
           </div>
-        </div>
 
-        <!-- 3-COLUMN STUDIO FORM -->
-        <form id="clientBriefForm">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- COLUMN 2: DESIGN VIBE & AESTHETICS & BRAND PALETTE -->
+          <div class="space-y-6">
             
-            <!-- COLUMN 1: CLIENT BASICS -->
-            <div class="space-y-4">
-              <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/10">
-                2. Client Basics
+            <!-- Vibe Sliders Box -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/5 mb-4">
+                3. DESIGN VIBE & AESTHETICS
               </div>
 
-              <div>
-                <label class="block text-[11px] font-medium text-slate-400 mb-1">Your Full Name *</label>
-                <input type="text" id="clientName" required placeholder="e.g. John Doe" class="studio-input">
-              </div>
-
-              <div>
-                <label class="block text-[11px] font-medium text-slate-400 mb-1">Company / Brand Name *</label>
-                <input type="text" id="companyName" required placeholder="e.g. Acme Studio" class="studio-input">
-              </div>
-
-              <div>
-                <label class="block text-[11px] font-medium text-slate-400 mb-1">Email Address *</label>
-                <input type="email" id="clientEmail" required placeholder="john@company.com" class="studio-input">
-              </div>
-
-              <div>
-                <label class="block text-[11px] font-medium text-slate-400 mb-1">Project Category *</label>
-                <select id="projectCategory" required class="studio-input">
-                  <option value="">Select Category...</option>
-                  <option value="Logo Design" selected>Logo Design & Identity</option>
-                  <option value="Web Design">Web Design & Front-End</option>
-                  <option value="3D Design">3D Design & Assets</option>
-                  <option value="Poster Design">Poster Design & Print</option>
-                </select>
-              </div>
-
-              <!-- WhatsApp Direct Studio Chat Card -->
-              <div class="bg-gradient-to-br from-[#091515] to-[#060c0d] border border-emerald-500/30 rounded-2xl p-5 text-center mt-4 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
-                <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto mb-2 text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                  <i class="fa-brands fa-whatsapp"></i>
+              <div class="bg-[#0b101a] border border-white/10 rounded-2xl p-5 space-y-4">
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Minimal</span>
+                    <span class="text-slate-500">Complex</span>
+                  </div>
+                  <input type="range" id="slMinimal" min="0" max="100" value="50">
                 </div>
-                <div class="text-xs font-bold text-white mb-0.5">Direct 1-on-1 Studio Chat</div>
-                <div class="text-[11px] text-slate-400 mb-3">Chat securely and privately with Cetora Design.</div>
-                <a href="https://wa.me/94777074837?text=Hello%20Cetora%20Design%2C%20I%20am%20inquiry%20about%20a%20project" target="_blank" class="w-full inline-block py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-                  Open Direct WhatsApp Chat ↗
-                </a>
-              </div>
 
-              <div>
-                <label class="block text-[11px] font-medium text-slate-400 mb-1">Estimated Timeline *</label>
-                <select id="timelineSelect" required class="studio-input">
-                  <option value="Standard (1-2 weeks)" selected>Standard (1-2 weeks)</option>
-                  <option value="3-5 days Priority">3-5 days Priority</option>
-                  <option value="1 day Express">1 day Ultra Express</option>
-                  <option value="Flexible Timeline">Flexible Timeline</option>
-                </select>
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Modern</span>
+                    <span class="text-slate-500">Classic</span>
+                  </div>
+                  <input type="range" id="slModern" min="0" max="100" value="75">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Playful</span>
+                    <span class="text-slate-500">Serious</span>
+                  </div>
+                  <input type="range" id="slPlayful" min="0" max="100" value="30">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Loud</span>
+                    <span class="text-slate-500">Subtle</span>
+                  </div>
+                  <input type="range" id="slLoud" min="0" max="100" value="60">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
+                    <span>Luxury</span>
+                    <span class="text-slate-500">Budget</span>
+                  </div>
+                  <input type="range" id="slLuxury" min="0" max="100" value="85">
+                </div>
               </div>
             </div>
 
-            <!-- COLUMN 2: DESIGN VIBE & BRAND PALETTE -->
-            <div class="space-y-6">
-              
-              <!-- Vibe Sliders Box -->
-              <div>
-                <div class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F] pb-1 border-b border-white/10 mb-4">
-                  3. Design Vibe & Aesthetics
+            <!-- Brand Color Palette Swatches -->
+            <div>
+              <div class="flex items-center justify-between pb-1 border-b border-white/5 mb-3">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#D36B3F]">4. BRAND COLOR PALETTE</span>
+                <span class="text-[10px] font-mono text-slate-500">6 color slots</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="color-slot" onclick="document.getElementById('cBase').click()">
+                  <input type="color" id="cBase" value="#070a12" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
+                  <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">BASE</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexBase">#070a12</div>
+                  </div>
                 </div>
 
-                <div class="bg-[#090e18]/80 border border-white/10 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div class="color-slot" onclick="document.getElementById('cPrimary').click()">
+                  <input type="color" id="cPrimary" value="#D36B3F" class="w-8 h-8 rounded border border-white/10 cursor-pointer bg-transparent">
                   <div>
-                    <div class="flex justify-between text-[11px] font-semibold text-slate-300 mb-1">
-                      <span>Minimal</span>
-                      <span class="text-slate-500">Complex</span>
-                    </div>
-                    <input type="range" id="slMinimal" min="0" max="100" value="50">
+                    <div class="text-[10px] font-bold text-[#E8855A] uppercase">PRIMARY</div>
+                    <div class="text-[11px] font-mono text-slate-300" id="hexPrimary">#D36B3F</div>
                   </div>
+                </div>
 
-                  <div>
-                    <div class="flex justify-between text-[11px] font-semibold text-slate-30
+                <div class="color-slot" onclick="document.getElementById('cSecondary').click()">
+                  <input type="color" id="cSecondary" value="#8C3E1F" class="w-8 h-8 rounded border border-white/10 cursor
