@@ -1,580 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cetora Design | The Studio One Portal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { --font-sans: 'Plus Jakarta Sans', sans-serif; --font-mono: 'JetBrains Mono', monospace; }
-    body { font-family: var(--font-sans); background-color: #030712; color: #f8fafc; overflow-x: hidden; min-height: 100vh; }
-    
-    select, option { color-scheme: dark; background-color: #030712 !important; color: #f8fafc !important; accent-color: #D36B3F !important; }
-    select:focus > option:checked { background: #D36B3F !important; color: #ffffff !important; }
-
-    input[type=range] { -webkit-appearance: none; background: transparent; position: relative; z-index: 10; cursor: pointer; }
-    input[type=range]:focus { outline: none; }
-    input[type=range]::-webkit-slider-runnable-track { height: 6px; background: #1e293b; border-radius: 999px; }
-    input[type=range]::-webkit-slider-thumb { 
-      -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; 
-      background: radial-gradient(circle at 35% 35%, #E8855A 0%, #D36B3F 60%, #8C3E1F 100%); 
-      cursor: pointer; margin-top: -6px; box-shadow: 0 0 10px rgba(211,107,63,0.5); 
-    }
-
-    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; border-radius: 0.75rem; }
-    input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0.75rem; }
-
-    .glow-orb { position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.3; pointer-events: none; animation: floatOrb 18s ease-in-out infinite alternate; }
-    .orb-1 { width: 500px; height: 500px; background: #D36B3F; top: -10%; left: 5%; }
-    .orb-2 { width: 550px; height: 550px; background: #8C3E1F; bottom: 5%; right: 5%; animation-duration: 22s; }
-    .orb-3 { width: 400px; height: 400px; background: #E8855A; top: 40%; left: 45%; animation-duration: 16s; }
-    @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.08); } 100% { transform: translate(-30px, 40px) scale(0.95); } }
-    
-    .mac-window { 
-      background: rgba(13, 17, 28, 0.75); 
-      backdrop-filter: blur(50px) saturate(200%); 
-      -webkit-backdrop-filter: blur(50px) saturate(200%); 
-      border: 1px solid rgba(255, 255, 255, 0.15); 
-      border-top: 1px solid rgba(211, 107, 63, 0.4); 
-      box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.95), 0 0 2px 1px rgba(255, 255, 255, 0.1) inset; 
-    }
-    
-    .gel-surface { 
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(15, 20, 32, 0.85); 
-      border: 1px solid rgba(255, 255, 255, 0.1); 
-      border-top: 1px solid rgba(255, 255, 255, 0.2); 
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05); 
-      transition: all 0.25s ease; 
-    }
-    .gel-surface:hover { border-color: rgba(211, 107, 63, 0.5); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(211, 107, 63, 0.15); }
-    .gel-surface:focus-within { border-color: #D36B3F; box-shadow: 0 0 0 3px rgba(211, 107, 63, 0.3); }
-    
-    .gel-btn { background: linear-gradient(180deg, #E8855A 0%, #D36B3F 100%); box-shadow: 0 4px 18px rgba(211, 107, 63, 0.45); transition: all 0.2s ease; border-top: 1px solid #ffb291; }
-    .gel-btn:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.1); box-shadow: 0 6px 24px rgba(211, 107, 63, 0.6); }
-    .gel-btn:disabled { background: #1e293b; cursor: not-allowed; opacity: 0.6; border-top: none; }
-    
-    .gel-btn-secondary { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.2s ease; }
-    .gel-btn-secondary:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); color: #fff; }
-
-    input[type="radio"]:checked + div.tab-label {
-      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2);
-      border-color: rgba(255,255,255,0.1);
-    }
-    
-    .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-    .tab-content.active { display: flex; opacity: 1; transform: translateY(0); }
-
-    @keyframes avatarFloat { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-8px) rotate(1.5deg); } }
-    @keyframes holoPulse { 0%, 100% { box-shadow: 0 0 20px rgba(211, 107, 63, 0.4), 0 0 40px rgba(232, 133, 90, 0.2); } 50% { box-shadow: 0 0 32px rgba(211, 107, 63, 0.7), 0 0 60px rgba(232, 133, 90, 0.45); } }
-    @keyframes ringSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .avatar-float { animation: avatarFloat 4s ease-in-out infinite; }
-    .holo-glow { animation: holoPulse 3s ease-in-out infinite; }
-    .ring-rotate { animation: ringSpin 12s linear infinite; }
-    .chat-scroll::-webkit-scrollbar { width: 5px; }
-    .chat-scroll::-webkit-scrollbar-thumb { background: rgba(211, 107, 63, 0.4); border-radius: 10px; }
-  </style>
-</head>
-<body class="relative flex items-center justify-center p-3 md:p-6 lg:p-8">
-
-  <div class="glow-orb orb-1"></div>
-  <div class="glow-orb orb-2"></div>
-  <div class="glow-orb orb-3"></div>
-
-  <main class="mac-window relative z-10 w-full max-w-7xl rounded-2xl overflow-hidden my-auto min-h-[640px]">
-    
-    <header class="h-20 px-5 md:px-7 border-b border-white/[0.08] flex items-center justify-between bg-black/40 shadow-sm relative">
-      <div class="flex items-center gap-6">
-        <!-- Logo Trigger with CD.svg Emblem -->
-        <div id="secretLogoTrigger" class="flex items-center gap-4 cursor-pointer select-none group" title="Cetora Design">
-          <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-black/60 border-2 border-[#D36B3F]/40 p-2 flex items-center justify-center shadow-[0_0_20px_rgba(211,107,63,0.3)] transition-transform group-hover:scale-105 overflow-hidden">
-            <img src="./CD.svg" alt="Cetora Design Emblem" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(211,107,63,0.4)]">
-          </div>
-          <div class="flex flex-col">
-            <span class="text-base md:text-xl font-extrabold tracking-widest uppercase text-white group-hover:text-[#E8855A] transition-colors">
-              CETORA <span class="text-[#D36B3F]">DESIGN</span>
-            </span>
-            <span class="text-[10px] md:text-xs tracking-[0.25em] uppercase text-slate-400 font-mono mt-0.5">The Studio One</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <button id="hubExitBtn" onclick="exitDesignerHub()" class="hidden px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 border border-white/10 transition-all">← Public Intake</button>
-        <div id="liveClock" class="text-xs md:text-sm font-mono font-semibold text-[#E8855A] bg-white/[0.06] px-4 py-2 rounded-full border border-white/[0.1] shadow-inner">--:--:--</div>
-      </div>
-    </header>
-
-    <div id="clientIntakeView" class="pb-10">
-      <section class="text-center pt-10 pb-6 px-6">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/30 mb-4 shadow-sm">OFFICIAL JOB ORDER SYSTEM</span>
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-3 drop-shadow-md">Client Brief <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E8855A] via-[#D36B3F] to-amber-300">Intake</span></h1>
-        <p class="text-xs md:text-sm text-slate-300 max-w-2xl mx-auto font-medium tracking-wide">Submit your creative vision, brand parameters, and design requirements for Studio One review.</p>
-      </section>
-
-      <form id="intakeForm" class="px-6 md:px-8 lg:px-10 grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8 items-start" onsubmit="handleFormSubmission(event)">
-        
-        <div class="col-span-1 lg:col-span-3 mb-4 flex flex-col items-center">
-          <div class="w-full flex items-center justify-center gap-2 pb-2 mb-4">
-            <span class="text-sm font-bold tracking-wider uppercase text-[#E8855A]">Select Service Package</span>
-          </div>
-          
-          <div class="flex p-1.5 bg-[#03050a] rounded-2xl border border-white/10 shadow-[inset_0_2px_10px_rgba(0,0,0,0.8)] w-full max-w-3xl mb-6 relative">
-            <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Essential Tier" class="peer sr-only" onchange="updateTierDisplay('essential')" required>
-              <div class="tab-label py-2.5 rounded-xl text-xs font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Essential</div>
-            </label>
-            
-            <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Standard Tier" class="peer sr-only" onchange="updateTierDisplay('standard')" required>
-              <div class="tab-label py-2.5 rounded-xl text-xs font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Standard</div>
-            </label>
-
-            <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Pro Tier" class="peer sr-only" onchange="updateTierDisplay('professional')" required checked>
-              <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#D36B3F] text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-md z-20 pointer-events-none">Popular</div>
-              <div class="tab-label py-2.5 rounded-xl text-xs font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Professional</div>
-            </label>
-
-            <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Ultra Tier" class="peer sr-only" onchange="updateTierDisplay('ultra')" required>
-              <div class="tab-label py-2.5 rounded-xl text-xs font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Ultra</div>
-            </label>
-          </div>
-
-          <div class="w-full max-w-3xl relative">
-            <div id="tier-card-essential" class="tab-content flex-col md:flex-row gap-6 gel-surface p-6 rounded-3xl border border-white/10 shadow-2xl">
-              <div class="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 text-center md:text-left">
-                <h3 class="text-sm font-black text-slate-300 uppercase tracking-widest mb-1">Essential</h3>
-                <div class="text-4xl font-black text-white mb-1">$149<span class="text-lg text-slate-500 font-medium">.99</span></div>
-                <p class="text-xs text-slate-500">Perfect for startups</p>
-              </div>
-              <div class="md:w-2/3 flex flex-col justify-center">
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm text-slate-300">
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 1 Base Concept</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 2 Revisions</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Standard Delivery</li>
-                </ul>
-              </div>
-            </div>
-
-            <div id="tier-card-standard" class="tab-content flex-col md:flex-row gap-6 gel-surface p-6 rounded-3xl border border-white/10 shadow-2xl">
-              <div class="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 text-center md:text-left">
-                <h3 class="text-sm font-black text-[#E8855A] uppercase tracking-widest mb-1">Standard</h3>
-                <div class="text-4xl font-black text-white mb-1">$299<span class="text-lg text-slate-500 font-medium">.99</span></div>
-                <p class="text-xs text-slate-500">Growing businesses</p>
-              </div>
-              <div class="md:w-2/3 flex flex-col justify-center">
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm text-slate-300">
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 3 Unique Concepts</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 5 Revisions</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Source Files (AI, PSD)</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Color Palette Specs</li>
-                </ul>
-              </div>
-            </div>
-
-            <div id="tier-card-professional" class="tab-content active flex-col md:flex-row gap-6 gel-surface p-6 rounded-3xl border border-[#D36B3F]/40 shadow-[0_15px_40px_rgba(211,107,63,0.15)] relative">
-              <div class="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#D36B3F]/5 to-transparent pointer-events-none"></div>
-              <div class="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 text-center md:text-left z-10">
-                <h3 class="text-sm font-black text-amber-400 uppercase tracking-widest mb-1">Professional</h3>
-                <div class="text-4xl font-black text-white mb-1">$599<span class="text-lg text-slate-500 font-medium">.99</span></div>
-                <p class="text-xs text-slate-500">Full brand identity</p>
-              </div>
-              <div class="md:w-2/3 flex flex-col justify-center z-10">
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm text-slate-300">
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Full Brand Guidelines</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Unlimited Revisions</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 3D Assets & Mockups</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Priority Support</li>
-                </ul>
-              </div>
-            </div>
-
-            <div id="tier-card-ultra" class="tab-content flex-col md:flex-row gap-6 gel-surface p-6 rounded-3xl border border-emerald-500/30 shadow-[0_15px_40px_rgba(16,185,129,0.1)]">
-              <div class="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 pb-4 md:pb-0 md:pr-6 text-center md:text-left">
-                <h3 class="text-sm font-black text-emerald-400 uppercase tracking-widest mb-1">Ultra</h3>
-                <div class="text-4xl font-black text-white mb-1">$999<span class="text-lg text-slate-500 font-medium">+</span></div>
-                <p class="text-xs text-slate-500">Studio takeover</p>
-              </div>
-              <div class="md:w-2/3 flex flex-col justify-center">
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm text-slate-300">
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Dedicated Lead Designer</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Full Web Development</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Motion Graphics</li>
-                  <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Enterprise Rights</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- COLUMN 1: CLIENT BASICS -->
-        <div class="flex flex-col gap-5">
-          <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
-            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Client Basics</span>
-          </div>
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Your Full Name <span class="text-rose-400">*</span></label>
-            <input type="text" id="clientName" required placeholder="e.g. John Doe" class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
-          </div>
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Company / Brand Name <span class="text-rose-400">*</span></label>
-            <input type="text" id="companyName" required placeholder="e.g. Acme Studio" class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
-          </div>
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Email Address <span class="text-rose-400">*</span></label>
-            <input type="email" id="clientEmail" required placeholder="john@company.com" class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
-          </div>
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Project Category <span class="text-rose-400">*</span></label>
-            <div class="relative">
-              <select id="projectCategory" required class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white focus:outline-none appearance-none cursor-pointer">
-                <option value="" disabled selected class="bg-[#030712] text-slate-400">Select Category...</option>
-                <option value="Logo Design" class="bg-[#030712] text-white">Logo Design</option>
-                <option value="Poster Design" class="bg-[#030712] text-white">Poster Design</option>
-                <option value="3D Design" class="bg-[#030712] text-white">3D Design</option>
-                <option value="Web Design" class="bg-[#030712] text-white">Web Design</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="gel-surface p-4 rounded-xl space-y-3 mt-2">
-            <div class="p-4 rounded-xl bg-black/40 border border-[#25D366]/30 shadow-[0_0_20px_rgba(37,211,102,0.08)] flex flex-col items-center text-center space-y-3">
-              <div class="w-10 h-10 rounded-full bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center text-[#25D366]">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.551 4.188 1.593 6.009L.435 23.565l5.658-1.485c1.761.96 3.743 1.468 5.938 1.468 6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 21.651c-1.815 0-3.593-.487-5.148-1.408l-.368-.219-3.824 1.003 1.023-3.73-.241-.383A9.704 9.704 0 0 1 2.327 12.03c0-5.352 4.355-9.707 9.704-9.707 5.35 0 9.705 4.355 9.705 9.707s-4.355 9.707-9.705 9.707zm5.324-7.25c-.292-.146-1.728-.853-1.996-.951-.268-.098-.464-.146-.659.146-.195.292-.756.951-.926 1.146-.17.195-.34.219-.633.073-1.964-.982-3.136-1.79-4.453-3.483-.17-.219-.018-.337.128-.483.131-.131.292-.34.438-.512.146-.17.195-.292.292-.487.098-.195.049-.365-.024-.512-.073-.146-.659-1.585-.902-2.17-.238-.573-.478-.495-.659-.504-.17-.009-.366-.009-.56-.009-.195 0-.512.073-.78.365-.268.292-1.023.999-1.023 2.437s1.048 2.827 1.194 3.022c.146.195 2.062 3.148 4.994 4.415 2.143.926 2.893 1.004 3.978.854 1.011-.139 3.238-1.321 3.693-2.602.454-1.28.454-2.376.318-2.602-.136-.226-.502-.365-.794-.512z"/></svg>
-              </div>
-              <div>
-                <p class="text-xs font-bold text-white tracking-wide">Direct 1-on-1 Studio Chat</p>
-                <p class="text-[10px] text-slate-300 font-medium">Chat securely and privately with Cetora Design.</p>
-              </div>
-              <a id="whatsappBtn" href="https://wa.me/94777074837" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-[0_4px_14px_rgba(37,211,102,0.35)]">
-                <span>Open Direct WhatsApp Chat ↗</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Estimated Timeline <span class="text-rose-400">*</span></label>
-            <div class="relative">
-              <select id="projectTimeline" required class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white focus:outline-none appearance-none cursor-pointer">
-                <option value="" disabled selected class="bg-[#030712] text-slate-400">Select Delivery Speed...</option>
-                <option value="1 day" class="bg-[#030712] text-white">1 day</option>
-                <option value="3 days" class="bg-[#030712] text-white">3 days</option>
-                <option value="1 week" class="bg-[#030712] text-white">1 week</option>
-                <option value="2 weeks" class="bg-[#030712] text-white">2 weeks</option>
-                <option value="4 weeks" class="bg-[#030712] text-white">4 weeks</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- COLUMN 2: DESIGN VIBE & BRAND COLOR PALETTE -->
-        <div class="flex flex-col gap-6">
-          <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
-              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">3. Design Vibe & Aesthetics</span>
-            </div>
-            <div class="gel-surface p-4 rounded-xl space-y-4">
-              <div class="space-y-1.5">
-                <div class="flex justify-between text-xs font-semibold"><span>Minimal</span><span>Complex</span></div>
-                <input type="range" id="vibeMinimal" min="1" max="5" value="3" class="w-full">
-              </div>
-              <div class="space-y-1.5">
-                <div class="flex justify-between text-xs font-semibold"><span>Modern</span><span>Classic</span></div>
-                <input type="range" id="vibeModern" min="1" max="5" value="3" class="w-full">
-              </div>
-              <div class="space-y-1.5">
-                <div class="flex justify-between text-xs font-semibold"><span>Playful</span><span>Serious</span></div>
-                <input type="range" id="vibePlayful" min="1" max="5" value="3" class="w-full">
-              </div>
-              <div class="space-y-1.5">
-                <div class="flex justify-between text-xs font-semibold"><span>Loud</span><span>Subtle</span></div>
-                <input type="range" id="vibeLoud" min="1" max="5" value="3" class="w-full">
-              </div>
-              <div class="space-y-1.5">
-                <div class="flex justify-between text-xs font-semibold"><span>Luxury</span><span>Budget</span></div>
-                <input type="range" id="vibeLuxury" min="1" max="5" value="3" class="w-full">
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between pb-2 border-b border-white/[0.1]">
-              <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">4. Brand Color Palette</span>
-              <span class="text-[10px] font-mono text-slate-400">6 Color Slots</span>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="baseColor" value="#070a12" oninput="document.getElementById('baseColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
-                <div class="flex-1 min-w-0">
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Base</p>
-                  <input type="text" id="baseColorText" value="#070a12" oninput="document.getElementById('baseColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
-                </div>
-              </div>
-
-              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="primaryColor" value="#D36B3F" oninput="document.getElementById('primaryColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
-                <div class="flex-1 min-w-0">
-                  <p class="text-[10px] uppercase font-bold text-[#E8855A] tracking-wider">Primary</p>
-                  <input type="text" id="primaryColorText" value="#D36B3F" oninput="document.getElementById('primaryColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
-                </div>
-              </div>
-
-              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="secondaryColor" value="#8C3E1F" oninput="document.getElementById('secondaryColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
-                <div class="flex-1 min-w-0">
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Secondary</p>
-                  <input type="text" id="secondaryColorText" value="#8C3E1F" oninput="document.getElementById('secondaryColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
-                </div>
-              </div>
-
-              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="accentColor" value="#E8855A" oninput="document.getElementById('accentColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
-                <div class="flex-1 min-w-0">
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Accent</p>
-                  <input type="text" id="accentColorText" value="#E8855A" oninput="document.getElementById('accentColor').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
-                </div>
-              </div>
-
-              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="neutralColor" value="#1e293b" oninput="document.getElementById('neutralColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
-                <div class="flex-1 min-w-0">
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Neutral</p>
-                  <input type="text" id="neutralColorText" value="#1e293b" oninput="document.getElementById('neutralColorText').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
-                </div>
-              </div>
-
-              <div class="gel-surface p-3 rounded-xl flex items-center gap-3">
-                <input type="color" id="lightColor" value="#f8fafc" oninput="document.getElementById('lightColorText').value = this.value" class="w-12 h-12 rounded-xl cursor-pointer bg-transparent border-0 shadow-md">
-                <div class="flex-1 min-w-0">
-                  <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Light</p>
-                  <input type="text" id="lightColorText" value="#f8fafc" oninput="document.getElementById('lightColorText').value = this.value" class="w-full font-mono text-xs font-bold bg-transparent text-white focus:outline-none">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- COLUMN 3: BRIEF DETAILS -->
-        <div class="flex flex-col gap-5">
-          <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
-            <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">5. Brief Details</span>
-          </div>
-          
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Project Description <span class="text-rose-400">*</span></label>
-            <textarea id="projectDesc" required rows="3" placeholder="Outline your project goals, deliverables, and requirements..." class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none resize-none"></textarea>
-          </div>
-
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-[#E8855A] flex items-center gap-1.5">
-              <span>💬</span> Direct Message to Studio Admins
-            </label>
-            <textarea id="clientDirectMessage" rows="2" placeholder="Send a direct note or question to the Cetora lead designer..." class="gel-surface w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none resize-none border-[#D36B3F]/30"></textarea>
-          </div>
-
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold text-slate-200">Upload Assets (Sketches, PDFs, Moodboards)</label>
-            <div id="dropZone" onclick="document.getElementById('fileInput').click()" class="gel-surface border-dashed border-2 border-slate-600 hover:border-[#E8855A] p-4 rounded-xl text-center cursor-pointer transition-colors">
-              <p id="uploadLabel" class="text-xs font-bold text-white uppercase tracking-wider">Drag & Drop Files or Browse</p>
-              <p class="text-[10px] text-slate-400 mt-1">Accepts images, vectors, and PDFs up to 25MB</p>
-              <input type="file" id="fileInput" class="hidden" onchange="handleFileSelection(event)">
-            </div>
-          </div>
-
-          <label class="flex items-center gap-3 p-1 cursor-pointer select-none">
-            <input type="checkbox" id="ndaCheckbox" class="w-4 h-4 rounded bg-black/60 border-slate-500 text-[#D36B3F] focus:ring-0">
-            <span class="text-xs font-semibold text-slate-200">Require mutual Non-Disclosure Agreement (NDA)</span>
-          </label>
-
-          <div class="flex items-center gap-3 pt-1">
-            <button type="button" onclick="resetFormToDefaults()" class="gel-btn-secondary w-1/3 py-3.5 rounded-xl text-slate-300 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5">
-              <span>↺</span> Reset
-            </button>
-            <button type="submit" id="submitBtn" class="gel-btn flex-1 py-3.5 rounded-xl text-slate-950 font-black text-sm uppercase tracking-wider shadow-lg">
-              Submit Design Brief
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <!-- DESIGNER HUB VIEW -->
-    <div id="designerHubView" class="hidden p-6 md:p-8 space-y-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
-        <div>
-          <span class="text-[10px] font-bold tracking-widest text-[#E8855A] uppercase bg-[#D36B3F]/10 px-2.5 py-0.5 rounded-md border border-[#D36B3F]/20">Studio Operations</span>
-          <h2 class="text-2xl font-extrabold text-white mt-1">Designer Command Hub</h2>
-          <p class="text-xs text-slate-400">Live submissions & direct client messages streaming from Google Sheets.</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <button onclick="refreshHubData()" class="gel-surface px-4 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-white"><span>↻</span> Refresh</button>
-          <a href="https://docs.google.com/spreadsheets/d/1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic/edit" target="_blank" class="gel-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-950 uppercase">Open Sheet ↗</a>
-        </div>
-      </div>
-
-      <div class="gel-surface rounded-xl overflow-hidden border border-white/[0.08]">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr class="border-b border-white/[0.08] bg-black/40 text-slate-400 font-bold uppercase tracking-wider">
-                <th class="p-3.5">Timestamp</th>
-                <th class="p-3.5">Client & Company</th>
-                <th class="p-3.5">Category</th>
-                <th class="p-3.5">Direct Message / Inquiry</th>
-                <th class="p-3.5 text-right">Assets</th>
-              </tr>
-            </thead>
-            <tbody id="briefsTableBody" class="divide-y divide-white/[0.04] text-slate-300">
-              <tr><td colspan="5" class="p-8 text-center text-slate-400 font-mono">Loading real-time messages...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Success Confirmation Modal -->
-    <div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
-      <div class="mac-window max-w-md w-full p-8 rounded-3xl text-center space-y-6 border border-white/20">
-        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-[#8C3E1F] via-[#D36B3F] to-amber-200 p-[2px] flex items-center justify-center">
-          <div class="w-full h-full rounded-full bg-[#0a0f1d] flex items-center justify-center">
-            <svg class="w-10 h-10 text-[#E8855A]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
-          </div>
-        </div>
-        <h3 class="text-2xl font-black text-white">Brief & Direct Message Sent!</h3>
-        <p class="text-xs text-slate-300">Your brief and direct message have been securely delivered to Cetora Design.</p>
-        <button type="button" onclick="closeSuccessModal()" class="gel-btn w-full py-3.5 rounded-xl text-slate-950 font-black text-xs uppercase tracking-wider">Done & Return</button>
-      </div>
-    </div>
-  </main>
-
-  <!-- 3D AI Concierge Aria -->
-  <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3 select-none">
-    <button type="button" onclick="toggleAiAssistant()" class="avatar-float relative group cursor-pointer focus:outline-none" title="Chat with Aria - Cetora AI">
-      <div class="ring-rotate absolute -inset-2.5 rounded-full border border-dashed border-[#D36B3F]/50 pointer-events-none"></div>
-      <div id="holoAura" class="holo-glow absolute inset-0 rounded-full bg-gradient-to-tr from-[#D36B3F] via-[#E8855A] to-amber-500 opacity-60 blur-md"></div>
-      <div class="relative w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-b from-[#E8855A] via-[#D36B3F] to-[#8C3E1F] shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
-        <div class="w-full h-full rounded-full bg-[#070b16] overflow-hidden relative flex items-center justify-center border border-white/20">
-          <svg class="w-full h-full transform scale-110 translate-y-1" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="faceGrad" cx="50%" cy="40%" r="55%">
-                <stop offset="0%" stop-color="#ffd5b8"/>
-                <stop offset="70%" stop-color="#f5a77f"/>
-                <stop offset="100%" stop-color="#c97148"/>
-              </radialGradient>
-              <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ff9a62"/>
-                <stop offset="45%" stop-color="#d36b3f"/>
-                <stop offset="100%" stop-color="#4a1505"/>
-              </linearGradient>
-              <linearGradient id="visorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
-                <stop offset="50%" stop-color="#818cf8" stop-opacity="0.75"/>
-                <stop offset="100%" stop-color="#c084fc" stop-opacity="0.9"/>
-              </linearGradient>
-              <linearGradient id="suitGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#1e293b"/>
-                <stop offset="100%" stop-color="#090d16"/>
-              </linearGradient>
-            </defs>
-            <circle cx="60" cy="60" r="50" fill="#131b2e" />
-            <circle cx="60" cy="60" r="46" stroke="#D36B3F" stroke-width="1.5" stroke-opacity="0.4" />
-            <path d="M22 108 C25 90 40 82 60 82 C80 82 95 90 98 108 Z" fill="url(#suitGrad)" stroke="#E8855A" stroke-width="1.5" stroke-opacity="0.6"/>
-            <polygon points="60,86 52,98 68,98" fill="#D36B3F" opacity="0.9"/>
-            <circle cx="60" cy="94" r="2.5" fill="#38bdf8"/>
-            <path d="M50 72 L50 84 C54 86 66 86 70 84 L70 72 Z" fill="#e89874"/>
-            <path d="M30 46 C28 65 32 82 40 92 C32 80 34 52 35 44 Z" fill="url(#hairGrad)"/>
-            <path d="M90 46 C92 65 88 82 80 92 C88 80 86 52 85 44 Z" fill="url(#hairGrad)"/>
-            <ellipse cx="60" cy="56" rx="22" ry="26" fill="url(#faceGrad)"/>
-            <path d="M36 48 C36 28 46 20 60 20 C74 20 84 28 84 48 C78 40 70 38 60 38 C48 38 42 42 36 48 Z" fill="url(#hairGrad)"/>
-            <path d="M40 38 C48 42 54 44 60 41 C66 44 74 41 80 36 C75 32 68 30 60 30 C50 30 44 34 40 38 Z" fill="#ff9a62" opacity="0.7"/>
-            <path d="M42 50 C46 48 54 48 58 50 L58 58 C54 60 46 60 42 58 Z" fill="url(#visorGrad)"/>
-            <path d="M62 50 C66 48 74 48 78 50 L78 58 C74 60 66 60 62 58 Z" fill="url(#visorGrad)"/>
-            <rect x="58" y="52" width="4" height="2" fill="#38bdf8"/>
-            <circle cx="50" cy="54" r="1.5" fill="#ffffff" opacity="0.8"/>
-            <circle cx="70" cy="54" r="1.5" fill="#ffffff" opacity="0.8"/>
-            <circle cx="46" cy="65" r="3" fill="#ff7f7f" opacity="0.4"/>
-            <circle cx="74" cy="65" r="3" fill="#ff7f7f" opacity="0.4"/>
-            <path d="M54 68 Q60 72 66 68" stroke="#a44b25" stroke-width="1.8" stroke-linecap="round"/>
-            <rect x="34" y="51" width="4" height="9" rx="2" fill="#D36B3F"/>
-            <circle cx="36" cy="55.5" r="1.2" fill="#38bdf8"/>
-            <path d="M35 58 Q36 68 45 71" stroke="#D36B3F" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <circle cx="45" cy="71" r="1.8" fill="#38bdf8"/>
-          </svg>
-          <span class="absolute bottom-0 right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#030712] shadow-[0_0_8px_#10b981]"></span>
-        </div>
-      </div>
-    </button>
-
-    <div id="aiAssistantWindow" class="hidden w-[350px] max-w-[92vw] mac-window rounded-2xl border border-[#D36B3F]/40 shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden transition-all duration-300">
-      <div class="px-4 py-3 bg-black/60 border-b border-white/10 flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-full bg-[#D36B3F]/20 border border-[#D36B3F]/40 flex items-center justify-center text-[#E8855A] font-bold text-xs">✨</div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs font-black tracking-wider uppercase text-white font-mono">ARIA</span>
-              <span class="text-[9px] uppercase font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">Studio AI</span>
-            </div>
-            <p class="text-[10px] text-slate-400">Cetora Design Concierge</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-1">
-          <button type="button" onclick="speakLastResponse()" class="p-1.5 rounded-lg text-slate-400 hover:text-[#E8855A] hover:bg-white/5 transition-all text-xs" title="Voice Speak">🔊</button>
-          <button type="button" onclick="toggleAiAssistant()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-xs">✕</button>
-        </div>
-      </div>
-
-      <div id="aiChatLog" class="p-4 space-y-3 max-h-72 overflow-y-auto chat-scroll text-xs">
-        <div class="flex gap-2.5 items-start">
-          <div class="w-6 h-6 rounded-full bg-[#D36B3F]/30 text-[10px] flex items-center justify-center shrink-0 border border-[#D36B3F]/50">A</div>
-          <div class="gel-surface p-3 rounded-2xl rounded-tl-sm text-slate-200 leading-relaxed border-white/10 space-y-1">
-            <p>Hi! I'm <strong>Aria</strong>, your Cetora design guide. How can I help you tailor your job order today?</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="px-4 py-2 border-t border-white/[0.06] bg-black/30 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px]">
-        <button type="button" onclick="askAiPrompt('Turnaround times?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">⏱ Turnaround?</button>
-        <button type="button" onclick="askAiPrompt('How does NDA work?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">🔒 NDA Info</button>
-        <button type="button" onclick="askAiPrompt('Direct quote process?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#D36B3F]/20 text-slate-300 hover:text-[#E8855A] border border-white/10 transition-all">💬 Quote Help</button>
-      </div>
-
-      <form onsubmit="handleAiChatSubmit(event)" class="p-3 bg-black/60 border-t border-white/10 flex items-center gap-2">
-        <input type="text" id="aiChatInput" placeholder="Ask Aria anything..." autocomplete="off" class="gel-surface flex-1 px-3.5 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none">
-        <button type="submit" class="gel-btn px-3 py-2 rounded-xl text-slate-950 font-bold text-xs uppercase transition-all shadow-md">Send</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Studio PIN Modal -->
-  <div id="pinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-    <div id="pinModalBox" class="mac-window w-full max-w-sm p-6 rounded-2xl space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="font-bold text-sm text-white uppercase tracking-wider">Studio Command Hub</h3>
-        <button type="button" onclick="closePinModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
-      </div>
-      <p class="text-[11px] text-slate-400">Enter studio authorization PIN to access live client briefs.</p>
-      <form onsubmit="event.preventDefault(); verifyAndOpenHub();" class="space-y-3">
-        <input type="password" id="adminPin" placeholder="••••" maxlength="6" autocomplete="off" class="gel-surface w-full px-4 py-2.5 rounded-xl text-base text-white text-center font-mono tracking-widest focus:outline-none">
-        <button type="submit" id="pinSubmitBtn" class="gel-btn w-full py-2.5 rounded-xl text-slate-950 font-bold text-xs uppercase">Unlock Hub</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Front-End JavaScript Logic -->
-  <script>
-    // Paste your newly deployed Google Apps Script Web App URL below:
+<script>
+    // Paste your active Google Apps Script Web App URL below:
     const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
 
-    // 1. Live Digital Clock
+    // 1. Digital Clock
     function updateClock() {
       const now = new Date();
-      document.getElementById('liveClock').textContent = now.toLocaleTimeString('en-US', { hour12: true });
+      const clockEl = document.getElementById('liveClock');
+      if (clockEl) {
+        clockEl.textContent = now.toLocaleTimeString('en-US', { hour12: true });
+      }
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -582,16 +16,19 @@
     // 2. Secret Logo Trigger for Command Hub (Click 3 Times)
     let logoClickCount = 0;
     let logoClickTimer = null;
-    document.getElementById('secretLogoTrigger').addEventListener('click', () => {
-      logoClickCount++;
-      clearTimeout(logoClickTimer);
-      if (logoClickCount === 3) {
-        logoClickCount = 0;
-        promptAdminModal();
-      } else {
-        logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 800);
-      }
-    });
+    const logoTrigger = document.getElementById('secretLogoTrigger');
+    if (logoTrigger) {
+      logoTrigger.addEventListener('click', () => {
+        logoClickCount++;
+        clearTimeout(logoClickTimer);
+        if (logoClickCount === 3) {
+          logoClickCount = 0;
+          promptAdminModal();
+        } else {
+          logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 800);
+        }
+      });
+    }
 
     // Keyboard shortcut: Ctrl + Shift + D (or Cmd + Shift + D)
     window.addEventListener('keydown', (e) => {
@@ -628,15 +65,21 @@
           type: file.type, 
           base64: evt.target.result.split(',')[1] 
         };
-        document.getElementById('uploadLabel').textContent = `Attached: ${file.name.substring(0, 16)}...`;
+        const label = document.getElementById('uploadLabel');
+        if (label) {
+          label.textContent = `Attached: ${file.name.substring(0, 16)}...`;
+        }
       };
       reader.readAsDataURL(file);
     }
 
     // 5. Reset Form to Studio Defaults
     function resetFormToDefaults() {
-      document.getElementById('intakeForm').reset();
-      document.querySelector('input[value="Pro Tier"]').checked = true;
+      const form = document.getElementById('intakeForm');
+      if (form) form.reset();
+
+      const defaultRadio = document.querySelector('input[value="Pro Tier"]');
+      if (defaultRadio) defaultRadio.checked = true;
       updateTierDisplay('professional');
 
       ['vibeMinimal', 'vibeModern', 'vibePlayful', 'vibeLoud', 'vibeLuxury'].forEach(id => {
@@ -658,44 +101,50 @@
       }
 
       uploadedFileData = null;
-      document.getElementById('uploadLabel').textContent = 'Drag & Drop Files or Browse';
+      const label = document.getElementById('uploadLabel');
+      if (label) {
+        label.textContent = 'Drag & Drop Files or Browse';
+      }
     }
 
     // 6. Submit Design Brief to Google Apps Script
     async function handleFormSubmission(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.disabled = true; 
-      btn.innerHTML = `<span class="inline-block animate-spin mr-2">↻</span> Submitting...`;
+      if (btn) {
+        btn.disabled = true; 
+        btn.innerHTML = `<span class="inline-block animate-spin mr-2">↻</span> Submitting...`;
+      }
 
       const selectedPackage = document.querySelector('input[name="packageTier"]:checked');
       const packageValue = selectedPackage ? selectedPackage.value : 'Custom Quote';
-      const baseCategory = document.getElementById('projectCategory').value;
+      const categoryEl = document.getElementById('projectCategory');
+      const baseCategory = categoryEl ? categoryEl.value : 'General';
 
       const payload = {
-        name: document.getElementById('clientName').value,
-        company: document.getElementById('companyName').value,
-        email: document.getElementById('clientEmail').value,
+        name: document.getElementById('clientName')?.value || '',
+        company: document.getElementById('companyName')?.value || '',
+        email: document.getElementById('clientEmail')?.value || '',
         category: `${baseCategory} (${packageValue})`,
-        timeline: document.getElementById('projectTimeline').value,
+        timeline: document.getElementById('projectTimeline')?.value || '',
         vibes: { 
-          minimal: document.getElementById('vibeMinimal').value, 
-          modern: document.getElementById('vibeModern').value, 
-          playful: document.getElementById('vibePlayful').value, 
-          loud: document.getElementById('vibeLoud').value, 
-          luxury: document.getElementById('vibeLuxury').value 
+          minimal: document.getElementById('vibeMinimal')?.value || '3', 
+          modern: document.getElementById('vibeModern')?.value || '3', 
+          playful: document.getElementById('vibePlayful')?.value || '3', 
+          loud: document.getElementById('vibeLoud')?.value || '3', 
+          luxury: document.getElementById('vibeLuxury')?.value || '3' 
         },
         palette: { 
-          base: document.getElementById('baseColorText').value, 
-          primary: document.getElementById('primaryColorText').value,
-          secondary: document.getElementById('secondaryColorText').value,
-          accent: document.getElementById('accentColorText').value,
-          neutral: document.getElementById('neutralColorText').value,
-          light: document.getElementById('lightColorText').value
+          base: document.getElementById('baseColorText')?.value || '#070a12', 
+          primary: document.getElementById('primaryColorText')?.value || '#D36B3F',
+          secondary: document.getElementById('secondaryColorText')?.value || '#8C3E1F',
+          accent: document.getElementById('accentColorText')?.value || '#E8855A',
+          neutral: document.getElementById('neutralColorText')?.value || '#1e293b',
+          light: document.getElementById('lightColorText')?.value || '#f8fafc'
         },
-        description: document.getElementById('projectDesc').value,
-        directMessage: document.getElementById('clientDirectMessage').value,
-        nda: document.getElementById('ndaCheckbox').checked ? 'Yes' : 'No',
+        description: document.getElementById('projectDesc')?.value || '',
+        directMessage: document.getElementById('clientDirectMessage')?.value || '',
+        nda: document.getElementById('ndaCheckbox')?.checked ? 'Yes' : 'No',
         file: uploadedFileData
       };
 
@@ -709,20 +158,26 @@
         formSuccessCleanup(btn);
       } catch (err) {
         alert("Submission failed. Please check network connection.");
+        if (btn) {
+          btn.disabled = false; 
+          btn.textContent = 'Submit Design Brief';
+        }
+      }
+    }
+
+    function formSuccessCleanup(btn) {
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.remove('hidden');
+      resetFormToDefaults();
+      if (btn) {
         btn.disabled = false; 
         btn.textContent = 'Submit Design Brief';
       }
     }
 
-    function formSuccessCleanup(btn) {
-      document.getElementById('successModal').classList.remove('hidden');
-      resetFormToDefaults();
-      btn.disabled = false; 
-      btn.textContent = 'Submit Design Brief';
-    }
-
     function closeSuccessModal() { 
-      document.getElementById('successModal').classList.add('hidden'); 
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.add('hidden'); 
     }
 
     // 7. 3D AI Concierge Aria Logic
@@ -730,14 +185,17 @@
 
     function toggleAiAssistant() {
       const win = document.getElementById('aiAssistantWindow');
-      win.classList.toggle('hidden');
-      if (!win.classList.contains('hidden')) {
-        setTimeout(() => document.getElementById('aiChatInput').focus(), 100);
+      if (win) {
+        win.classList.toggle('hidden');
+        if (!win.classList.contains('hidden')) {
+          setTimeout(() => document.getElementById('aiChatInput')?.focus(), 100);
+        }
       }
     }
 
     function appendMessage(sender, text) {
       const log = document.getElementById('aiChatLog');
+      if (!log) return;
       const isAria = sender === 'aria';
       const msgDiv = document.createElement('div');
       msgDiv.className = `flex gap-2.5 items-start ${isAria ? '' : 'flex-row-reverse'}`;
@@ -765,13 +223,17 @@
     }
 
     function askAiPrompt(query) {
-      document.getElementById('aiChatInput').value = query;
-      handleAiChatSubmit(new Event('submit'));
+      const input = document.getElementById('aiChatInput');
+      if (input) {
+        input.value = query;
+        handleAiChatSubmit(new Event('submit'));
+      }
     }
 
     function handleAiChatSubmit(e) {
       e.preventDefault();
       const input = document.getElementById('aiChatInput');
+      if (!input) return;
       const query = input.value.trim();
       if (!query) return;
 
@@ -806,61 +268,72 @@
 
     // 8. Command Hub PIN Authentication & JSONP Live Stream
     function promptAdminModal() { 
-      document.getElementById('pinModal').classList.remove('hidden'); 
-      setTimeout(() => document.getElementById('adminPin').focus(), 50); 
+      const modal = document.getElementById('pinModal');
+      if (modal) {
+        modal.classList.remove('hidden'); 
+        setTimeout(() => document.getElementById('adminPin')?.focus(), 50); 
+      }
     }
     
     function closePinModal() { 
-      document.getElementById('pinModal').classList.add('hidden'); 
-      document.getElementById('adminPin').value = ''; 
+      const modal = document.getElementById('pinModal');
+      if (modal) modal.classList.add('hidden'); 
+      const pinInput = document.getElementById('adminPin');
+      if (pinInput) pinInput.value = ''; 
     }
 
     const VALID_ADMIN_PINS = ['1234', '5678', '9900'];
     function verifyAndOpenHub() {
-      const pin = document.getElementById('adminPin').value.trim();
+      const pinInput = document.getElementById('adminPin');
+      const pin = pinInput ? pinInput.value.trim() : '';
       if (VALID_ADMIN_PINS.includes(pin)) {
         closePinModal();
-        document.getElementById('clientIntakeView').classList.add('hidden');
-        document.getElementById('designerHubView').classList.remove('hidden');
-        document.getElementById('hubExitBtn').classList.remove('hidden');
+        document.getElementById('clientIntakeView')?.classList.add('hidden');
+        document.getElementById('designerHubView')?.classList.remove('hidden');
+        document.getElementById('hubExitBtn')?.classList.remove('hidden');
         refreshHubData();
       } else { 
         alert('Invalid PIN Access Denied.'); 
-        document.getElementById('adminPin').value = '';
+        if (pinInput) pinInput.value = '';
       }
     }
 
     function exitDesignerHub() {
-      document.getElementById('designerHubView').classList.add('hidden');
-      document.getElementById('clientIntakeView').classList.remove('hidden');
-      document.getElementById('hubExitBtn').classList.add('hidden');
+      document.getElementById('designerHubView')?.classList.add('hidden');
+      document.getElementById('clientIntakeView')?.classList.remove('hidden');
+      document.getElementById('hubExitBtn')?.classList.add('hidden');
     }
 
-    // Streams live brief rows bypassing CORS via JSONP
+    // Streams live brief rows via JSONP
     function refreshHubData() {
       const tbody = document.getElementById('briefsTableBody');
-      tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono">Loading real-time submissions...</td></tr>';
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono">Loading real-time submissions...</td></tr>';
+      }
       
-      const oldScript = document.getElementById('hubJsonpScript');
-      if (oldScript) oldScript.remove();
+      const existingScript = document.getElementById('hubJsonpScript');
+      if (existingScript) existingScript.remove();
 
       window.handleHubDataResponse = function(rows) {
         renderHubTable(rows);
-        const script = document.getElementById('hubJsonpScript');
-        if (script) script.remove();
+        const s = document.getElementById('hubJsonpScript');
+        if (s) s.remove();
       };
 
       const script = document.createElement('script');
       script.id = 'hubJsonpScript';
       script.src = `${APPS_SCRIPT_WEBAPP_URL}?callback=handleHubDataResponse&t=${Date.now()}`;
       script.onerror = function() {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Unable to load data. Click "Open Sheet ↗" above to view directly in Google Sheets.</td></tr>';
+        if (tbody) {
+          tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Unable to load data. Click "Open Sheet ↗" above to view directly in Google Sheets.</td></tr>';
+        }
       };
       document.body.appendChild(script);
     }
 
     function renderHubTable(rows) {
       const tbody = document.getElementById('briefsTableBody');
+      if (!tbody) return;
       if (!rows || rows.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">No submissions found.</td></tr>';
         return;
@@ -869,15 +342,13 @@
       rows.forEach(r => {
         const fileBtn = r.driveLink ? `<a href="${r.driveLink}" target="_blank" class="text-[#E8855A] hover:underline font-mono">View File ↗</a>` : '<span class="text-slate-600">None</span>';
         html += `<tr class="hover:bg-white/[0.02]">
-          <td class="p-3.5 font-mono text-slate-400 text-[11px]">${r.timestamp}</td>
-          <td class="p-3.5"><p class="font-bold text-white text-xs">${r.clientName}</p><p class="text-[11px] text-slate-400">${r.company} • ${r.email}</p></td>
-          <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D36B3F]/10 text-[#E8855A] border border-[#D36B3F]/20">${r.category}</span></td>
-          <td class="p-3.5 text-amber-200 font-medium bg-amber-950/20 rounded-lg">"${r.directMessage}"</td>
+          <td class="p-3.5 font-mono text-slate-400 text-[11px]">${r.timestamp || ''}</td>
+          <td class="p-3.5"><p class="font-bold text-white text-xs">${r.clientName || 'Anonymous'}</p><p class="text-[11px] text-slate-400">${r.company || ''} • ${r.email || ''}</p></td>
+          <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D36B3F]/10 text-[#E8855A] border border-[#D36B3F]/20">${r.category || ''}</span></td>
+          <td class="p-3.5 text-amber-200 font-medium bg-amber-950/20 rounded-lg">"${r.directMessage || 'None'}"</td>
           <td class="p-3.5 text-right">${fileBtn}</td>
         </tr>`;
       });
       tbody.innerHTML = html;
     }
   </script>
-</body>
-</html>
