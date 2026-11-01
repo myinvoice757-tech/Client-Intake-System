@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root { --font-sans: 'Plus Jakarta Sans', sans-serif; --font-mono: 'JetBrains Mono', monospace; }
     body { font-family: var(--font-sans); background-color: #030712 !important; color: #f8fafc; overflow-x: hidden; min-height: 100vh; margin: 0; }
@@ -85,10 +85,10 @@
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
 
-  <!-- Wide-Format Main Window: Expands to full screen width (max-w-[98vw] / 1700px) -->
+  <!-- Widescreen Responsive Container (max-w-[1700px]) -->
   <main class="mac-window relative z-10 w-full max-w-[1700px] rounded-3xl overflow-hidden my-auto min-h-[85vh] shadow-[0_30px_100px_rgba(0,0,0,0.9)]">
     
-    <!-- Top Studio Header -->
+    <!-- Header -->
     <header class="h-24 px-6 md:px-10 border-b border-white/[0.08] flex items-center justify-between bg-black/50 shadow-md relative">
       <div class="flex items-center gap-6">
         <div id="secretLogoTrigger" class="flex items-center gap-4 cursor-pointer select-none group" title="Cetora Design">
@@ -110,7 +110,7 @@
       </div>
     </header>
 
-    <!-- Public Client Intake Section -->
+    <!-- Client Intake Section -->
     <div id="clientIntakeView" class="pb-12">
       <section class="text-center pt-10 pb-6 px-6">
         <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/35 mb-4 shadow-sm">OFFICIAL JOB ORDER SYSTEM</span>
@@ -1035,51 +1035,36 @@
 
         html += `
           <tr class="hover:bg-white/[0.04] transition-colors border-b border-white/[0.04]">
-            <!-- Job ID -->
             <td class="p-5 pl-6 font-mono font-extrabold text-[#E8855A] text-sm whitespace-nowrap">
               <span class="bg-[#D36B3F]/15 px-2.5 py-1 rounded-md border border-[#D36B3F]/30">${r.jobId}</span>
             </td>
-
-            <!-- Timestamp -->
             <td class="p-5 font-mono text-slate-400 text-xs whitespace-nowrap">
               ${r.timestamp}
             </td>
-
-            <!-- Client & Company -->
             <td class="p-5">
               <p class="font-bold text-white text-base leading-tight">${r.clientName}</p>
               <p class="text-xs text-slate-400 font-medium mt-0.5">${r.company}</p>
               <a href="mailto:${r.email}" class="text-xs text-sky-400 hover:underline font-mono mt-0.5 inline-block">${r.email}</a>
             </td>
-
-            <!-- Category & Package -->
             <td class="p-5">
               <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-white/[0.06] text-[#E8855A] border border-white/[0.12] whitespace-nowrap shadow-inner">
                 ${r.category}
               </span>
             </td>
-
-            <!-- Timeline & NDA -->
             <td class="p-5 whitespace-nowrap">
               <div class="font-bold text-slate-200 text-xs">${r.timeline}</div>
               <div class="mt-1">${ndaBadge}</div>
             </td>
-
-            <!-- Direct Message -->
             <td class="p-5 max-w-xs">
               <div class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-xs italic font-medium leading-relaxed">
                 "${r.directMessage}"
               </div>
             </td>
-
-            <!-- Detail Modal Trigger -->
             <td class="p-5 whitespace-nowrap">
               <button onclick="openBriefModal(${idx})" class="px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-xs font-semibold transition-all">
                 View Brief ↗
               </button>
             </td>
-
-            <!-- Assets -->
             <td class="p-5 pr-6 text-right whitespace-nowrap">
               ${fileBtn}
             </td>
@@ -1089,7 +1074,7 @@
       tbody.innerHTML = html;
     }
 
-    // Modal Details Viewer
+    // Modal Inspector
     function openBriefModal(idx) {
       const data = cachedSubmissions[idx];
       if (!data) return;
