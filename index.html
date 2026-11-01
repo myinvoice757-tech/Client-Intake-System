@@ -410,6 +410,7 @@
       </form>
     </div>
 
+    <!-- DESIGNER HUB VIEW -->
     <div id="designerHubView" class="hidden p-6 md:p-8 space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div>
@@ -457,6 +458,7 @@
     </div>
   </main>
 
+  <!-- 3D AI Concierge Aria -->
   <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3 select-none">
     <button type="button" onclick="toggleAiAssistant()" class="avatar-float relative group cursor-pointer focus:outline-none" title="Chat with Aria - Cetora AI">
       <div class="ring-rotate absolute -inset-2.5 rounded-full border border-dashed border-[#D36B3F]/50 pointer-events-none"></div>
@@ -554,6 +556,7 @@
     </div>
   </div>
 
+  <!-- PIN Modal -->
   <div id="pinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
     <div id="pinModalBox" class="mac-window w-full max-w-sm p-6 rounded-2xl space-y-4">
       <div class="flex items-center justify-between">
@@ -569,7 +572,6 @@
   </div>
 
   <script>
-    // Paste your active Web App deployment URL here
     const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
 
     function updateClock() { document.getElementById('liveClock').textContent = new Date().toLocaleTimeString(); }
@@ -685,18 +687,6 @@
         file: uploadedFileData
       };
 
-      if (typeof google !== 'undefined' && google.script && google.script.run) {
-        google.script.run
-          .withSuccessHandler(() => { formSuccessCleanup(btn); })
-          .withFailureHandler(err => { 
-            alert('Submission Error: ' + err.message); 
-            btn.disabled = false; 
-            btn.textContent = 'Submit Design Brief'; 
-          })
-          .processFormSubmission(payload);
-        return;
-      }
-
       try {
         await fetch(APPS_SCRIPT_WEBAPP_URL, {
           method: 'POST',
@@ -721,6 +711,7 @@
 
     function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
 
+    // AI Concierge
     let lastAriaSpeech = "Hi! I am Aria, your Cetora design concierge. How can I help you tailor your job order today?";
 
     function toggleAiAssistant() {
@@ -799,6 +790,7 @@
       }
     }
 
+    // Command Hub Stream
     function promptAdminModal() { document.getElementById('pinModal').classList.remove('hidden'); setTimeout(() => document.getElementById('adminPin').focus(), 50); }
     function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); document.getElementById('adminPin').value = ''; }
 
@@ -823,13 +815,16 @@
       document.getElementById('hubExitBtn').classList.add('hidden');
     }
 
-    function refreshHubData() {
+    async function refreshHubData() {
       const tbody = document.getElementById('briefsTableBody');
-      tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono">Connecting to Google Sheets...</td></tr>';
-      if (typeof google !== 'undefined' && google.script && google.script.run) {
-        google.script.run.withSuccessHandler(renderHubTable).getDesignerHubData();
-      } else {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Live database active. Click "Open Sheet ↗" above to view all submissions in Google Sheets.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-[#E8855A] font-mono">Loading real-time submissions...</td></tr>';
+      
+      try {
+        const response = await fetch(`${APPS_SCRIPT_WEBAPP_URL}?action=getHubData`);
+        const rows = await response.json();
+        renderHubTable(rows);
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-400">Unable to load data directly. Click "Open Sheet ↗" above to view in Google Sheets.</td></tr>';
       }
     }
 
