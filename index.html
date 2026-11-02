@@ -82,10 +82,10 @@
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
 
-  <!-- Widescreen Studio One Shell -->
+  <!-- Widescreen Responsive Command Shell -->
   <main class="mac-window relative z-10 w-full max-w-[1700px] rounded-3xl overflow-hidden my-auto min-h-[85vh] shadow-[0_30px_100px_rgba(0,0,0,0.9)]">
     
-    <!-- Header -->
+    <!-- Top Header Navigation -->
     <header class="h-24 px-6 md:px-10 border-b border-white/[0.08] flex items-center justify-between bg-black/50 shadow-md relative">
       <div class="flex items-center gap-6">
         <div id="secretLogoTrigger" class="flex items-center gap-4 cursor-pointer select-none group" title="Cetora Design">
@@ -96,12 +96,12 @@
             <span class="text-lg md:text-2xl font-black tracking-widest uppercase text-white group-hover:text-[#E8855A] transition-colors">
               CETORA <span class="text-[#D36B3F]">DESIGN</span>
             </span>
-            <span class="text-xs tracking-[0.3em] uppercase text-slate-400 font-mono mt-0.5">Studio One Hub</span>
+            <span class="text-xs tracking-[0.3em] uppercase text-slate-400 font-mono mt-0.5">The Studio One</span>
           </div>
         </div>
       </div>
 
-      <!-- Live Stream Pill & Digital Clock -->
+      <!-- Live Database Indicator Pill & Digital Clock -->
       <div class="flex items-center gap-3 md:gap-5">
         <button id="hubExitBtn" onclick="exitDesignerHub()" class="hidden px-5 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase bg-white/10 hover:bg-white/20 text-slate-100 border border-white/20 transition-all shadow-sm">← Public Intake</button>
         
@@ -110,7 +110,7 @@
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
           </span>
-          <span class="hidden sm:inline font-bold tracking-wider uppercase text-emerald-400">Live Stream</span>
+          <span class="hidden sm:inline font-bold tracking-wider uppercase text-emerald-400">Live Database Stream</span>
           <span class="text-slate-500">|</span>
           <span id="liveClock" class="font-bold text-[#E8855A] tracking-wider">--:--:--</span>
         </div>
@@ -127,7 +127,7 @@
 
       <form id="intakeForm" class="px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start" onsubmit="handleFormSubmission(event)">
         
-        <!-- SECTION 1: DYNAMIC SERVICE PACKAGE MATRIX -->
+        <!-- SECTION 1: DYNAMIC SERVICE PACKAGE MATRIX (Live from Sheets) -->
         <div class="col-span-1 lg:col-span-3 mb-2 flex flex-col items-center">
           <div class="w-full flex items-center justify-between max-w-4xl pb-2 mb-3 border-b border-white/10">
             <span class="text-sm md:text-base font-extrabold tracking-wider uppercase text-white flex items-center gap-2">
@@ -138,38 +138,38 @@
           
           <div class="flex p-1.5 bg-[#03050a] rounded-2xl border border-white/10 shadow-[inset_0_2px_10px_rgba(0,0,0,0.8)] w-full max-w-4xl mb-6 relative">
             <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Essential" class="peer sr-only" onchange="selectTier('essential')" required>
+              <input type="radio" name="packageTier" value="essential" class="peer sr-only" onchange="selectTier('essential')" required>
               <div class="tab-label py-3 rounded-xl text-xs md:text-sm font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Essential</div>
             </label>
             
             <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Standard" class="peer sr-only" onchange="selectTier('standard')" required>
+              <input type="radio" name="packageTier" value="standard" class="peer sr-only" onchange="selectTier('standard')" required>
               <div class="tab-label py-3 rounded-xl text-xs md:text-sm font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Standard</div>
             </label>
 
             <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Professional" class="peer sr-only" onchange="selectTier('professional')" required checked>
+              <input type="radio" name="packageTier" value="professional" class="peer sr-only" onchange="selectTier('professional')" required checked>
               <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D36B3F] text-white text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md z-20 pointer-events-none">Popular</div>
               <div class="tab-label py-3 rounded-xl text-xs md:text-sm font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Professional</div>
             </label>
 
             <label class="flex-1 text-center cursor-pointer relative group">
-              <input type="radio" name="packageTier" value="Ultra" class="peer sr-only" onchange="selectTier('ultra')" required>
+              <input type="radio" name="packageTier" value="ultra" class="peer sr-only" onchange="selectTier('ultra')" required>
               <div class="tab-label py-3 rounded-xl text-xs md:text-sm font-bold text-slate-400 group-hover:text-white border border-transparent transition-all">Ultra</div>
             </label>
           </div>
 
-          <!-- Dynamic Tier Detail Card -->
+          <!-- Dynamic Tier Card with Greenish Ticks -->
           <div class="w-full max-w-4xl gel-surface p-7 md:p-9 rounded-3xl border border-[#D36B3F]/40 shadow-2xl relative overflow-hidden">
             <div class="flex flex-col md:flex-row gap-8 items-center">
               <div class="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 pb-6 md:pb-0 md:pr-8 text-center md:text-left">
-                <span id="tierTagBadge" class="text-xs font-black text-amber-400 uppercase tracking-widest mb-1.5">Professional</span>
+                <span id="tierTagBadge" class="text-xs font-black text-amber-400 uppercase tracking-widest mb-1.5">PROFESSIONAL</span>
                 <div class="text-4xl md:text-5xl font-black text-white mb-2" id="tierPriceDisplay">$599<span class="text-xl text-slate-400 font-medium">.99</span></div>
-                <p id="tierTaglineDisplay" class="text-xs md:text-sm text-slate-400 font-medium">Comprehensive production & priority turnaround</p>
+                <p id="tierTaglineDisplay" class="text-xs md:text-sm text-slate-400 font-medium leading-relaxed">Comprehensive production & priority turnaround</p>
               </div>
               <div class="md:w-2/3 w-full">
                 <ul id="tierFeaturesList" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3.5 gap-x-6 text-sm text-slate-200">
-                  <!-- Populated by JavaScript according to category -->
+                  <!-- Populated dynamically with greenish tickmarks from Google Sheets -->
                 </ul>
               </div>
             </div>
@@ -207,7 +207,7 @@
             </div>
           </div>
 
-          <!-- WhatsApp Chat Card -->
+          <!-- Direct Studio WhatsApp -->
           <div class="gel-surface p-4 rounded-xl space-y-3 mt-2">
             <div class="p-4 rounded-xl bg-black/40 border border-[#25D366]/30 shadow-[0_0_20px_rgba(37,211,102,0.08)] flex flex-col items-center text-center space-y-3">
               <div class="w-10 h-10 rounded-full bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center text-[#25D366]">
@@ -357,6 +357,7 @@
     <!-- ENLARGED HIGH-VISIBILITY DESIGNER COMMAND HUB -->
     <div id="designerHubView" class="hidden p-6 md:p-10 lg:p-12 space-y-8">
       
+      <!-- Top Status Bar & Metrics -->
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/[0.1]">
         <div>
           <div class="flex items-center gap-2.5">
@@ -566,7 +567,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzCAIQN_tN3cXIgyTHCJVqfogqGDSUndnnw4cWjr1bY43kZ4LwC1qgm0D_uv4eaMwGmhw/exec";
+    const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
     const SPREADSHEET_ID = "1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic";
 
     // 1. Digital Clock
@@ -602,99 +603,86 @@
       }
     });
 
-    // 3. SERVICE PACKAGES MATRIX (Customized by Category)
-    const PACKAGE_DATA = {
+    // 3. SERVICE PACKAGES MATRIX (Loaded Dynamically from Google Sheets)
+    let PACKAGE_DATA = {
       "3D Design": {
-        essential: {
-          price: "$249.99",
-          tagline: "Single 3D asset modeling & basic texture pass",
-          features: ["1 Custom 3D Model", "Standard Studio Lighting", "4K Render Export (PNG)", "2 Iteration Cycles"]
-        },
-        standard: {
-          price: "$449.99",
-          tagline: "Complex product staging & advanced materials",
-          features: ["Photorealistic Texturing", "3 High-Angle Perspectives", "Turnaround Video (1080p)", "Source OBJ / FBX / Blend"]
-        },
-        professional: {
-          price: "$599.99",
-          tagline: "Comprehensive 3D brand identity & custom lighting setup",
-          features: ["Full 3D Scene Composition", "Unlimited Iterations", "Interactive Web3D Asset", "Cinema 4K Motion Clip", "Priority Studio Support"]
-        },
-        ultra: {
-          price: "$1,199+",
-          tagline: "Full CGI studio takeover & immersive environments",
-          features: ["Full Unreal / Three.js Pipeline", "Dynamic Simulation & VFX", "Commercial Master Rights", "Dedicated 3D Art Director"]
-        }
+        essential: { price: "$249.99", tagline: "Single 3D asset modeling & basic texture pass", features: ["1 Custom 3D Model", "Standard Studio Lighting", "4K Render Export (PNG)", "2 Iteration Cycles"] },
+        standard: { price: "$449.99", tagline: "Complex product staging & advanced materials", features: ["Photorealistic Texturing", "3 High-Angle Perspectives", "Turnaround Video (1080p)", "Source OBJ / FBX / Blend"] },
+        professional: { price: "$599.99", tagline: "Comprehensive 3D brand identity & custom lighting setup", features: ["Full 3D Scene Composition", "Unlimited Iterations", "Interactive Web3D Asset", "Cinema 4K Motion Clip", "Priority Studio Support"] },
+        ultra: { price: "$1,199+", tagline: "Full CGI studio takeover & immersive environments", features: ["Full Unreal / Three.js Pipeline", "Dynamic Simulation & VFX", "Commercial Master Rights", "Dedicated 3D Art Director"] }
       },
       "Logo Design": {
-        essential: {
-          price: "$149.99",
-          tagline: "Essential vector mark for modern startups",
-          features: ["2 Distinct Logo Concepts", "Monochrome & Full Color", "Vector SVG, EPS & PNG", "2 Revision Rounds"]
-        },
-        standard: {
-          price: "$299.99",
-          tagline: "Complete visual identity & typography pairing",
-          features: ["4 Bespoke Logo Directions", "Typography & Color Guide", "Social Media Icon Kit", "Source Vector Files (AI)"]
-        },
-        professional: {
-          price: "$499.99",
-          tagline: "Full brand signature, stationery & system guidelines",
-          features: ["Comprehensive Brand Bible", "3D Logo Mockups & Textures", "Unlimited Design Revisions", "Full Trademark Ownership", "VIP Lead Designer Desk"]
-        },
-        ultra: {
-          price: "$899+",
-          tagline: "Enterprise branding, stationery & motion mark",
-          features: ["Animated Logo Idents (4K)", "Full Corporate System", "Print & Packaging Standards", "Perpetual Copyright Transfer"]
-        }
+        essential: { price: "$149.99", tagline: "Essential vector mark for modern startups", features: ["2 Distinct Logo Concepts", "Monochrome & Full Color", "Vector SVG, EPS & PNG", "2 Revision Rounds"] },
+        standard: { price: "$299.99", tagline: "Complete visual identity & typography pairing", features: ["4 Bespoke Logo Directions", "Typography & Color Guide", "Social Media Icon Kit", "Source Vector Files (AI)"] },
+        professional: { price: "$499.99", tagline: "Full brand signature, stationery & system guidelines", features: ["Comprehensive Brand Bible", "3D Logo Mockups & Textures", "Unlimited Design Revisions", "Full Trademark Ownership", "VIP Lead Designer Desk"] },
+        ultra: { price: "$899+", tagline: "Enterprise branding, stationery & motion mark", features: ["Animated Logo Idents (4K)", "Full Corporate System", "Print & Packaging Standards", "Perpetual Copyright Transfer"] }
       },
       "Poster Design": {
-        essential: {
-          price: "$119.99",
-          tagline: "High-impact visual layout for events or digital release",
-          features: ["1 Custom Key Art Direction", "High-Resolution Print PDF", "Social Media Promo Crop", "2 Layout Adjustments"]
-        },
-        standard: {
-          price: "$219.99",
-          tagline: "Art-directed editorial or campaign poster system",
-          features: ["2 Distinct Art Concepts", "Commercial Print Ready (CMYK)", "Animated Motion Story Crop", "Master Layered PSD/AI"]
-        },
-        professional: {
-          price: "$379.99",
-          tagline: "Comprehensive key-art campaign with multi-size assets",
-          features: ["Billboard & Street-Post Sizing", "Photorealistic Street Mockups", "Unlimited Concept Tweaks", "Motion Poster Loop (MP4)", "Priority Studio Turnaround"]
-        },
-        ultra: {
-          price: "$699+",
-          tagline: "Full festival, album or theatrical key-art packaging",
-          features: ["Multi-Sheet Campaign Series", "Custom Illustrated Graphics", "Physical Merch Adaptations", "Exclusive Studio License"]
-        }
+        essential: { price: "$119.99", tagline: "High-impact visual layout for events or digital release", features: ["1 Custom Key Art Direction", "High-Resolution Print PDF", "Social Media Promo Crop", "2 Layout Adjustments"] },
+        standard: { price: "$219.99", tagline: "Art-directed editorial or campaign poster system", features: ["2 Distinct Art Concepts", "Commercial Print Ready (CMYK)", "Animated Motion Story Crop", "Master Layered PSD/AI"] },
+        professional: { price: "$379.99", tagline: "Comprehensive key-art campaign with multi-size assets", features: ["Billboard & Street-Post Sizing", "Photorealistic Street Mockups", "Unlimited Concept Tweaks", "Motion Poster Loop (MP4)", "Priority Studio Turnaround"] },
+        ultra: { price: "$699+", tagline: "Full festival, album or theatrical key-art packaging", features: ["Multi-Sheet Campaign Series", "Custom Illustrated Graphics", "Physical Merch Adaptations", "Exclusive Studio License"] }
       },
       "Web Design": {
-        essential: {
-          price: "$349.99",
-          tagline: "Clean, conversion-focused single-page landing site",
-          features: ["Figma Wireframes & Prototype", "Mobile Responsive Layout", "Tailwind / CSS Spec Sheets", "2 Review Milestones"]
-        },
-        standard: {
-          price: "$649.99",
-          tagline: "Multi-section custom web experience with modern UI",
-          features: ["Up to 5 Custom Page Layouts", "Interactive Component Kit", "Micro-Interactions & States", "Complete Figma Design System"]
-        },
-        professional: {
-          price: "$999.99",
-          tagline: "Full bespoke studio design & high-performance build",
-          features: ["Dynamic 3D / Three.js Elements", "Full Responsive Development", "Unlimited Design Revisions", "Google Analytics & Forms", "Dedicated Frontend Lead"]
-        },
-        ultra: {
-          price: "$1,899+",
-          tagline: "Enterprise web platform with full custom backend",
-          features: ["Custom Web App Architecture", "Automated Intake & CMS Flow", "Performance Optimization", "Full Deployment & Handover"]
-        }
+        essential: { price: "$349.99", tagline: "Clean, conversion-focused single-page landing site", features: ["Figma Wireframes & Prototype", "Mobile Responsive Layout", "Tailwind / CSS Spec Sheets", "2 Review Milestones"] },
+        standard: { price: "$649.99", tagline: "Multi-section custom web experience with modern UI", features: ["Up to 5 Custom Page Layouts", "Interactive Component Kit", "Micro-Interactions & States", "Complete Figma Design System"] },
+        professional: { price: "$999.99", tagline: "Full bespoke studio design & high-performance build", features: ["Dynamic 3D / Three.js Elements", "Full Responsive Development", "Unlimited Design Revisions", "Google Analytics & Forms", "Dedicated Frontend Lead"] },
+        ultra: { price: "$1,899+", tagline: "Enterprise web platform with full custom backend", features: ["Custom Web App Architecture", "Automated Intake & CMS Flow", "Performance Optimization", "Full Deployment & Handover"] }
       }
     };
 
     let activeTier = 'professional';
+
+    // Fetch Live Pricing from Google Sheets (Pricing Matrix tab)
+    async function loadLivePricingFromSheet() {
+      const sheetName = encodeURIComponent("Pricing Matrix");
+      const csvUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${sheetName}&t=${Date.now()}`;
+      
+      try {
+        const response = await fetch(csvUrl);
+        if (!response.ok) throw new Error("HTTP error " + response.status);
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+
+        if (rows.length > 1) {
+          const freshMatrix = {};
+          rows.slice(1).forEach(r => {
+            const cat = r[0] ? r[0].trim() : "";
+            const tier = r[1] ? r[1].trim().toLowerCase() : "";
+            const price = r[2] ? r[2].trim() : "";
+            const tagline = r[3] ? r[3].trim() : "";
+            const rawFeatures = r[4] ? r[4].trim() : "";
+
+            if (!cat || !tier) return;
+            if (!freshMatrix[cat]) freshMatrix[cat] = {};
+
+            const featuresList = rawFeatures 
+              ? rawFeatures.split(/[,|]/).map(f => f.trim()).filter(f => f.length > 0)
+              : [];
+
+            freshMatrix[cat][tier] = {
+              price: price,
+              tagline: tagline,
+              features: featuresList
+            };
+          });
+
+          PACKAGE_DATA = Object.assign({}, PACKAGE_DATA, freshMatrix);
+          updateTierCardDisplay();
+        }
+      } catch (err) {
+        console.warn("Could not load dynamic pricing from CSV, falling back to Web App API...", err);
+        fetch(`${APPS_SCRIPT_WEBAPP_URL}?action=getPricing&t=${Date.now()}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && Object.keys(data).length > 0) {
+              PACKAGE_DATA = Object.assign({}, PACKAGE_DATA, data);
+              updateTierCardDisplay();
+            }
+          })
+          .catch(e => console.log("Using static pricing fallbacks"));
+      }
+    }
 
     function handleCategoryChange() {
       const category = document.getElementById('projectCategory').value;
@@ -719,23 +707,31 @@
       const listEl = document.getElementById('tierFeaturesList');
 
       if (tagEl) tagEl.textContent = activeTier.toUpperCase();
-      if (priceEl) priceEl.innerHTML = tierInfo.price.includes('.') 
-        ? `${tierInfo.price.split('.')[0]}<span class="text-xl text-slate-400 font-medium">.${tierInfo.price.split('.')[1]}</span>`
-        : tierInfo.price;
+      if (priceEl) {
+        if (tierInfo.price.includes('.')) {
+          const parts = tierInfo.price.split('.');
+          priceEl.innerHTML = `${parts[0]}<span class="text-xl text-slate-400 font-medium">.${parts[1]}</span>`;
+        } else {
+          priceEl.textContent = tierInfo.price;
+        }
+      }
       if (taglineEl) taglineEl.textContent = tierInfo.tagline;
 
       if (listEl) {
         listEl.innerHTML = tierInfo.features.map(f => `
           <li class="flex items-center gap-2.5">
-            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg>
             <span>${f}</span>
           </li>
         `).join('');
       }
     }
 
-    // Initialize package card on startup
+    // Initialize package card and load spreadsheet data
     handleCategoryChange();
+    loadLivePricingFromSheet();
 
     // 4. DYNAMIC COLOR PALETTE BUILDER (3 Core Slots + Add More Swatches)
     const PRESET_SLOTS = [
@@ -818,7 +814,7 @@
       const form = document.getElementById('intakeForm');
       if (form) form.reset();
 
-      const defaultRadio = document.querySelector('input[value="Professional"]');
+      const defaultRadio = document.querySelector('input[value="professional"]');
       if (defaultRadio) defaultRadio.checked = true;
       activeTier = 'professional';
       handleCategoryChange();
@@ -980,7 +976,7 @@
         } else if (q.includes('nda') || q.includes('privacy')) {
           reply = "Absolute privacy is guaranteed. Check the <strong>'Require mutual Non-Disclosure Agreement'</strong> box at the bottom of the form.";
         } else if (q.includes('quote') || q.includes('price') || q.includes('cost')) {
-          reply = "You can view each package tier at the top of the form. When you change the <strong>Project Category</strong>, all prices and deliverables adjust automatically!";
+          reply = "You can view each package tier at the top of the form. When you change the <strong>Project Category</strong>, all prices and deliverables adjust automatically from our master spreadsheet!";
         } else {
           reply = `Got it! For questions regarding "<em>${query}</em>", feel free to add a note directly in the <strong>💬 Direct Message</strong> box or click through to our WhatsApp!`;
         }
