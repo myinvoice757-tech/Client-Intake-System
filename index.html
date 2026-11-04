@@ -82,10 +82,8 @@
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
 
-  <!-- Main Container -->
   <main class="mac-window relative z-10 w-full max-w-[1700px] rounded-3xl overflow-hidden my-auto min-h-[85vh] shadow-[0_30px_100px_rgba(0,0,0,0.9)]">
     
-    <!-- Top Header -->
     <header class="h-24 px-6 md:px-10 border-b border-white/[0.08] flex items-center justify-between bg-black/50 shadow-md relative">
       <div class="flex items-center gap-6">
         <div id="secretLogoTrigger" class="flex items-center gap-4 cursor-pointer select-none group" title="Cetora Design">
@@ -101,7 +99,6 @@
         </div>
       </div>
 
-      <!-- Live Stream Indicator & Digital Clock -->
       <div class="flex items-center gap-3 md:gap-5">
         <button id="hubExitBtn" onclick="exitDesignerHub()" class="hidden px-5 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase bg-white/10 hover:bg-white/20 text-slate-100 border border-white/20 transition-all shadow-sm">← Public Intake</button>
         
@@ -117,7 +114,6 @@
       </div>
     </header>
 
-    <!-- Public Client Intake View -->
     <div id="clientIntakeView" class="pb-12">
       <section class="text-center pt-10 pb-6 px-6">
         <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-[#D36B3F]/15 text-[#E8855A] border border-[#D36B3F]/35 mb-4 shadow-sm">STUDIO ONE PORTAL</span>
@@ -127,13 +123,12 @@
 
       <form id="intakeForm" class="px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start" onsubmit="handleFormSubmission(event)">
         
-        <!-- SECTION 1: DYNAMIC SERVICE PACKAGE MATRIX -->
         <div class="col-span-1 lg:col-span-3 mb-2 flex flex-col items-center">
           <div class="w-full flex items-center justify-between max-w-4xl pb-2 mb-3 border-b border-white/10">
             <span class="text-sm md:text-base font-extrabold tracking-wider uppercase text-white flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-[#D36B3F]"></span> 1. Select Service Package
             </span>
-            <span id="activeCategoryBadge" class="text-xs font-mono font-bold text-[#E8855A] uppercase bg-[#D36B3F]/15 px-3 py-1 rounded-md border border-[#D36B3F]/30">Loading Packages...</span>
+            <span id="activeCategoryBadge" class="text-xs font-mono font-bold text-[#E8855A] uppercase bg-[#D36B3F]/15 px-3 py-1 rounded-md border border-[#D36B3F]/30">3D Design Packages</span>
           </div>
           
           <div class="flex p-1.5 bg-[#03050a] rounded-2xl border border-white/10 shadow-[inset_0_2px_10px_rgba(0,0,0,0.8)] w-full max-w-4xl mb-6 relative">
@@ -159,7 +154,6 @@
             </label>
           </div>
 
-          <!-- Dynamic Pricing Card (Prices & Greenish Ticks) -->
           <div class="w-full max-w-4xl gel-surface p-7 md:p-9 rounded-3xl border border-[#D36B3F]/40 shadow-2xl relative overflow-hidden">
             <div class="flex flex-col md:flex-row gap-8 items-center">
               <div class="md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 pb-6 md:pb-0 md:pr-8 text-center md:text-left">
@@ -169,14 +163,12 @@
               </div>
               <div class="md:w-2/3 w-full">
                 <ul id="tierFeaturesList" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3.5 gap-x-6 text-sm text-slate-200">
-                  <!-- Loaded dynamically from Google Sheets -->
                 </ul>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN 1: CLIENT BASICS -->
         <div class="flex flex-col gap-6">
           <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
             <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">2. Client Basics</span>
@@ -194,11 +186,11 @@
             <input type="email" id="clientEmail" required placeholder="john@company.com" class="gel-surface w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none">
           </div>
 
-          <!-- Dynamic Category Dropdown from Settings Tab -->
           <div class="space-y-1.5">
             <label class="block text-xs font-semibold text-slate-200">Project Category <span class="text-rose-400">*</span></label>
             <div class="relative">
               <select id="projectCategory" required onchange="handleCategoryChange()" class="gel-surface w-full px-4 py-3 rounded-xl text-sm text-white focus:outline-none appearance-none cursor-pointer">
+                <option value="3D Design" selected class="bg-[#030712] text-white">3D Design</option>
                 <option value="Logo Design" class="bg-[#030712] text-white">Logo Design</option>
                 <option value="Poster Design" class="bg-[#030712] text-white">Poster Design</option>
                 <option value="Architectural Design" class="bg-[#030712] text-white">Architectural Design</option>
@@ -207,7 +199,6 @@
             </div>
           </div>
 
-          <!-- Studio WhatsApp Chat -->
           <div class="gel-surface p-4 rounded-xl space-y-3 mt-2">
             <div class="p-4 rounded-xl bg-black/40 border border-[#25D366]/30 shadow-[0_0_20px_rgba(37,211,102,0.08)] flex flex-col items-center text-center space-y-3">
               <div class="w-10 h-10 rounded-full bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center text-[#25D366]">
@@ -223,7 +214,6 @@
             </div>
           </div>
 
-          <!-- Dynamic Timeline Dropdown from Settings Tab -->
           <div class="space-y-1.5">
             <label class="block text-xs font-semibold text-slate-200">Estimated Timeline <span class="text-rose-400">*</span></label>
             <div class="relative">
@@ -233,12 +223,13 @@
                 <option value="3 days" class="bg-[#030712] text-white">3 days</option>
                 <option value="1 week" class="bg-[#030712] text-white">1 week</option>
                 <option value="2 weeks" selected class="bg-[#030712] text-white">2 weeks</option>
+                <option value="3 weeks" class="bg-[#030712] text-white">3 weeks</option>
+                <option value="4 weeks" class="bg-[#030712] text-white">4 weeks</option>
               </select>
             </div>
           </div>
         </div>
 
-        <!-- COLUMN 2: DESIGN VIBE & DYNAMIC BRAND COLOR PALETTE -->
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-4">
             <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
@@ -268,7 +259,6 @@
             </div>
           </div>
 
-          <!-- Modular Palette Builder -->
           <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between pb-2 border-b border-white/[0.1]">
               <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">4. Brand Color Palette</span>
@@ -307,7 +297,6 @@
           </div>
         </div>
 
-        <!-- COLUMN 3: BRIEF DETAILS -->
         <div class="flex flex-col gap-6">
           <div class="flex items-center gap-2 pb-2 border-b border-white/[0.1]">
             <span class="text-xs font-bold tracking-wider uppercase text-[#E8855A]">5. Brief Details</span>
@@ -351,7 +340,6 @@
       </form>
     </div>
 
-    <!-- DESIGNER COMMAND HUB VIEW -->
     <div id="designerHubView" class="hidden p-6 md:p-10 lg:p-12 space-y-8">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/[0.1]">
         <div>
@@ -406,7 +394,6 @@
       </div>
     </div>
 
-    <!-- Success Modal -->
     <div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
       <div class="mac-window max-w-md w-full p-8 rounded-3xl text-center space-y-6 border border-white/20">
         <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-[#8C3E1F] via-[#D36B3F] to-amber-200 p-[2px] flex items-center justify-center">
@@ -420,7 +407,6 @@
       </div>
     </div>
 
-    <!-- Brief Inspection Modal -->
     <div id="briefDetailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
       <div class="mac-window max-w-2xl w-full p-8 rounded-3xl space-y-6 border border-white/20">
         <div class="flex items-center justify-between border-b border-white/10 pb-4">
@@ -447,7 +433,6 @@
     </div>
   </main>
 
-  <!-- 3D AI Concierge Aria -->
   <div class="fixed bottom-6 right-6 z-40 flex flex-col-reverse items-end gap-3 select-none">
     <button type="button" onclick="toggleAiAssistant()" class="avatar-float relative group cursor-pointer focus:outline-none" title="Chat with Aria - Cetora AI">
       <div class="ring-rotate absolute -inset-2.5 rounded-full border border-dashed border-[#D36B3F]/50 pointer-events-none"></div>
@@ -545,7 +530,6 @@
     </div>
   </div>
 
-  <!-- Studio PIN Modal -->
   <div id="pinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
     <div id="pinModalBox" class="mac-window w-full max-w-sm p-6 rounded-2xl space-y-4">
       <div class="flex items-center justify-between">
@@ -564,7 +548,6 @@
     const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUMo7Z8eAVGP24Amss7QqbwKHi359WBn2Zv07rbmp3kh2nANtKsjqVo7YYJlQKv2F8HQ/exec";
     const SPREADSHEET_ID = "1BCFmqs9qJho_bz5saw6D9xV9izkc_TkyXkavI7lxZic";
 
-    // 1. Digital Clock
     function updateClock() {
       const now = new Date();
       const clockEl = document.getElementById('liveClock');
@@ -573,7 +556,6 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. Secret Logo Trigger for Command Hub (Click 3 Times)
     let logoClickCount = 0;
     let logoClickTimer = null;
     const logoTrigger = document.getElementById('secretLogoTrigger');
@@ -597,43 +579,41 @@
       }
     });
 
-    // 3. SERVICE PACKAGES MATRIX (Loaded Dynamically from Google Sheets)
     let PACKAGE_DATA = {
       "3D Design": {
-        essential: { price: "$249.99", tagline: "Single 3D asset modeling & basic texture pass", features: ["1 Custom 3D Model", "Standard Studio Lighting", "4K Render Export (PNG)", "2 Iteration Cycles"] },
-        standard: { price: "$449.99", tagline: "Complex product staging & advanced materials", features: ["Photorealistic Texturing", "3 High-Angle Perspectives", "Turnaround Video (1080p)", "Source OBJ / FBX / Blend"] },
+        essential: { price: "$100.00", tagline: "Single 3D asset modeling & basic texture pass", features: ["1 Custom 3D Model", "Standard Studio Lighting", "4K Render Export (PNG)", "2 Iteration Cycles"] },
+        standard: { price: "$200.00", tagline: "Complex product staging & advanced materials", features: ["Photorealistic Texturing", "3 High-Angle Perspectives", "Turnaround Video (1080p)", "Source OBJ / FBX / Blend"] },
         professional: { price: "$300.00", tagline: "Comprehensive 3D brand identity & custom lighting setup", features: ["Full 3D Scene Composition", "Unlimited Iterations", "Interactive Web3D Asset", "Cinema 4K Motion Clip", "Priority Studio Support"] },
-        ultra: { price: "$1,199+", tagline: "Full CGI studio takeover & immersive environments", features: ["Full Unreal / Three.js Pipeline", "Dynamic Simulation & VFX", "Commercial Master Rights", "Dedicated 3D Art Director"] }
+        ultra: { price: "$600.00", tagline: "Full CGI studio takeover & immersive environments", features: ["Full Unreal / Three.js Pipeline", "Dynamic Simulation & VFX", "Commercial Master Rights", "Dedicated 3D Art Director"] }
       },
       "Logo Design": {
-        essential: { price: "$149.99", tagline: "Essential vector mark for modern startups", features: ["2 Distinct Logo Concepts", "Monochrome & Full Color", "Vector SVG, EPS & PNG", "2 Revision Rounds"] },
-        standard: { price: "$299.99", tagline: "Complete visual identity & typography pairing", features: ["4 Bespoke Logo Directions", "Typography & Color Guide", "Social Media Icon Kit", "Source Vector Files (AI)"] },
-        professional: { price: "$499.99", tagline: "Full brand signature, stationery & system guidelines", features: ["Comprehensive Brand Bible", "3D Logo Mockups & Textures", "Unlimited Design Revisions", "Full Trademark Ownership", "VIP Lead Designer Desk"] },
-        ultra: { price: "$899+", tagline: "Enterprise branding, stationery & motion mark", features: ["Animated Logo Idents (4K)", "Full Corporate System", "Print & Packaging Standards", "Perpetual Copyright Transfer"] }
+        essential: { price: "$10.00", tagline: "Essential vector mark for modern startups", features: ["2 Distinct Logo Concepts", "Monochrome & Full Color", "Vector SVG, EPS & PNG", "2 Revision Rounds"] },
+        standard: { price: "$20.00", tagline: "Complete visual identity & typography pairing", features: ["4 Bespoke Logo Directions", "Typography & Color Guide", "Social Media Icon Kit", "Source Vector Files (AI)"] },
+        professional: { price: "$30.00", tagline: "Full brand signature, stationery & system guidelines", features: ["Comprehensive Brand Bible", "3D Logo Mockups & Textures", "Unlimited Design Revisions", "Full Trademark Ownership", "VIP Lead Designer Desk"] },
+        ultra: { price: "$60.00", tagline: "Enterprise branding, stationery & motion mark", features: ["Animated Logo Idents (4K)", "Full Corporate System", "Print & Packaging Standards", "Perpetual Copyright Transfer"] }
       },
       "Poster Design": {
-        essential: { price: "$119.99", tagline: "High-impact visual layout for events or digital release", features: ["1 Custom Key Art Direction", "High-Resolution Print PDF", "Social Media Promo Crop", "2 Layout Adjustments"] },
-        standard: { price: "$219.99", tagline: "Art-directed editorial or campaign poster system", features: ["2 Distinct Art Concepts", "Commercial Print Ready (CMYK)", "Animated Motion Story Crop", "Master Layered PSD/AI"] },
-        professional: { price: "$379.99", tagline: "Comprehensive key-art campaign with multi-size assets", features: ["Billboard & Street-Post Sizing", "Photorealistic Street Mockups", "Unlimited Concept Tweaks", "Motion Poster Loop (MP4)", "Priority Studio Turnaround"] },
-        ultra: { price: "$699+", tagline: "Full festival, album or theatrical key-art packaging", features: ["Multi-Sheet Campaign Series", "Custom Illustrated Graphics", "Physical Merch Adaptations", "Exclusive Studio License"] }
+        essential: { price: "$15.00", tagline: "High-impact visual layout for events or digital release", features: ["1 Custom Key Art Direction", "High-Resolution Print PDF", "Social Media Promo Crop", "2 Layout Adjustments"] },
+        standard: { price: "$25.00", tagline: "Art-directed editorial or campaign poster system", features: ["2 Distinct Art Concepts", "Commercial Print Ready (CMYK)", "Animated Motion Story Crop", "Master Layered PSD/AI"] },
+        professional: { price: "$40.00", tagline: "Comprehensive key-art campaign with multi-size assets", features: ["Billboard & Street-Post Sizing", "Photorealistic Street Mockups", "Unlimited Concept Tweaks", "Motion Poster Loop (MP4)", "Priority Studio Turnaround"] },
+        ultra: { price: "$60.00", tagline: "Full festival, album or theatrical key-art packaging", features: ["Multi-Sheet Campaign Series", "Custom Illustrated Graphics", "Physical Merch Adaptations", "Exclusive Studio License"] }
       },
       "Architectural Design": {
-        essential: { price: "$299.99", tagline: "2D CAD drafting & spatial layout pass", features: ["2D Floor Plan Drawing", "Dimension Specs", "Export to PDF / DWG", "2 Review Rounds"] },
-        standard: { price: "$549.99", tagline: "3D exterior/interior massing model", features: ["3D Perspective Views", "Basic Daylight Texturing", "Elevation Renders", "Source SketchUp / OBJ"] },
-        professional: { price: "$799.99", tagline: "Photorealistic architectural walkthrough & scene rendering", features: ["Cinema 4K Renders", "Custom Materials & Foliage", "Unlimited Iterations", "Priority Studio Delivery"] },
-        ultra: { price: "$1,499+", tagline: "Complete masterplan, animations & construction set", features: ["Lumion / Unreal Cinematic Video", "Full Permitting Drawings", "Commercial Master Rights", "Dedicated Architect Desk"] }
+        essential: { price: "$100.00", tagline: "2D CAD drafting & spatial layout pass", features: ["2D Floor Plan Drawing", "Dimension Specs", "Export to PDF / DWG", "2 Review Rounds"] },
+        standard: { price: "$250.00", tagline: "3D exterior/interior massing model", features: ["3D Perspective Views", "Basic Daylight Texturing", "Elevation Renders", "Source SketchUp / OBJ"] },
+        professional: { price: "$400.00", tagline: "Photorealistic architectural walkthrough & scene rendering", features: ["Cinema 4K Renders", "Custom Materials & Foliage", "Unlimited Iterations", "Priority Studio Delivery"] },
+        ultra: { price: "$750.00", tagline: "Complete masterplan, animations & construction set", features: ["Lumion / Unreal Cinematic Video", "Full Permitting Drawings", "Commercial Master Rights", "Dedicated Architect Desk"] }
       },
       "Web Design": {
-        essential: { price: "$349.99", tagline: "Clean, conversion-focused single-page landing site", features: ["Figma Wireframes & Prototype", "Mobile Responsive Layout", "Tailwind / CSS Spec Sheets", "2 Review Milestones"] },
-        standard: { price: "$649.99", tagline: "Multi-section custom web experience with modern UI", features: ["Up to 5 Custom Page Layouts", "Interactive Component Kit", "Micro-Interactions & States", "Complete Figma Design System"] },
-        professional: { price: "$999.99", tagline: "Full bespoke studio design & high-performance build", features: ["Dynamic 3D / Three.js Elements", "Full Responsive Development", "Unlimited Design Revisions", "Google Analytics & Forms", "Dedicated Frontend Lead"] },
-        ultra: { price: "$1,899+", tagline: "Enterprise web platform with full custom backend", features: ["Custom Web App Architecture", "Automated Intake & CMS Flow", "Performance Optimization", "Full Deployment & Handover"] }
+        essential: { price: "$150.00", tagline: "Clean, conversion-focused single-page landing site", features: ["Figma Wireframes & Prototype", "Mobile Responsive Layout", "Tailwind / CSS Spec Sheets", "2 Review Milestones"] },
+        standard: { price: "$300.00", tagline: "Multi-section custom web experience with modern UI", features: ["Up to 5 Custom Page Layouts", "Interactive Component Kit", "Micro-Interactions & States", "Complete Figma Design System"] },
+        professional: { price: "$450.00", tagline: "Full bespoke studio design & high-performance build", features: ["Dynamic 3D / Three.js Elements", "Full Responsive Development", "Unlimited Design Revisions", "Google Analytics & Forms", "Dedicated Frontend Lead"] },
+        ultra: { price: "$750.00", tagline: "Enterprise web platform with full custom backend", features: ["Custom Web App Architecture", "Automated Intake & CMS Flow", "Performance Optimization", "Full Deployment & Handover"] }
       }
     };
 
     let activeTier = 'professional';
 
-    // 4. FETCH CATEGORIES & TIMELINES FROM "Settings" TAB
     async function loadDropdownOptionsFromSheet() {
       const sheetName = encodeURIComponent("Settings");
       const csvUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${sheetName}&t=${Date.now()}`;
@@ -651,7 +631,6 @@
           const categories = [];
           const timelines = [];
 
-          // Column A = Categories | Column B = Timelines
           rows.slice(1).forEach(r => {
             if (r[0] && r[0].trim()) categories.push(r[0].trim());
             if (r[1] && r[1].trim()) timelines.push(r[1].trim());
@@ -677,7 +656,6 @@
       }
     }
 
-    // 5. FETCH LIVE PRICING & GREENISH TICKS FROM "Pricing Matrix" TAB
     async function loadLivePricingFromSheet() {
       const sheetName = encodeURIComponent("Pricing Matrix");
       const csvUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${sheetName}&t=${Date.now()}`;
@@ -715,21 +693,14 @@
           updateTierCardDisplay();
         }
       } catch (err) {
-        console.warn("Could not load dynamic pricing from CSV, falling back to Web App API...", err);
-        fetch(`${APPS_SCRIPT_WEBAPP_URL}?action=getPricing&t=${Date.now()}`)
-          .then(res => res.json())
-          .then(data => {
-            if (data && Object.keys(data).length > 0) {
-              PACKAGE_DATA = Object.assign({}, PACKAGE_DATA, data);
-              updateTierCardDisplay();
-            }
-          })
-          .catch(e => console.log("Using static pricing fallbacks"));
+        console.warn("Could not load dynamic pricing from CSV, using current matrix", err);
+        updateTierCardDisplay();
       }
     }
 
     function handleCategoryChange() {
-      const category = document.getElementById('projectCategory').value;
+      const categorySelect = document.getElementById('projectCategory');
+      const category = categorySelect ? categorySelect.value : '3D Design';
       const badge = document.getElementById('activeCategoryBadge');
       if (badge) badge.textContent = `${category} Packages`;
       updateTierCardDisplay();
@@ -741,8 +712,9 @@
     }
 
     function updateTierCardDisplay() {
-      const category = document.getElementById('projectCategory').value || 'Logo Design';
-      const categoryPackages = PACKAGE_DATA[category] || PACKAGE_DATA["Logo Design"] || PACKAGE_DATA["3D Design"];
+      const categorySelect = document.getElementById('projectCategory');
+      const category = categorySelect ? categorySelect.value : '3D Design';
+      const categoryPackages = PACKAGE_DATA[category] || PACKAGE_DATA["3D Design"];
       const tierInfo = (categoryPackages && categoryPackages[activeTier]) ? categoryPackages[activeTier] : {
         price: "$0",
         tagline: "Custom Quote",
@@ -777,11 +749,10 @@
       }
     }
 
-    // Startup Initializations
+    handleCategoryChange();
     loadDropdownOptionsFromSheet();
     loadLivePricingFromSheet();
 
-    // 6. DYNAMIC BRAND COLOR PALETTE
     const PRESET_SLOTS = [
       { name: "Base", color: "#070a12" },
       { name: "Neutral", color: "#1e293b" },
@@ -839,7 +810,6 @@
       if (countEl) countEl.textContent = `${count} Color Slots`;
     }
 
-    // 7. File Attachment Handler
     let uploadedFileData = null;
     function handleFileSelection(e) {
       const file = e.target.files[0];
@@ -857,7 +827,6 @@
       reader.readAsDataURL(file);
     }
 
-    // 8. Reset Form
     function resetFormToDefaults() {
       const form = document.getElementById('intakeForm');
       if (form) form.reset();
@@ -884,7 +853,6 @@
       if (label) label.textContent = 'Drag & Drop Files or Browse';
     }
 
-    // 9. Submit Design Brief
     async function handleFormSubmission(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
@@ -955,7 +923,6 @@
       if (modal) modal.classList.add('hidden'); 
     }
 
-    // 10. AI Concierge Aria
     let lastAriaSpeech = "Hi! I am Aria, your Cetora design concierge. How can I help you tailor your job order today?";
 
     function toggleAiAssistant() {
@@ -1041,7 +1008,6 @@
       }
     }
 
-    // 11. Command Hub PIN Authentication
     function promptAdminModal() { 
       const modal = document.getElementById('pinModal');
       if (modal) {
@@ -1079,7 +1045,6 @@
       document.getElementById('hubExitBtn')?.classList.add('hidden');
     }
 
-    // 12. HIGH-VISIBILITY DATA STREAM (Direct Sheets CSV Engine)
     let cachedSubmissions = [];
 
     async function refreshHubData() {
@@ -1249,10 +1214,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
